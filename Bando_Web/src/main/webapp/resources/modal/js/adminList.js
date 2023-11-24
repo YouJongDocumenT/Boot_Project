@@ -10,37 +10,35 @@ function allElementCk(ckBox){
     }
 }
 
-function removeElement(key, url) {
+function removeElement(key) {
     const ckBoxes = document.querySelectorAll(ckBoxQuery + ":checked");
     if(ckBoxes.length == 0)
         return;
 
     const isRemove = confirm("정말로 삭제하시겠습니까?");
     if(isRemove){
-        const arr = [];
+        const productArr = [];
         for (let i = 0; i < ckBoxes.length; i++) {
             let obj = {};
             obj[key] = ckBoxes[i].dataset['elementid'];
-            arr.push(obj);
+            productArr.push(obj);
         }
 
-        fetch(url, {
-            method: "POST",
-            headers:{
-                "Content-Type":"application/json",
-            },
-            body: JSON.stringify(arr),
+        $.ajax({
+        	url : "http://localhost:8090/IOmanage/deletemanage",
+        	type : 'POST',
+        	traditional : true,
+        	data : {
+        		productArr : productArr
+        	},
+        	success: function(data){
+        		if(data == YES){
+        			alert("성공");
+        		}else{
+        			alert("실패");
+        		}
+        	}
         })
-            .then(response => response.json())
-            .then(result => {
-                if(result >= 1){
-                    alert("성공적으로 삭제되었습니다.")
-                    window.location.reload();
-                    return;
-                }
-                alert("삭제에 실패했습니다.")
-            })
-            .catch(error => alert("삭제에 실패했습니다."));
     }
 
 }
