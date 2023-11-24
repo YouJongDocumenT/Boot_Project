@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manageMapper">
+
+<!-- 재고 작성 -->
+   <insert id="productinsert">
+	   INSERT INTO TEST_ALLBOARD(PDTNUM, PRODUCT, PURCHASECOMP, REPOSIBILITY, PWEIGHT
+	   							, PLENGTH, QUANTITY, PCHPRICE, PRICE, TAX, DIFFERENCE)
+	                 VALUES( TEST_ALLBOARD_SEQ.NEXTVAL, #{product}, #{purchasecomp}, #{reposibility}, #{pweight}
+	                 		, #{plength}, #{quantity}, #{pchprice}, #{price}, #{tax}, #{difference} )
+   
+   </insert>
+   
+<!-- 재고 조회 -->
+   <select id="productlist" resultType="com.bando.dto.manageDTO">
+	   SELECT PDTNUM, BUTDATE, PRODUCT, PURCHASECOMP, REPOSIBILITY, PWEIGHT
+	   			, PLENGTH, QUANTITY, PCHPRICE, PRICE, TAX, DIFFERENCE
+	   		FROM TEST_ALLBOARD
+	        ORDER BY PDTNUM DESC  
+   </select>
+   
+ <!-- 재고 수정 -->
+   <update id="productupdate" parameterType="com.bando.dto.manageDTO">
+	   UPDATE TEST_ALLBOARD
+	   		SET PRODUCT = #{product},
+	   			PURCHASECOMP = #{purchasecomp},
+	   			REPOSIBILITY = #{reposibility},
+	   			PWEIGHT = #{pweight},
+	   			PLENGTH = #{plength},
+	   			QUANTITY = #{quantity},
+	   			PCHPRICE = #{pchprice},
+	   			PRICE = #{price},
+	   			TAX = #{tax},
+	   			DIFFERENCE = #{difference}
+	   			
+	   WHERE PDTNUM = #{pdtnum}  
+   </update>
+   
+<!-- 재고 삭제 -->
+   <delete id="productdelete" parameterType="com.bando.dto.manageDTO">
+	   DELETE 
+			FROM TEST_ALLBOARD
+		WHERE PDTNUM = #{pdtnum}  
+	                 
+   </delete>
+   
+   
+</mapper>
