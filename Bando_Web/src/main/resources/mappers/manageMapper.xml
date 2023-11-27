@@ -50,7 +50,7 @@
    <select id="saleslist" resultType="com.bando.dto.SalesDTO">
     	SELECT SUM(PCHPRICE) AS total_pchprice, 
            	   SUM(DIFFERENCE) AS total_difference 
-    		FROM TEST_ALLBOARD;
+    		FROM TEST_ALLBOARD
 	</select>
    
 </mapper>
