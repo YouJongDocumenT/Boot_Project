@@ -39,7 +39,7 @@
    </update>
    
 <!-- 재고 삭제 -->
-   <delete id="productdelete" parameterType="com.bando.dto.manageDTO">
+   <delete id="productdelete" parameterType="int">
 	   DELETE 
 			FROM TEST_ALLBOARD
 		WHERE PDTNUM = #{pdtnum}  

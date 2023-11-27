@@ -1,5 +1,7 @@
 package com.bando.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,13 +65,23 @@ public class ManageController {
 	
 	// 재고 삭제
 	@PostMapping("/IOmanage/deletemanage")
-	@ResponseBody
-	public String productdelete(manageDTO managedto) throws Exception{
-		
-		logger.info("deletemanage");
-		
-		manageservice.productdelete(managedto.getPdtnum());
-		
-		return "YES";
+	public String productdelete(HttpServletRequest request) throws Exception{
+	    logger.info("deletemanage");
+	    
+	    String[] ajaxMsg = request.getParameterValues("valueArr");
+	    if (ajaxMsg != null) {
+	        for (String str : ajaxMsg) {
+	            try {
+	                int intValue = Integer.parseInt(str.trim());
+	                manageservice.productdelete(intValue); // 정수값을 사용하여 삭제 메서드 호출
+	            } catch (NumberFormatException e) {
+	                // 정수로 변환할 수 없는 경우 처리
+	                e.printStackTrace(); // 또는 로그 출력
+	                // 오류 발생 시 어떻게 처리할지 결정
+	            }
+	        }
+	    }
+	    
+	    return "redirect:/IOmanage";
 	}
 }
