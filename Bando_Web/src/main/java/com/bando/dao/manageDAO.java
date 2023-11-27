@@ -2,6 +2,7 @@ package com.bando.dao;
 
 import java.util.List;
 
+import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
 
 public interface manageDAO {
@@ -17,4 +18,7 @@ public interface manageDAO {
 	
 	// 재고 삭제 dto매핑
 	public void productdelete(int pdtnum) throws Exception;
+	
+	// 총 단가,매출
+	public List<SalesDTO> saleslist() throws Exception;
 }

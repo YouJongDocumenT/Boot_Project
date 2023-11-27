@@ -2,6 +2,7 @@ package com.bando.service;
 
 import java.util.List;
 
+import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
 
 public interface manageService {
@@ -17,4 +18,7 @@ public interface manageService {
 	
 	// 재고 삭제
 	public void productdelete(int pdtnum) throws Exception;
+	
+	// 총 단가/매출 출력
+	public List<SalesDTO> saleslist() throws Exception;
 }

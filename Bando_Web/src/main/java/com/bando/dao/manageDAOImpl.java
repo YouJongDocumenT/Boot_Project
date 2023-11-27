@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
 
 @Repository
@@ -38,5 +39,10 @@ public class manageDAOImpl implements manageDAO{
 	public void productdelete(int pdtnum) throws Exception{
 		sqlSession.delete("manageMapper.productdelete", pdtnum);
 	}
-
+	
+	// 총 단가,매출
+	@Override
+	public List<SalesDTO> saleslist() throws Exception{
+		return sqlSession.selectList("manageMapper.saleslist");
+	}
 }

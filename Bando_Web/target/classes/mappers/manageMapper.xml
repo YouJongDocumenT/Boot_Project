@@ -46,5 +46,11 @@
 	                 
    </delete>
    
+   <!-- 총 단가, 총 매출 -->
+   <select id="saleslist" resultType="com.bando.dto.SalesDTO">
+    	SELECT SUM(PCHPRICE) AS total_pchprice, 
+           	   SUM(DIFFERENCE) AS total_difference 
+    		FROM TEST_ALLBOARD;
+	</select>
    
 </mapper>

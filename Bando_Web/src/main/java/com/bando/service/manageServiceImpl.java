@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bando.dao.manageDAO;
+import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
 
 @Service
@@ -21,17 +22,26 @@ public class manageServiceImpl implements manageService{
 	}
 	
 	// 재고 조회
+	@Override
 	public List<manageDTO> productlist()throws Exception{
 		return managedao.productlist();
 	}
 	
 	// 재고 수정
+	@Override
 	public void productupdate(manageDTO managedto) throws Exception{
 		managedao.productupdate(managedto);
 	}
 	
 	// 재고 삭제
+	@Override
 	public void productdelete(int pdtnum) throws Exception{
 		managedao.productdelete(pdtnum);
+	}
+	
+	// 총 단가/매출 출력
+	@Override
+	public List<SalesDTO> saleslist() throws Exception{
+		return managedao.saleslist();
 	}
 }

@@ -33,6 +33,7 @@ public class ManageController {
 		logger.info("IOmanage");
 		
 		model.addAttribute("productlist", manageservice.productlist());
+		model.addAttribute("saleslist", manageservice.saleslist());
 		
 		return "management/IOmanage";
 	}
@@ -55,6 +56,7 @@ public class ManageController {
 	@ResponseBody
 	public String productupdate(manageDTO managedto) throws Exception{
 		
+		System.out.println("manageDTO: " + managedto);
 		logger.info("updatemanage");
 		
 		manageservice.productupdate(managedto);

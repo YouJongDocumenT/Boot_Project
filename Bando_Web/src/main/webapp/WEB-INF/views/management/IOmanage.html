@@ -423,7 +423,35 @@
                                             <td th:text="${item.tax}"></td>
                                             <td th:text="${item.difference}"></td>
                                             <td>
-                                            	<a class="btn btn-outline-primary btn-sm">수정</a>
+                                                <a class="btn btn-outline-primary btn-sm"
+                                                        data-toggle="modal"
+                                                        href="#ProductEditModal"
+                                                        style="cursor: pointer;"
+                                                        th:pdtnum="${item.pdtnum}"
+                                                        th:Product="${item.Product}"
+                                                        th:purchasecomp="${item.purchasecomp}"
+                                                        th:reposibility="${item.reposibility}"
+                                                        th:pweight="${item.pweight}"
+                                                        th:plength="${item.plength}"
+                                                        th:quantity="${item.quantity}"
+                                                        th:pchprice="${item.pchprice}"
+                                                        th:price="${item.price}"
+                                                        th:tax="${item.tax}"
+                                                        th:difference="${item.difference}"
+                                                        th:onclick="initProductEdit([
+                                                        	this.getAttribute('pdtnum'),
+                                                            this.getAttribute('Product'),
+                                                            this.getAttribute('purchasecomp'),
+                                                            this.getAttribute('reposibility'),
+                                                            this.getAttribute('pweight'),
+                                                            this.getAttribute('plength'),
+                                                            this.getAttribute('quantity'),
+                                                            this.getAttribute('pchprice'),
+                                                            this.getAttribute('price'),
+                                                            this.getAttribute('tax'),
+                                                            this.getAttribute('difference')
+                                                           ])">수정
+                                                    </a>
 											</td>
                                             
                                         </tr>
@@ -494,7 +522,8 @@
                 </button>
             </div>
             <div class="modal-body">
-            <!-- 폼태그 -->
+            
+            <!-- 추가 폼태그 -->
                 <form id="ProductAddLabelForm">
                     <div class="mb-3 row">
                         <label for="editId" class="col-sm-2 col-form-label">품명</label>
@@ -567,6 +596,105 @@
 </div>
 
 
+
+
+
+
+
+
+
+    <!-- 재고정보 수정모달 -->
+<div class="modal fade" id="ProductEditModal" tabindex="-1" role="dialog"
+     aria-labelledby="ProductEditModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ProductEditLabel">재고 추가</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            
+            <!-- 추가 폼태그 -->
+                <form id="ProductEditLabelForm">
+                    <div class="mb-3 row">
+                        <label for="EditProduct" class="col-sm-2 col-form-label">품명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="EditProduct" name="Product" value="" require>
+                            <input type="hidden" class="form-control" id="Editpdtnum" name="pdtnum" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editName" class="col-sm-2 col-form-label">구매처</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Editpurchasecomp" name="purchasecomp" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">담당자</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditReposibility" name="reposibility" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditPweight" name="pweight" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">가로</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditPlength" name="plength" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditQuantity" name="quantity" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">구매가</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditPchprice" name="pchprice" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditPrice" name="price" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">세액</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditTax" name="tax" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">차액</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="EditDifference" name="difference" value="" require>
+                        </div>
+                    </div>
+                </form>
+               </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" onclick="EditProductList()">수정</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="/resources/BootStrapTemplates/vendor/jquery/jquery.min.js"></script>
     <script src="/resources/BootStrapTemplates/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -587,7 +715,6 @@
 	<script type="text/javascript">
 
 	// 체크박스 전체 선택 로직
-	
 	$(function(){
 	    var chkObj = document.getElementsByName("RowCheck");
 	    var rowCnt = chkObj.length;
@@ -639,6 +766,130 @@
 	            }
 	        });
 	    }
+	}
+	
+	
+	
+	// 재고 추가 로직
+	function addProductList(){
+    const formData = $("#ProductAddLabelForm").serialize();
+
+    Swal.fire({
+        title: '재고 추가',
+        text: "정말로 추가 하시겠습니까?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '승인',
+        cancelButtonText: '취소',
+        reverseButtons: false, // 버튼 순서 거꾸로
+
+    }).then(result => {
+
+        if(result.isConfirmed){
+            $.ajax({
+                url: "http://localhost:8090/IOmanage/write",
+                type: "POST",
+                data: formData, // 직렬화한 폼 데이터를 전송
+                success: function (data) {
+                    if (data.trim()==='YES') {
+                        AddSuccess(result);
+                    } else {
+                        Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
+                    }
+                },error: function () {
+                    Swal.fire('에러 발생', '서버 오류가 발생했습니다.', 'error');
+                }
+            });
+        }
+
+    }) // end Swal
+}
+
+function AddSuccess(result){
+    Swal.fire(
+        'success',
+        '추가 완료되었습니다.',
+        'success'
+    ).then(function(){
+        location.href = location.href;
+    })
+}
+
+
+//재고 수정 로직
+function EditProductList(){
+const formData = $("#ProductEditLabelForm").serialize();
+
+Swal.fire({
+    title: '재고 수정',
+    text: "정말로 수정 하시겠습니까?",
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: '승인',
+    cancelButtonText: '취소',
+    reverseButtons: false, // 버튼 순서 거꾸로
+
+}).then(result => {
+
+    if(result.isConfirmed){
+        $.ajax({
+            url: "http://localhost:8090/IOmanage/updatemanage",
+            type: "POST",
+            data: formData, // 직렬화한 폼 데이터를 전송
+            success: function (data) {
+                if (data.trim()==='YES') {
+                    updateSuccess(result);
+                } else {
+                    Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
+                }
+            },error: function () {
+                Swal.fire('에러 발생', '서버 오류가 발생했습니다.', 'error');
+            }
+        });
+    }
+
+}) // end Swal
+}
+
+function updateSuccess(result){
+Swal.fire(
+    'success',
+    '수정이 완료되었습니다.',
+    'success'
+).then(function(){
+    location.href = location.href;
+})
+}
+	
+	// 수정창 리스트 형식 가져오기
+	function initProductEdit(duct){
+	    const pdtnum = duct[0];
+	    const Product = duct[1];
+	    const purchasecomp = duct[2];
+	    const reposibility = duct[3];
+	    const pweight = duct[4];
+	    const plength = duct[5];
+	    const quantity = duct[6];
+	    const pchprice = duct[7];
+	    const price = duct[8];
+	    const tax = duct[9];
+	    const difference = duct[10];
+
+	    document.querySelector("#Editpdtnum").value = pdtnum;
+	    document.querySelector("#EditProduct").value = Product;
+	    document.querySelector("#Editpurchasecomp").value = purchasecomp;
+	    document.querySelector("#EditReposibility").value = reposibility;
+	    document.querySelector("#EditPweight").value = pweight;
+	    document.querySelector("#EditPlength").value = plength;
+	    document.querySelector("#EditQuantity").value = quantity;
+	    document.querySelector("#EditPchprice").value = pchprice;
+	    document.querySelector("#EditPrice").value = price;
+	    document.querySelector("#EditTax").value = tax;
+	    document.querySelector("#EditDifference").value = difference;
 	}
 	
 	</script>
