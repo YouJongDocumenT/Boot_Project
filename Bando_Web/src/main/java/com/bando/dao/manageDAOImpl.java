@@ -40,9 +40,9 @@ public class manageDAOImpl implements manageDAO{
 		sqlSession.delete("manageMapper.productdelete", pdtnum);
 	}
 	
-	// 총 단가,매출
+	// 총 단가,매출, 총 내역 수
 	@Override
 	public List<SalesDTO> saleslist() throws Exception{
 		return sqlSession.selectList("manageMapper.saleslist");
-	}
+	}	
 }

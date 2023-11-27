@@ -21,4 +21,5 @@ public interface manageDAO {
 	
 	// 총 단가,매출
 	public List<SalesDTO> saleslist() throws Exception;
+	
 }

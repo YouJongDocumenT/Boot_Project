@@ -395,7 +395,7 @@
 											<th></th>
 											<th></th>
 											<th>총 거래</th>
-                                            <th></th>
+                                            <th class="money" th:text="${sales.total_cnt + '회'}"></th>
                                             <th>총 단가</th>
                                             <th class="money" th:text="${sales.total_pchprice + '원'}"></th>
                                             <th>총 매출</th>
@@ -414,7 +414,7 @@
                                             <td th:text="${item.Product}"></td>
                                             <td th:text="${item.purchasecomp}"></td>
                                             <td th:text="${item.reposibility}"></td>
-                                            <td class="money" type="text"th:text="${item.pweight + '*' + item.plength + '(mm)'}"></td>
+                                            <td class="money" type="text"th:text="${item.plength + '*' + item.pweight + '(mm)'}"></td>
                                             <!-- <input type="text"th:text="${item.pweight}"> -->
                                             <!-- <input type="text" th:text="${item.plength}"> -->
                                             <td class="money" th:text="${item.quantity + 'EA'}"></td>
