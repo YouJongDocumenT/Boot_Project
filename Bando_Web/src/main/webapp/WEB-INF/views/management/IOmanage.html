@@ -366,7 +366,7 @@
                             <div class="d-flex justify-content-end">
                                         <a class="btn btn-sm btn-outline-danger" type="button" onclick="deleteValue();" th:text="삭제"></a>
                                     </div>
-                                <table class="table table-hover" width="100%" cellspacing="0">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                         	<th style="min-width: 50px">
@@ -394,14 +394,13 @@
 											<th></th>
 											<th></th>
 											<th></th>
-											<th>날짜</th>
+											<th>총 거래</th>
                                             <th></th>
                                             <th>총 단가</th>
-                                            <th th:text="${sales.total_pchprice}"></th>
+                                            <th class="money" th:text="${sales.total_pchprice + '원'}"></th>
                                             <th>총 매출</th>
-                                            <th th:text="${sales.total_difference}"></th>
+                                            <th class="money" th:text="${sales.total_difference + '원'}"></th>
 											<th>
-                                            	<a class="btn btn-outline-primary btn-sm">저장</a>
                                             	<a class="btn btn-outline-primary btn-sm">저장</a>
 											</th>
                                         </tr>
@@ -415,14 +414,14 @@
                                             <td th:text="${item.Product}"></td>
                                             <td th:text="${item.purchasecomp}"></td>
                                             <td th:text="${item.reposibility}"></td>
-                                            <td type="text"th:text="${item.pweight}"></td>
+                                            <td class="money" type="text"th:text="${item.pweight + '*' + item.plength + '(mm)'}"></td>
                                             <!-- <input type="text"th:text="${item.pweight}"> -->
                                             <!-- <input type="text" th:text="${item.plength}"> -->
-                                            <td th:text="${item.quantity}"></td>
-                                            <td th:text="${item.pchprice}"></td>
-                                            <td th:text="${item.price}"></td>
-                                            <td th:text="${item.tax}"></td>
-                                            <td th:text="${item.difference}"></td>
+                                            <td class="money" th:text="${item.quantity + 'EA'}"></td>
+                                            <td class="money" th:text="${item.pchprice + '원'}"></td>
+                                            <td class="money" th:text="${item.price + '원'}"></td>
+                                            <td class="money" th:text="${item.tax + '원'}"></td>
+                                            <td class="money" th:text="${item.difference + '원'}"></td>
                                             <td>
                                                 <a class="btn btn-outline-primary btn-sm"
                                                         data-toggle="modal"
@@ -714,6 +713,15 @@
     <script src="/resources/BootStrapTemplates/js/demo/datatables-demo.js"></script>
 
 	<script type="text/javascript">
+	
+	// 금액 단위 표시 (정규식 사용)
+	$(document).ready(function() {
+    $('.money').each(function() {
+        var money = $(this).text();
+        var reviseMoney = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        $(this).text(reviseMoney);
+    });
+});
 
 	// 체크박스 전체 선택 로직
 	$(function(){
