@@ -74,6 +74,20 @@
 	   			VALUES ( #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{pur_length}, #{pur_weight})
    </insert>
    
+<!-- 구매처 회사 정보 조회 -->
+   <select id="purchcompbyid" resultType="com.bando.dto.PurchaseCompDTO">
+	   SELECT purchase_company, adress, comp_number, email
+	   		FROM purchasecomp_table
+	   		WHERE purchase_id = #{purchase_id}
+   </select>
+ 
+<!-- 구매 정보 조회 -->
+   <select id="purchlistbyid" resultType="com.bando.dto.PurChasePdtDTO">
+	   SELECT Product, purchase_date, pur_quantity, purchase_price, pur_length, pur_weight
+	   		FROM purchase_table
+	   		WHERE purchase_id = #{purchase_id}
+   </select>
+     
 </mapper>
 
 
