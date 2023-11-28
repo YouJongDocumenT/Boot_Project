@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
 
@@ -45,4 +46,11 @@ public class manageDAOImpl implements manageDAO{
 	public List<SalesDTO> saleslist() throws Exception{
 		return sqlSession.selectList("manageMapper.saleslist");
 	}	
+	
+	// 구매처회사 정보 조회 sql매핑
+	@Override
+	public List<PurchaseCompDTO> purchasecomplist() throws Exception{
+		return sqlSession.selectList("manageMapper.purchasecomplist");
+		
+	}
 }

@@ -54,4 +54,27 @@
     		FROM TEST_ALLBOARD
 	</select>
    
+   <!-- 구매처 회사 정보 작성 -->
+   <insert id="purchasecompinsert">
+	   INSERT INTO purchasecomp_table(purchase_id, purchase_company, adress, comp_number, email)
+	                 VALUES( purchasecomp_table_SEQ.NEXTVAL, #{purchase_company}, #{adress}, #{comp_number}, #{email} )
+   
+   </insert>
+   
+<!-- 구매처 회사 정보 조회 -->
+   <select id="purchasecomplist" resultType="com.bando.dto.PurchaseCompDTO">
+	   SELECT purchase_id, purchase_company, adress, comp_number, email
+	   		FROM purchasecomp_table
+   </select>
+   
+<!-- 구매처 회사 매칭해 거래내역 추가 -->
+<insert id="purchcomptradelist">
+	   INSERT INTO purchase_table (purchase_id, product, pur_quantity, 
+	   								purchase_price, pur_length, pur_weight)
+	   			VALUES ( #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{pur_length}, #{pur_weight})
+   </insert>
+   
 </mapper>
+
+
+

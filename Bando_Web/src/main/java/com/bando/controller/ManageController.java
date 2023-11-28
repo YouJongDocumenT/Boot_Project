@@ -1,5 +1,7 @@
 package com.bando.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.manageDTO;
 import com.bando.service.manageService;
 
@@ -34,6 +37,8 @@ public class ManageController {
 		
 		model.addAttribute("productlist", manageservice.productlist());
 		model.addAttribute("saleslist", manageservice.saleslist());
+		// 구매처 모델 호출
+		model.addAttribute("purchasecomplist", manageservice.purchasecomplist());
 		
 		return "management/IOmanage";
 	}
