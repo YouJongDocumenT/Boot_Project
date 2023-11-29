@@ -1,6 +1,9 @@
 package com.bando.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import com.bando.dto.MachineDTO;
 import com.bando.dto.PruchCommonDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
+import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.manageDTO;
 import com.bando.service.CompCheckService;
@@ -123,20 +127,47 @@ public class CompCheckController {
 		String machine_name = mcdto.get(0).getMachine_name();
 		int machine_id = mcdto.get(0).getMachine_id();
 		
-		System.out.println(mcdto); // machine_id는 개수만큼 잘 가져옴
-		
 		// client_id에 매칭된 기계정보 가져옴
 		model.addAttribute("machinelist", ccs.machinebyid(client_id));
 		
 		model.addAttribute("machine_name", machine_name);
 		model.addAttribute("machine_id", machine_id);
 		
-		// machine_id에 매칭된 고객사 판매 정보 호출
-		model.addAttribute("sellListbyid", ccs.sellListbyid(machine_id));
+		// client_id에 매칭된 고객사 판매 정보 호출
+		model.addAttribute("sellListbyid", ccs.sellListbyid(client_id));
 		logger.info("구매 정보 매칭");
+		
+		// client_id에 매칭된 모든 판매 정보 호출
+		Map<Integer, List<SellAllDataDTO>> sellAllDataMap = new HashMap<Integer, List<SellAllDataDTO>>();
+
+		for (int i = 0; i < mcdto.size(); i++) {
+		    int machineList_id = mcdto.get(i).getMachine_id();
+		    List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id);
+		    
+		    sellAllDataMap.put(machineList_id, sellAllData);
+		    
+		    System.out.println("아이디 : " + sellAllData);
+		    logger.info("구매 정보 매칭 : " + i);
+		}
+
+		// SellAllDataDTO 형식의 리스트를 생성합니다.
+		List<SellAllDataDTO> sellAllDataList = new ArrayList<SellAllDataDTO>();
+
+		// sellAllDataMap에서 값들을 가져와서 리스트에 추가합니다.
+		for (Map.Entry<Integer, List<SellAllDataDTO>> entry : sellAllDataMap.entrySet()) {
+		    List<SellAllDataDTO> sellAllData = entry.getValue();
+		    
+		    // sellAllData가 null이 아니고 비어 있지 않은 경우에만 리스트에 추가합니다.
+		    if (sellAllData != null && !sellAllData.isEmpty()) {
+		        sellAllDataList.addAll(sellAllData);
+		    }
+		}
+		model.addAttribute("sellAllDataList", sellAllDataList);
 
 		return "management/clientcompany";
 	}
+	
+	
 	
 	// 판매정보 추가
 	@PostMapping("/clientcompany/selladd")

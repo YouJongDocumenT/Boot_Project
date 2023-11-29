@@ -10,6 +10,7 @@ import com.bando.dto.ClientDTO;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
+import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.manageDTO;
 
@@ -75,8 +76,14 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	// 판매 정보 조회
 	@Override
-	public List<SellpdtDTO> sellListbyid(int machine_id) throws Exception {
-		return ccd.sellListbyid(machine_id);
+	public List<SellpdtDTO> sellListbyid(Long client_id) throws Exception {
+		return ccd.sellListbyid(client_id);
+	}
+	
+	// 종합 판매 정보 조회
+	@Override
+	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id) throws Exception {
+		return ccd.sellAlldata(client_id, machineList_id);
 	}
 	
 	
