@@ -37,5 +37,8 @@ public interface CompCheckDAO {
 	
 	// 기계 정보 조회 dto매핑
 	public List<MachineDTO> machinebyid(Long client_id) throws Exception;
+	
+	// 판매 정보 조회 dto매핑
+	public List<SellpdtDTO> sellListbyid(int machine_id) throws Exception;
 
 }

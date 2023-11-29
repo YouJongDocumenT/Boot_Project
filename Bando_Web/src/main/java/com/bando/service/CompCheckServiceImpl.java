@@ -73,4 +73,27 @@ public class CompCheckServiceImpl implements CompCheckService{
 		return ccd.machinebyid(client_id);
 	}
 	
+	// 판매 정보 조회
+	@Override
+	public List<SellpdtDTO> sellListbyid(int machine_id) throws Exception {
+		return ccd.sellListbyid(machine_id);
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

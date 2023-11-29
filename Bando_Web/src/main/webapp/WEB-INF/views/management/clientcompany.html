@@ -379,12 +379,15 @@
                                         	<th style="min-width: 50px">
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
-                                            <th>구매일</th>
+                                            <th>판매일</th>
                                             <th>품명</th>
-                                            <th>구매처</th>
+                                            <th>고객사</th>
+                                            <th>기계명</th>
+                                            <th>담당자</th>
                                             <th>규격(mm)</th>
                                             <th>수량</th>
-                                            <th>구매가격</th>
+                                            <th>단가</th>
+                                            <th>세액</th>
                                             <th style="min-width: 50px">
                                             	<a class="btn btn-outline-primary btn-sm" 
                                             			data-toggle="modal"
@@ -418,6 +421,9 @@
 											<th></th>
 											<th></th>
                                             <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
                                             <th>총 구매(건)</th>
                                             <th></th>
                                             <th>총 지출(원)</th>
@@ -428,34 +434,39 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="item : ${purchlistbyid}">
+                                        <tr th:each="item : ${sellListbyid}">
                                         	<th style="min-width: 50px">
                                         		<input type="checkbox" name="RowCheck"/>
                                         	</th>
-                                            <td th:text="${#dates.format(item.purchase_date, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${item.Product}"></td>
-                                            <td th:text="${PurchaseCompany}"></td>
-                                            <td class="money" type="text"th:text="${item.pur_length + '*' + item.pur_weight + '(mm)'}"></td>
+                                            <td th:text="${#dates.format(item.sell_date, 'yyyy-MM-dd')}"></td>
+                                            <td th:text="${item.sell_pdt}"></td>
+                                            <td th:text="${clientCompany}"></td>
+                                            <td th:text="${machine_name}"></td>
+                                            <td th:text="${item.responsibility}"></td>
+                                            <td class="money" type="text"th:text="${item.sell_length + '*' + item.sell_weight + '(mm)'}"></td>
                                             <!-- <input type="text"th:text="${item.pweight}"> -->
                                             <!-- <input type="text" th:text="${item.plength}"> -->
-                                            <td class="money" th:text="${item.pur_quantity + 'EA'}"></td>
-                                            <td class="money" th:text="${item.purchase_price + '원'}"></td>
+                                            <td class="money" th:text="${item.sell_quantity + 'EA'}"></td>
+                                            <td class="money" th:text="${item.sell_price + '원'}"></td>
+                                            <td class="money" th:text="${item.tax + '원'}"></td>
                                             <td>
                                                 <a class="btn btn-outline-primary btn-sm"
                                                         data-toggle="modal"
                                                         href="#ProductEditModal"
                                                         style="cursor: pointer;"
-                                                        th:Product="${item.Product}"
-                                                        th:pweight="${item.pur_weight}"
-                                                        th:plength="${item.pur_length}"
-                                                        th:quantity="${item.pur_quantity}"
-                                                        th:pchprice="${item.purchase_price}"
+                                                        th:sell_pdt="${item.sell_pdt}"
+                                                        th:sell_length="${item.sell_length}"
+                                                        th:sell_weight="${item.sell_weight}"
+                                                        th:sell_quantity="${item.sell_quantity}"
+                                                        th:sell_price="${item.sell_price}"
+                                                        th:sell_tax="${item.tax}"
                                                         th:onclick="initProductEdit([
-                                                            this.getAttribute('Product'),
-                                                            this.getAttribute('pur_weight'),
-                                                            this.getAttribute('pur_length'),
-                                                            this.getAttribute('pur_quantity'),
-                                                            this.getAttribute('purchase_price'),
+                                                            this.getAttribute('sell_pdt'),
+                                                            this.getAttribute('sell_length'),
+                                                            this.getAttribute('item.sell_weight'),
+                                                            this.getAttribute('sell_quantity'),
+                                                            this.getAttribute('sell_price'),
+                                                            this.getAttribute('tax'),
                                                            ])">수정
                                                     </a>
 											</td>
@@ -614,37 +625,43 @@
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">번호</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addPh_number" name="ph_number" value="" require>
+                            <input type="text" class="form-control" id="addPh_number" name="ph_number" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">품명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addsell_pdt" name="sell_pdt" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addSell_quantity" name="sell_quantity" value="" require>
+                            <input type="text" class="form-control" id="addSell_quantity" name="sell_quantity" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">길이</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addSell_length" name="sell_length" value="" require>
+                            <input type="text" class="form-control" id="addSell_length" name="sell_length" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addSell_weight" name="sell_weight" value="" require>
+                            <input type="text" class="form-control" id="addSell_weight" name="sell_weight" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addSell_price" name="sell_price" value="" require>
+                            <input type="text" class="form-control" id="addSell_price" name="sell_price" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">세액</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addTax" name="tax" value="" require>
+                            <input type="text" class="form-control" id="addTax" name="tax" value="" require>
                         </div>
                     </div>
                 </form>
@@ -917,7 +934,7 @@
     const formData = $("#sellAddLabelForm").serialize();
 
     Swal.fire({
-        title: '기계 추가',
+        title: '판매 정보 추가',
         text: "정말로 추가 하시겠습니까?",
         icon: 'info',
         showCancelButton: true,

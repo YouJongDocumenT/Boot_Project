@@ -40,5 +40,8 @@ public interface CompCheckService {
 	
 	// 기계 정보 조회
 	public List<MachineDTO> machinebyid(Long client_id) throws Exception;
+
+	// 판매 정보 조회
+	public List<SellpdtDTO> sellListbyid(int machine_id) throws Exception;
 		
 }

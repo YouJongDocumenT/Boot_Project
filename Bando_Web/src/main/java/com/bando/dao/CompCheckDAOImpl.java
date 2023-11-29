@@ -77,6 +77,13 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 		return sqlSession.selectList("manageMapper.machinebyid", client_id);
 
 	}	
+	
+	// 판매 정보 조회 sql매핑
+	@Override
+	public List<SellpdtDTO> sellListbyid(int machine_id) throws Exception {
+		return sqlSession.selectList("manageMapper.sellListbyid", machine_id);
+
+	}
 		
 		
 }

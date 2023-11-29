@@ -118,8 +118,8 @@
    
 <!-- 판매 정보 작성 -->
    <insert id="selladd">
-	   INSERT INTO sell_product(machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax )
-	                 VALUES( #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax} )
+	   INSERT INTO sell_product(machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt )
+	                 VALUES( #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
    
    </insert>   
         
@@ -132,7 +132,15 @@
    </select>        
         
         
-        
+<!-- 매칭된 machine_id값의 판매 정보 조회 -->
+   <select id="sellListbyid" resultType="com.bando.dto.SellpdtDTO">
+	   SELECT responsibility, ph_number, sell_date, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt
+	   		FROM sell_product
+	   		WHERE machine_id = #{machine_id}
+   </select> 
+   
+   
+           
 </mapper>
 
 

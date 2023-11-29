@@ -124,6 +124,10 @@ public class CompCheckController {
 		int machine_id = mcdto.get(0).getMachine_id();
 		model.addAttribute("machine_name", machine_name);
 		model.addAttribute("machine_id", machine_id);
+		
+		// machine_id에 매칭된 고객사 판매 정보 호출
+		model.addAttribute("sellListbyid", ccs.sellListbyid(machine_id));
+		logger.info("구매 정보 매칭");
 
 		return "management/clientcompany";
 	}
