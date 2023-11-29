@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class SellpdtDTO {
 	
+	private int client_id;
 	private int machine_id;
 	private String responsibility;
 	private int ph_number;
@@ -19,9 +20,10 @@ public class SellpdtDTO {
 
 	}
 
-	public SellpdtDTO(int machine_id, String responsibility, int ph_number, Date sell_date, int sell_quantity,
-			int sell_length, int sell_weight, int sell_price, int tax, String sell_pdt) {
+	public SellpdtDTO(int client_id, int machine_id, String responsibility, int ph_number, Date sell_date,
+			int sell_quantity, int sell_length, int sell_weight, int sell_price, int tax, String sell_pdt) {
 		super();
+		this.client_id = client_id;
 		this.machine_id = machine_id;
 		this.responsibility = responsibility;
 		this.ph_number = ph_number;
@@ -32,6 +34,14 @@ public class SellpdtDTO {
 		this.sell_price = sell_price;
 		this.tax = tax;
 		this.sell_pdt = sell_pdt;
+	}
+
+	public int getClient_id() {
+		return client_id;
+	}
+
+	public void setClient_id(int client_id) {
+		this.client_id = client_id;
 	}
 
 	public int getMachine_id() {
@@ -116,12 +126,13 @@ public class SellpdtDTO {
 
 	@Override
 	public String toString() {
-		return "SellpdtDTO [machine_id=" + machine_id + ", responsibility=" + responsibility + ", ph_number="
-				+ ph_number + ", sell_date=" + sell_date + ", sell_quantity=" + sell_quantity + ", sell_length="
-				+ sell_length + ", sell_weight=" + sell_weight + ", sell_price=" + sell_price + ", tax=" + tax
-				+ ", sell_pdt=" + sell_pdt + "]";
+		return "SellpdtDTO [client_id=" + client_id + ", machine_id=" + machine_id + ", responsibility="
+				+ responsibility + ", ph_number=" + ph_number + ", sell_date=" + sell_date + ", sell_quantity="
+				+ sell_quantity + ", sell_length=" + sell_length + ", sell_weight=" + sell_weight + ", sell_price="
+				+ sell_price + ", tax=" + tax + ", sell_pdt=" + sell_pdt + "]";
 	}
 
+	
 	
 	
 	

@@ -122,6 +122,12 @@ public class CompCheckController {
 		List<MachineDTO> mcdto = ccs.machinebyid(client_id); // 가정: PurchaseCompDTO 객체 리스트 반환
 		String machine_name = mcdto.get(0).getMachine_name();
 		int machine_id = mcdto.get(0).getMachine_id();
+		
+		System.out.println(mcdto); // machine_id는 개수만큼 잘 가져옴
+		
+		// client_id에 매칭된 기계정보 가져옴
+		model.addAttribute("machinelist", ccs.machinebyid(client_id));
+		
 		model.addAttribute("machine_name", machine_name);
 		model.addAttribute("machine_id", machine_id);
 		

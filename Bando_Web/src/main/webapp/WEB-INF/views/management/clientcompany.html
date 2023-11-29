@@ -405,10 +405,12 @@
                                                         href="#sellAddModal" 
                                                         style="cursor: pointer;"
                                                         th:clientCompany="${clientCompany}"
+                                                        th:client_id="${client_id}"
                                                         th:machine_name="${machine_name}"
                                                         th:machine_id="${machine_id}"
                                                         th:onclick="initSellAdd([
                                                         	this.getAttribute('clientCompany'),
+                                                        	this.getAttribute('client_id'),
                                                         	this.getAttribute('machine_name'),
                                                         	this.getAttribute('machine_id'),
                                                         ])">추가</a>       
@@ -607,13 +609,19 @@
                         <label for="editName" class="col-sm-2 col-form-label">고객사</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="clientCompany" value="" readonly>
+                            <input type="hidden" class="form-control" id="client_id" name="client_id" value="" readonly>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editName" class="col-sm-2 col-form-label">기계</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="machine_name" value="" readonly>
-                            <input type="hidden" class="form-control" id="machine_id" name="machine_id" value="" require>
+                            <select id="machineDropdown" class="form-control">
+								<option value="">고객사를 선택하세요</option>
+								<option th:each="machine : ${machinelist}"
+									th:if="${machine != null}" th:value="${machine.machine_id}"
+									th:text="${machine.machine_name}"></option>
+							</select>
+                            <input type="hidden" class="form-control" id="machine_id" name="machine_id" value="" readonly>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1038,9 +1046,11 @@ function initMachineAdd(duct){
 //판매 <- 기계코드등 설렉터
 function initSellAdd(duct){
 	const clientCompany = duct[0];
-	const machine_name = duct[1];
-	const machine_id = duct[2];
+	const client_id = duct[1];
+	const machine_name = duct[2];
+	const machine_id = duct[3];
 	document.querySelector("#clientCompany").value = clientCompany;
+	document.querySelector("#client_id").value = client_id;
 	document.querySelector("#machine_name").value = machine_name;
 	document.querySelector("#machine_id").value = machine_id;
 }
@@ -1074,6 +1084,31 @@ function initSellAdd(duct){
 	}
 	
 	</script>
+	
+	
+	
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var machineDropdown = document.getElementById('machineDropdown');
+        var machineIdInput = document.getElementById('machine_id');
+
+        machineDropdown.addEventListener('change', function () {
+            var selectedMachine = machineDropdown.options[machineDropdown.selectedIndex];
+            var selectedMachineId = selectedMachine.value;
+            var selectedMachineName = selectedMachine.textContent;
+
+            machineIdInput.value = selectedMachineId; // 선택된 machine_id 값을 input 요소에 설정
+            // 여기서 선택된 machine_name을 필요에 따라 사용할 수 있습니다.
+        });
+    });
+</script>
+
+
+
+
+
+
+
 </body>
 
 </html>

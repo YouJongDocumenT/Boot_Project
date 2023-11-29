@@ -118,8 +118,8 @@
    
 <!-- 판매 정보 작성 -->
    <insert id="selladd">
-	   INSERT INTO sell_product(machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt )
-	                 VALUES( #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
+	   INSERT INTO sell_product(client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt )
+	                 VALUES( #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
    
    </insert>   
         
