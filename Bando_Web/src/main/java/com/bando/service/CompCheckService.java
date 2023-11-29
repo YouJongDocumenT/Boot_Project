@@ -2,8 +2,11 @@ package com.bando.service;
 
 import java.util.List;
 
+import com.bando.dto.ClientDTO;
+import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
+import com.bando.dto.SellpdtDTO;
 import com.bando.dto.manageDTO;
 
 public interface CompCheckService {
@@ -20,5 +23,22 @@ public interface CompCheckService {
 	
 	// 구매 정보 조회
 	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id) throws Exception;
+	
+	
+	
+	// 고객사 추가
+	public void clientadd(ClientDTO clientdto) throws Exception;
+	
+	// 판매정보 추가
+	public void selladd(SellpdtDTO sellpdtdto) throws Exception;
+		
+	// 기계정보 추가
+	public void machineadd(MachineDTO machinedto) throws Exception;
+	
+	// 고객사 정보 조회
+	public List<ClientDTO> clientbyid(Long client_id) throws Exception;
+	
+	// 기계 정보 조회
+	public List<MachineDTO> machinebyid(Long client_id) throws Exception;
 		
 }

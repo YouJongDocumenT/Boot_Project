@@ -2,6 +2,7 @@ package com.bando.dao;
 
 import java.util.List;
 
+import com.bando.dto.ClientDTO;
 import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
@@ -25,4 +26,7 @@ public interface manageDAO {
 	
 	// 구매처 회사정보 조회 dto매핑
 	public List<PurchaseCompDTO> purchasecomplist() throws Exception;
+	
+	// 고객사 회사정보 조회 dto매핑
+	public List<ClientDTO> clientlist() throws Exception;
 }

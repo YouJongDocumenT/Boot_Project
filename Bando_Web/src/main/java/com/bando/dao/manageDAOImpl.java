@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bando.dto.ClientDTO;
 import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
@@ -53,4 +54,20 @@ public class manageDAOImpl implements manageDAO{
 		return sqlSession.selectList("manageMapper.purchasecomplist");
 		
 	}
+	
+	// 고객사 정보 조회 sql매핑
+	@Override
+	public List<ClientDTO> clientlist() throws Exception {
+		return sqlSession.selectList("manageMapper.clientlist");
+
+	}
+	
+	
 }
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bando.dao.manageDAO;
+import com.bando.dto.ClientDTO;
 import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
@@ -51,4 +52,19 @@ public class manageServiceImpl implements manageService{
 	public List<PurchaseCompDTO> purchasecomplist()throws Exception{
 		return managedao.purchasecomplist();
 	}
+	
+	// 구매처 회사 정보 조회
+	@Override
+	public List<ClientDTO> clientlist() throws Exception {
+		return managedao.clientlist();
+	}
+	
+	
+	
+	
 }
+
+
+
+
+

@@ -7,6 +7,7 @@ CREATE TABLE stock_table (
 );
 
 CREATE TABLE clientcomp_table (
+    client_id number NOT NULL,
     client_company VARCHAR2(200) NOT NULL,
     adress VARCHAR2(200),
     comp_number VARCHAR2(200),
@@ -14,9 +15,10 @@ CREATE TABLE clientcomp_table (
 );
 
 CREATE TABLE machine_table (
-    responsibility VARCHAR2(200),
-    client_company VARCHAR2(200) NOT NULL,
-    machine_name VARCHAR2(200)
+    client_id number NOT NULL,
+    responsibility_code number NOT NULL,
+    machine_name VARCHAR2(200),
+    responsibility VARCHAR2(200)
 );
 
 CREATE TABLE purchasecomp_table (
@@ -47,7 +49,7 @@ CREATE TABLE price_table (
 
 CREATE TABLE sell_product (
     responsibility VARCHAR2(200),
-    product_code NUMBER NOT NULL,
+    product_code number NOT NULL,
     ph_number NUMBER,
     sell_date DATE NOT NULL,
     sell_quantity NUMBER,

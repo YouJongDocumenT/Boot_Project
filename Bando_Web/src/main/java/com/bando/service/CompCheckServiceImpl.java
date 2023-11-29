@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bando.dao.CompCheckDAO;
+import com.bando.dto.ClientDTO;
+import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
+import com.bando.dto.SellpdtDTO;
 import com.bando.dto.manageDTO;
 
 @Service
@@ -38,6 +41,36 @@ public class CompCheckServiceImpl implements CompCheckService{
 	@Override
 	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id) throws Exception {
 		return ccd.purchlistbyid(purchase_id);
+	}
+	
+	// 고객사 추가
+	@Override
+	public void clientadd(ClientDTO clientdto) throws Exception {
+		ccd.clientadd(clientdto);
+	}
+	
+	// 판매정보 추가
+	@Override
+	public void selladd(SellpdtDTO sellpdtdto) throws Exception {
+		ccd.selladd(sellpdtdto);
+	}
+	
+	// 기계정보 추가
+	@Override
+	public void machineadd(MachineDTO machinedto) throws Exception {
+		ccd.machineadd(machinedto);
+	}
+	
+	// 고객사 정보 조회
+	@Override
+	public List<ClientDTO> clientbyid(Long client_id) throws Exception {
+		return ccd.clientbyid(client_id);
+	}
+	
+	// 기계 정보 조회
+	@Override
+	public List<MachineDTO> machinebyid(Long client_id) throws Exception {
+		return ccd.machinebyid(client_id);
 	}
 	
 }

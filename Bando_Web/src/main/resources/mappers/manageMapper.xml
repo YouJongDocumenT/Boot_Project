@@ -87,8 +87,62 @@
 	   		FROM purchase_table
 	   		WHERE purchase_id = #{purchase_id}
    </select>
+   
+<!-- 고객사 회사 정보 작성 -->
+   <insert id="clientinsert">
+	   INSERT INTO clientcomp_table(client_id, client_company, address, comp_number, email)
+	                 VALUES( clientcomp_table_SEQ.NEXTVAL, #{client_company}, #{address}, #{comp_number}, #{email} )
+   
+   </insert>
+   
+<!-- 고객사 회사 정보 조회 -->
+   <select id="clientlist" resultType="com.bando.dto.ClientDTO">
+	   SELECT client_id, client_company, address, comp_number, email
+	   		FROM clientcomp_table
+   </select>
      
+<!-- 고객사 기계 정보 작성 -->
+   <insert id="machineadd">
+	   INSERT INTO machine_table(machine_id, client_id, machine_name, machine_memo)
+	                 VALUES( machine_table_SEQ.NEXTVAL, #{client_id}, #{machine_name}, #{machine_memo} )
+   
+   </insert>     
+     
+
+<!-- 매칭된 id값의 고객사 회사 정보 조회 -->
+   <select id="clientbyid" resultType="com.bando.dto.ClientDTO">
+	   SELECT client_id, client_company, address, comp_number, email
+	   		FROM clientcomp_table
+	   		WHERE client_id = #{client_id}
+   </select>
+   
+<!-- 판매 정보 작성 -->
+   <insert id="selladd">
+	   INSERT INTO sell_product(machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax )
+	                 VALUES( #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax} )
+   
+   </insert>   
+        
+        
+<!-- 매칭된 client_id값의 기계 정보 조회 -->
+   <select id="machinebyid" resultType="com.bando.dto.MachineDTO">
+	   SELECT machine_id, client_id, machine_name, machine_memo
+	   		FROM machine_table
+	   		WHERE client_id = #{client_id}
+   </select>        
+        
+        
+        
 </mapper>
+
+
+
+
+
+
+
+
+
 
 
 

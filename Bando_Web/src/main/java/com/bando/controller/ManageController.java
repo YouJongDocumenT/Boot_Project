@@ -37,8 +37,12 @@ public class ManageController {
 		
 		model.addAttribute("productlist", manageservice.productlist());
 		model.addAttribute("saleslist", manageservice.saleslist());
+		
 		// 구매처 모델 호출
 		model.addAttribute("purchasecomplist", manageservice.purchasecomplist());
+		
+		// 고객사 모델 호출
+		model.addAttribute("clientlist", manageservice.clientlist());
 		
 		return "management/IOmanage";
 	}

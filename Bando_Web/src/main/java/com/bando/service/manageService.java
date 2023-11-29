@@ -2,6 +2,7 @@ package com.bando.service;
 
 import java.util.List;
 
+import com.bando.dto.ClientDTO;
 import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.SalesDTO;
 import com.bando.dto.manageDTO;
@@ -25,4 +26,7 @@ public interface manageService {
 	
 	// 구매처 회사 정보 조회
 	public List<PurchaseCompDTO> purchasecomplist() throws Exception;
+	
+	// 구매처 회사 정보 조회
+	public List<ClientDTO> clientlist() throws Exception;
 }
