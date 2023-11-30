@@ -148,7 +148,23 @@
     JOIN sell_product sp ON mt.machine_id = sp.machine_id
     WHERE cc.client_id = #{client_id} AND mt.machine_id = #{machine_id}
 </select>  
+
+
+<!-- 각 구매 관련 테이블의 purchase_id에 매칭된 모든데이터 출력 -->
+   <select id="PurChaseMachingDataList" resultType="com.bando.dto.AllPurchaseDataDTO">
+	   SELECT *
+		FROM purchasecomp_table pc
+		JOIN purchase_table pt ON pc.purchase_id = pt.purchase_id
+   </select>
    
+<!-- 각 구매 관련 테이블의 client_id및 machine_id에 매칭된 모든데이터 출력 -->
+   <select id="SellMachingDataList" resultType="com.bando.dto.AllSellDataDTO">
+	   SELECT cc.client_company, mt.machine_name, sp.*
+		FROM clientcomp_table cc
+		JOIN machine_table mt ON cc.client_id = mt.client_id
+		JOIN sell_product sp ON mt.machine_id = sp.machine_id
+   </select>
+ 
            
 </mapper>
 

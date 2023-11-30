@@ -2,6 +2,8 @@ package com.bando.dao;
 
 import java.util.List;
 
+import com.bando.dto.AllPurchaseDataDTO;
+import com.bando.dto.AllSellDataDTO;
 import com.bando.dto.ClientDTO;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
@@ -45,4 +47,17 @@ public interface CompCheckDAO {
 	// 종합 판매 정보 조회 dto매핑
 	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id) throws Exception;
 
+	// 모든 구매처 정보 조회 dto매핑
+	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception;
+	
+	// 모든 고객사 정보 조회 dto매핑
+	public List<AllSellDataDTO> SellMachingDataList() throws Exception;
+	
+	
+	
 }
+
+
+
+
+

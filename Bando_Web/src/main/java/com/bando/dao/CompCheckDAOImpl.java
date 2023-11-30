@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bando.dto.AllPurchaseDataDTO;
+import com.bando.dto.AllSellDataDTO;
 import com.bando.dto.ClientDTO;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
@@ -96,10 +98,26 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	    parameters.put("machine_id", machineList_id);
 
 	    return sqlSession.selectList("manageMapper.sellAlldata", parameters);
-		
-		
 	}
+	
+	// 총 판매 정보 조회 sql매핑
+	@Override
+	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception {
+		return sqlSession.selectList("manageMapper.PurChaseMachingDataList");
+	}
+	
+	// 총 고객사 정보 조회 sql매핑
+	@Override
+	public List<AllSellDataDTO> SellMachingDataList() throws Exception {
+		return sqlSession.selectList("manageMapper.SellMachingDataList");
+	}
+	
 }
+
+
+
+
+
 
 
 

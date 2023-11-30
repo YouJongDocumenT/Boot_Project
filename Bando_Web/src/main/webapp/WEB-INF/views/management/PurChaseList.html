@@ -433,16 +433,16 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr >
+                                        <tr th:each="item : ${PurChaseMachingDataList}">
                                         	<th style="min-width: 50px">
                                         		<input type="checkbox" name="RowCheck" />
                                         	</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td th:text="${#dates.format(item.purchase_date, 'yyyy-MM-dd')}"></td>
+                                            <td th:text="${item.Product}"></td>
+                                            <td th:text="${item.purchase_company}"></td>
+                                            <td class="money" type="text" th:text="${item.pur_length + '*' + item.pur_weight + '(mm)'}"></td>
+                                            <td class="money" th:text="${item.pur_quantity + 'EA'}"></td>
+                                            <td class="money" th:text="${item.purchase_price + '원'}"></td>
                                         </tr>
                                     </tbody>
                                 </table>

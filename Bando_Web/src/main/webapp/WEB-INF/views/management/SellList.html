@@ -439,19 +439,19 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr >
+                                        <tr th:each="item : ${SellMachingDataList}">
                                         	<th style="min-width: 50px">
                                         		<input type="checkbox" name="RowCheck" />
                                         	</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td th:text="${#dates.format(item.sell_date, 'yyyy-MM-dd')}"></td>
+                                            <td th:text="${item.sell_pdt}"></td>
+                                            <td th:text="${item.client_company}"></td>
+                                            <td th:text="${item.machine_name}"></td>
+                                            <td th:text="${item.responsibility}"></td>
+                                            <td class="money" type="text" th:text="${item.sell_length + '*' + item.sell_weight + '(mm)'}"></td>
+                                            <td class="money" th:text="${item.sell_quantity + 'EA'}"></td>
+                                            <td class="money" th:text="${item.sell_price + '원'}"></td>
+                                            <td class="money" th:text="${item.tax + '원'}"></td>
                                         </tr>
                                     </tbody>
                                 </table>

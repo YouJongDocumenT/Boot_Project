@@ -53,7 +53,7 @@ public class manageServiceImpl implements manageService{
 		return managedao.purchasecomplist();
 	}
 	
-	// 구매처 회사 정보 조회
+	// 고객사 회사 정보 조회
 	@Override
 	public List<ClientDTO> clientlist() throws Exception {
 		return managedao.clientlist();
