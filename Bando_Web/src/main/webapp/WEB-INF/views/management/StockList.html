@@ -67,18 +67,22 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-wrench"></i>
                     <span>구매처</span>
                 </a>
                 <div id="collapseTwo" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">구매처 명:</h6>
+						
 						<div th:each="purch : ${purchasecomplist}">
-							<a class="collapse-item" th:if="${purch != null}" th:text="${purch.purchase_company}"
-								th:href="'/purchasecompany/' + ${purch.purchase_id}"> 거래처명이 없습니다. </a> <span
-								th:unless="${purch != null}"> 거래처 객체가 없습니다. </span>
+							<a class="collapse-item" th:if="${purch != null}"
+								th:text="${purch.purchase_company}"
+								th:href="@{purchasecompany(purchase_id=${purch.purchase_id})}">
+								<span th:unless="${purch != null}">거래처명이 없습니다.</span>
+							</a> <span th:unless="${purch != null}">거래처 객체가 없습니다.</span>
 						</div>
+						
 					</div>
 				</div>
 
@@ -94,14 +98,45 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">고객사 명:</h6>
+                        
+                        <div th:each="client : ${clientlist}">
+							<a class="collapse-item" th:if="${client != null}"
+								th:text="${client.client_company}"
+								th:href="@{clientcompany(client_id=${client.client_id})}">
+								<span th:unless="${client != null}">고객사명이 없습니다.</span>
+							</a> <span th:unless="${client != null}">고객사 객체가 없습니다.</span>
+						</div>
+                    
                     </div>
                 </div>
             </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                	내역 List
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>거래 내역</span>
+                </a>
+                <div id="collapseThree" class="collapse"
+					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">총 내역:</h6>
+						<a class="collapse-item" href="PurChaseList">총 구매 내역</a>
+						<a class="collapse-item" href="SellList">총 판매 내역</a>						
+					</div>
+				</div>
+
+			</li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -120,14 +155,11 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <h6 class="collapse-header">명세서 저장:</h6>
+                        <a class="collapse-item" href="#">PDF로 다운받기</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">명세서 자징</h6>
+                        <a class="collapse-item" href="#">한글로 다운받기</a>
                     </div>
                 </div>
             </li>
@@ -361,15 +393,17 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">재고관리</h1>
 
+                    <!-- ############################################################# 테이블 시작 #################################################################### -->
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 -inline">
-                            <h6 class="m-0 font-weight-bold text-primary">총 내역</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">재고</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                             <div class="d-flex justify-content-end">
-                                                        
+                            			
                                         <a class="btn btn-sm btn-outline-danger" type="button" 
                                         				onclick="deleteValue();" th:text="삭제"></a>
                                     </div>
@@ -379,96 +413,39 @@
                                         	<th style="min-width: 50px">
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
-                                            <th>판매일</th>
+                                            <th>구매일</th>
                                             <th>품명</th>
-                                            <th>고객사</th>
-                                            <th>기계명</th>
-                                            <th>담당자</th>
+                                            <th>구매처</th>                                          
                                             <th>규격(mm)</th>
                                             <th>수량</th>
-                                            <th>단가</th>
-                                            <th>세액</th>
-                                            <th style="min-width: 50px">
-                                            	<a class="btn btn-outline-primary btn-sm" 
-                                            			data-toggle="modal"
-                                                        href="#machineAddModal" 
-                                                        style="cursor: pointer;"
-                                                        th:clientCompany="${clientCompany}"
-                                                        th:client_id="${client_id}"
-                                                        th:onclick="initMachineAdd([
-                                                        	this.getAttribute('clientCompany'),
-                                                        	this.getAttribute('client_id'),
-                                                        ])">기계추가</a>
-                                                        
-                                                <a class="btn btn-outline-primary btn-sm" 
-                                            			data-toggle="modal"
-                                                        href="#sellAddModal" 
-                                                        style="cursor: pointer;"
-                                                        th:clientCompany="${clientCompany}"
-                                                        th:client_id="${client_id}"
-                                                        th:machine_name="${machine_name}"
-                                                        th:machine_id="${machine_id}"
-                                                        th:onclick="initSellAdd([
-                                                        	this.getAttribute('clientCompany'),
-                                                        	this.getAttribute('client_id'),
-                                                        	this.getAttribute('machine_name'),
-                                                        	this.getAttribute('machine_id'),
-                                                        ])">추가</a>       
-                                            </th>
-                                            
+                                            <th></th>                                           
                                         </tr>
                                     </thead>
                                     <tfoot>
-                                        <tr>
+                                        <tr >
 											<th></th>
 											<th></th>
+											<th></th>
+                                            <th></th>
+                                            <th>총 재고수량(EA)</th>
                                             <th></th>
                                             <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>총 구매(건)</th>
-                                            <th></th>
-                                            <th>총 지출(원)</th>
-                                            <th></th>
-											<th>
-                                            	<a class="btn btn-outline-primary btn-sm">저장</a>
-											</th>
                                         </tr>
                                     </tfoot>
-									<tbody>
-
-										<!-- 각 SellAllDataDTO 객체에 대한 속성 출력 -->
-										<tr th:each="sellData : ${sellAllDataList}">
-											<th style="min-width: 50px">
-                                        		<input type="checkbox" name="RowCheck"/>
+                                    <tbody>
+                                        <tr >
+                                        	<th style="min-width: 50px">
+                                        		<input type="checkbox" name="RowCheck" />
                                         	</th>
-											<td
-												th:text="${#dates.format(sellData.sell_date, 'yyyy-MM-dd')}"></td>
-											<td th:text="${sellData.sell_pdt}"></td>
-											<td th:text="${sellData.client_company}"></td>
-											<td th:text="${sellData.machine_name}"></td>
-											<!-- 필요한 속성들을 모두 출력 -->
-											<td th:text="${sellData.responsibility}"></td>
-											<td class="money" th:text="${sellData.sell_length + ' * ' + sellData.sell_weight + ' (mm)'}"></td>
-											<td class="money" th:text="${sellData.sell_quantity + 'EA'}"></td>
-											<td class="money" th:text="${sellData.sell_price + '원'}"></td>
-											<td class="money" th:text="${sellData.tax + '원'}"></td>
-											<td><a class="btn btn-outline-primary btn-sm"
-												data-toggle="modal" href="#ProductEditModal"
-												style="cursor: pointer;"
-												th:onclick="initProductEdit([
-											                        ${sellData.sell_pdt},
-											                        ${sellData.sell_length},
-											                        ${sellData.sell_weight},
-											                        ${sellData.sell_quantity},
-											                        ${sellData.sell_price},
-											                        ${sellData.tax}
-											                    ])">
-													수정 </a></td>
-										</tr>
-
-									</tbody>
-								</table>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -520,255 +497,8 @@
         </div>
     </div>
     
-    
-    
-    
-    
-        <!-- 기계정보 추가모달 -->
-<div class="modal fade" id="machineAddModal" tabindex="-1" role="dialog"
-     aria-labelledby="machineAddLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="machineLabel">기계 추가</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            
-            <!-- 추가 폼태그 -->
-                <form id="machineAddLabelForm">
-                
-                
-                	<div class="mb-3 row">
-                        <label for="editName" class="col-sm-2 col-form-label">고객사</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addclientCompany" name="clientCompany" value="" readonly>
-                            <input type="hidden" class="form-control" id="addclient_id" name="client_id" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editId" class="col-sm-2 col-form-label">기계명</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addProduct" name="machine_name" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">메모</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addReposibility" name="machine_memo" value="" require>
-                        </div>
-                    </div>
-                    
-                    
-                </form>
-               </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" onclick="machineAddList()">추가</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-
-
-
-
-
-
-    
-    
-    <!-- 판매정보 추가모달 -->
-<div class="modal fade" id="sellAddModal" tabindex="-1" role="dialog"
-     aria-labelledby="sellAddLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="sellAddLabel">판매정보 추가</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            
-            <!-- 추가 폼태그 -->
-                <form id="sellAddLabelForm">
-                	<div class="mb-3 row">
-                        <label for="editName" class="col-sm-2 col-form-label">고객사</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="clientCompany" value="" readonly>
-                            <input type="hidden" class="form-control" id="client_id" name="client_id" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editName" class="col-sm-2 col-form-label">기계</label>
-                        <div class="col-sm-10">
-                            <select id="machineDropdown" class="form-control">
-								<option value="">고객사를 선택하세요</option>
-								<option th:each="machine : ${machinelist}"
-									th:if="${machine != null}" th:value="${machine.machine_id}"
-									th:text="${machine.machine_name}"></option>
-							</select>
-                            <input type="hidden" class="form-control" id="machine_id" name="machine_id" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editId" class="col-sm-2 col-form-label">담당자</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addResponsibilityt" name="responsibility" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">번호</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addPh_number" name="ph_number" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">품명</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addsell_pdt" name="sell_pdt" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addSell_quantity" name="sell_quantity" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">길이</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addSell_length" name="sell_length" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addSell_weight" name="sell_weight" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addSell_price" name="sell_price" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">세액</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addTax" name="tax" value="" require>
-                        </div>
-                    </div>
-                </form>
-               </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" onclick="sellAddList()">추가</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    <!-- 재고정보 수정모달 -->
-<div class="modal fade" id="ProductEditModal" tabindex="-1" role="dialog"
-     aria-labelledby="ProductEditModal"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ProductEditLabel">재고 추가</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            
-            <!-- 추가 폼태그 -->
-                <form id="ProductEditLabelForm">
-                    <div class="mb-3 row">
-                        <label for="EditProduct" class="col-sm-2 col-form-label">품명</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="EditProduct" name="Product" value="" require>
-                            <input type="hidden" class="form-control" id="Editpdtnum" name="pdtnum" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editName" class="col-sm-2 col-form-label">구매처</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Editpurchasecomp" name="purchasecomp" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">담당자</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditReposibility" name="reposibility" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPweight" name="pweight" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">가로</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPlength" name="plength" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditQuantity" name="quantity" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">구매가</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPchprice" name="pchprice" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPrice" name="price" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">세액</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditTax" name="tax" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">차액</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditDifference" name="difference" value="" require>
-                        </div>
-                    </div>
-                </form>
-               </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" onclick="EditProductList()">수정</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
     <!-- Bootstrap core JavaScript-->
@@ -855,9 +585,9 @@
 	
 	
 	
-	// 구매정보 추가 로직
-	function PurchAddList(){
-    const formData = $("#PurchAddLabelForm").serialize();
+	// 재고 추가 로직
+	function addProductList(){
+    const formData = $("#ProductAddLabelForm").serialize();
 
     Swal.fire({
         title: '재고 추가',
@@ -874,49 +604,12 @@
 
         if(result.isConfirmed){
             $.ajax({
-                url: "http://localhost:8090/purchasecompany/purchadd",
+                url: "http://localhost:8090/IOmanage/write",
                 type: "POST",
                 data: formData, // 직렬화한 폼 데이터를 전송
                 success: function (data) {
                     if (data.trim()==='YES') {
-                        purchAddSuccess(result);
-                    } else {
-                        Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
-                    }
-                },error: function () {
-                    Swal.fire('에러 발생', '서버 오류가 발생했습니다.', 'error');
-                }
-            });
-        }
-
-    }) // end Swal
-}
-	
-// 기계정보 추가 로직
-	function machineAddList(){
-    const formData = $("#machineAddLabelForm").serialize();
-
-    Swal.fire({
-        title: '기계 추가',
-        text: "정말로 추가 하시겠습니까?",
-        icon: 'info',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '승인',
-        cancelButtonText: '취소',
-        reverseButtons: false, // 버튼 순서 거꾸로
-
-    }).then(result => {
-
-        if(result.isConfirmed){
-            $.ajax({
-                url: "http://localhost:8090//clientcompany/machineadd",
-                type: "POST",
-                data: formData, // 직렬화한 폼 데이터를 전송
-                success: function (data) {
-                    if (data.trim()==='YES') {
-                        purchAddSuccess(result);
+                        AddSuccess(result);
                     } else {
                         Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
                     }
@@ -929,48 +622,7 @@
     }) // end Swal
 }
 
-
-	// 판매정보 추가 로직
-	function sellAddList(){
-    const formData = $("#sellAddLabelForm").serialize();
-
-    Swal.fire({
-        title: '판매 정보 추가',
-        text: "정말로 추가 하시겠습니까?",
-        icon: 'info',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '승인',
-        cancelButtonText: '취소',
-        reverseButtons: false, // 버튼 순서 거꾸로
-
-    }).then(result => {
-
-        if(result.isConfirmed){
-            $.ajax({
-                url: "http://localhost:8090/clientcompany/selladd",
-                type: "POST",
-                data: formData, // 직렬화한 폼 데이터를 전송
-                success: function (data) {
-                    if (data.trim()==='YES') {
-                        purchAddSuccess(result);
-                    } else {
-                        Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
-                    }
-                },error: function () {
-                    Swal.fire('에러 발생', '서버 오류가 발생했습니다.', 'error');
-                }
-            });
-        }
-
-    }) // end Swal
-}
-
-	
-	
-	
-function purchAddSuccess(result){
+function AddSuccess(result){
     Swal.fire(
         'success',
         '추가 완료되었습니다.',
@@ -1027,28 +679,7 @@ Swal.fire(
     location.href = location.href;
 })
 }
-
-// 기계코드
-function initMachineAdd(duct){
-	const clientCompany = duct[0];
-	const client_id = duct[1];
-	document.querySelector("#addclientCompany").value = clientCompany;
-	document.querySelector("#addclient_id").value = client_id;
-}
-
-//판매 <- 기계코드등 설렉터
-function initSellAdd(duct){
-	const clientCompany = duct[0];
-	const client_id = duct[1];
-	const machine_name = duct[2];
-	const machine_id = duct[3];
-	document.querySelector("#clientCompany").value = clientCompany;
-	document.querySelector("#client_id").value = client_id;
-	document.querySelector("#machine_name").value = machine_name;
-	document.querySelector("#machine_id").value = machine_id;
-}
-
-
+	
 	// 수정창 리스트 형식 가져오기
 	function initProductEdit(duct){
 	    const pdtnum = duct[0];
@@ -1076,32 +707,111 @@ function initSellAdd(duct){
 	    document.querySelector("#EditDifference").value = difference;
 	}
 	
-	</script>
 	
 	
 	
-<script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var machineDropdown = document.getElementById('machineDropdown');
-        var machineIdInput = document.getElementById('machine_id');
+	
+	// 구매처 추가 로직
+	function AddPurchase(){
+    const formData = $("#PurchaseAddLabelForm").serialize();
 
-        machineDropdown.addEventListener('change', function () {
-            var selectedMachine = machineDropdown.options[machineDropdown.selectedIndex];
-            var selectedMachineId = selectedMachine.value;
-            var selectedMachineName = selectedMachine.textContent;
+    Swal.fire({
+        title: '구매처 추가',
+        text: "정말로 추가 하시겠습니까?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '승인',
+        cancelButtonText: '취소',
+        reverseButtons: false, // 버튼 순서 거꾸로
 
-            machineIdInput.value = selectedMachineId; // 선택된 machine_id 값을 input 요소에 설정
-            // 여기서 선택된 machine_name을 필요에 따라 사용할 수 있습니다.
+    }).then(result => {
+
+        if(result.isConfirmed){
+            $.ajax({
+                url: "http://localhost:8090/purchasecompany/add",
+                type: "POST",
+                data: formData, // 직렬화한 폼 데이터를 전송
+                success: function (data) {
+                    if (data.trim()==='YES') {
+                        AddSuccesss(result);
+                    } else {
+                        Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
+                    }
+                },error: function () {
+                    Swal.fire('에러 발생', '서버 오류가 발생했습니다.', 'error');
+                }
+            });
+        }
+
+    }) // end Swal
+}
+
+function AddSuccesss(result){
+    Swal.fire(
+        'success',
+        '추가 완료되었습니다.',
+        'success'
+    ).then(function(){
+        location.href = location.href;
+    })
+}
+AddClient
+
+
+//고객사 추가 로직
+function AddClient(){
+const formData = $("#ClientAddLabelForm").serialize();
+
+Swal.fire({
+    title: '구매처 추가',
+    text: "정말로 추가 하시겠습니까?",
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: '승인',
+    cancelButtonText: '취소',
+    reverseButtons: false, // 버튼 순서 거꾸로
+
+}).then(result => {
+
+    if(result.isConfirmed){
+        $.ajax({
+            url: "http://localhost:8090/purchasecompany/addClient",
+            type: "POST",
+            data: formData, // 직렬화한 폼 데이터를 전송
+            success: function (data) {
+                if (data.trim()==='YES') {
+                    AdddSuccesss(result);
+                } else {
+                    Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
+                }
+            },error: function () {
+                Swal.fire('에러 발생', '서버 오류가 발생했습니다.', 'error');
+            }
         });
-    });
-</script>
+    }
+
+}) // end Swal
+}
+
+function AdddSuccesss(result){
+Swal.fire(
+    'success',
+    '추가 완료되었습니다.',
+    'success'
+).then(function(){
+    location.href = location.href;
+})
+}
 
 
 
 
-
-
-
+	
+	</script>
 </body>
 
 </html>
