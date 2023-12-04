@@ -142,7 +142,7 @@
  
 <!-- 매칭된 값의 판매 정보 조회 -->  
 <select id="sellAlldata" parameterType="map" resultType="com.bando.dto.SellAllDataDTO">
-    SELECT cc.client_company, cc.address, mt.machine_name, mt.machine_memo, sp.sell_date, sp.responsibility, sp.sell_quantity, sp.sell_length, sp.sell_weight, sp.sell_price, sp.tax, sp.sell_pdt
+    SELECT cc.client_company, cc.address, cc.comp_number, cc.email, mt.machine_id, mt.machine_name, mt.machine_memo, sp.sell_date, sp.responsibility, sp.ph_number, sp.sell_quantity, sp.sell_length, sp.sell_weight, sp.sell_price, sp.tax, sp.sell_pdt
     FROM clientcomp_table cc
     JOIN machine_table mt ON cc.client_id = mt.client_id
     JOIN sell_product sp ON mt.machine_id = sp.machine_id
@@ -163,6 +163,14 @@
 		FROM clientcomp_table cc
 		JOIN machine_table mt ON cc.client_id = mt.client_id
 		JOIN sell_product sp ON mt.machine_id = sp.machine_id
+   </select>
+   
+   
+<!-- 회사정보 조회 -->
+   <select id="PurchCompInfo" resultType="com.bando.dto.PurchaseCompDTO">
+	   SELECT purchase_id, purchase_company, adress, comp_number, email
+	   		FROM purchasecomp_table
+	   		WHERE purchase_id = #{purchase_id} 
    </select>
  
            

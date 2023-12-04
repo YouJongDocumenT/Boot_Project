@@ -373,7 +373,7 @@
                                         <a class="btn btn-sm btn-outline-danger" type="button" 
                                         				onclick="deleteValue();" th:text="삭제"></a>
                                     </div>
-                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                <table class="table table-hover" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                         	<th style="min-width: 50px">
@@ -438,7 +438,27 @@
 									<tbody>
 
 										<!-- 각 SellAllDataDTO 객체에 대한 속성 출력 -->
-										<tr th:each="sellData : ${sellAllDataList}">
+										<tr th:each="sellData : ${sellAllDataList}" data-toggle="modal" data-target="#ClientCompInfoModal" 
+																	th:client_company="${sellData.client_company}"
+																	th:address="${sellData.address}"
+																	th:comp_number="${sellData.comp_number}"
+																	th:email="${sellData.email}"
+																	th:machine_id="${sellData.machine_id}"
+																	th:machine_name="${sellData.machine_name}"
+																	th:machine_memo="${sellData.machine_memo}"
+																	th:responsibility="${sellData.responsibility}"
+																	th:ph_number="${sellData.ph_number}"
+																	th:onclick="initSell([
+																		this.getAttribute('client_company'),
+																		this.getAttribute('address'),
+																		this.getAttribute('comp_number'),
+																		this.getAttribute('email'),
+																		this.getAttribute('machine_id'),
+																		this.getAttribute('machine_name'),
+																		this.getAttribute('machine_memo'),
+																		this.getAttribute('responsibility'),
+																		this.getAttribute('ph_number')
+											                    ])">
 											<th style="min-width: 50px">
                                         		<input type="checkbox" name="RowCheck"/>
                                         	</th>
@@ -609,7 +629,7 @@
                         <label for="editName" class="col-sm-2 col-form-label">기계</label>
                         <div class="col-sm-10">
                             <select id="machineDropdown" class="form-control">
-								<option value="">고객사를 선택하세요</option>
+								<option value="">설비를 선택하세요</option>
 								<option th:each="machine : ${machinelist}"
 									th:if="${machine != null}" th:value="${machine.machine_id}"
 									th:text="${machine.machine_name}"></option>
@@ -769,6 +789,97 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- 고객사정보 조회모달 -->
+<div class="modal fade" id="ClientCompInfoModal" tabindex="-1" role="dialog"
+     aria-labelledby="ClientCompInfoLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ClientCompInfoLabel">상세보기</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            
+            <!-- 추가 폼태그 -->
+                <form id="ProductEditLabelForm">
+                    <div class="mb-3 row">
+                        <label for="editName" class="col-sm-2 col-form-label">회사명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SellclientCompany" name="purchasecomp" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">주소</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="SellAddress" name="reposibility" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">번호(C)</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="SellCompNumber" name="pweight" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">이메일</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="SellEmail" name="pweight" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">기계명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SellMachineName" name="plength" value="" readonly>
+                            <input type=hidden class="form-control" id="SellMachineId" name="plength" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">메모</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="SellMachineMemo" name="quantity" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">담당자</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="SellReposibility" name="pchprice" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">번호(R)</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="SellPhNumber" name="price" value="" readonly>
+                        </div>
+                    </div>
+                </form>
+               </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" onclick="EditProductList()">수정</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 
     <!-- Bootstrap core JavaScript-->
@@ -1026,6 +1137,30 @@ Swal.fire(
 ).then(function(){
     location.href = location.href;
 })
+}
+
+
+// 고객사 정보 조회
+function initSell(duct){
+	const client_company = duct[0];
+	const address = duct[1];
+	const comp_number = duct[2];
+	const email = duct[3];
+	const machine_id = duct[4];
+	const machine_name = duct[5];
+	const machine_memo = duct[6];
+	const responsibility = duct[7];
+	const ph_number = duct[8];
+	
+	document.querySelector("#SellclientCompany").value = client_company;
+	document.querySelector("#SellAddress").value = address;
+	document.querySelector("#SellCompNumber").value = comp_number;
+	document.querySelector("#SellEmail").value = email;
+	document.querySelector("#SellMachineId").value = machine_id;
+	document.querySelector("#SellMachineName").value = machine_name;
+	document.querySelector("#SellMachineMemo").value = machine_memo;
+	document.querySelector("#SellReposibility").value = responsibility;
+	document.querySelector("#SellPhNumber").value = ph_number;
 }
 
 // 기계코드

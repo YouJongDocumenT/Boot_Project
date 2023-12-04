@@ -56,6 +56,8 @@ public interface CompCheckService {
 	// 종합 판매 정보 조회
 	public List<AllSellDataDTO> SellMachingDataList() throws Exception;
 	
+	// 회사 정보 조회
+	public List<PurchaseCompDTO> PurchCompInfo(Long purchase_id) throws Exception;
 	
 }
 

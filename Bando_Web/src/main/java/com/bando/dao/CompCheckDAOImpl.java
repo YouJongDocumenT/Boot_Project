@@ -112,7 +112,17 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 		return sqlSession.selectList("manageMapper.SellMachingDataList");
 	}
 	
+	// 회사 정보 조회
+	@Override
+	public List<PurchaseCompDTO> PurchCompInfo(Long purchase_id) throws Exception {
+		return sqlSession.selectList("manageMapper.PurchCompInfo", purchase_id);
+	}
+	
+	
 }
+
+
+
 
 
 

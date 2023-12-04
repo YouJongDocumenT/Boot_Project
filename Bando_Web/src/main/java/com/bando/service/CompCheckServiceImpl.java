@@ -99,6 +99,12 @@ public class CompCheckServiceImpl implements CompCheckService{
 	public List<AllSellDataDTO> SellMachingDataList() throws Exception {
 		return ccd.SellMachingDataList();
 	}
+	
+	// 회사 정보 조회
+	@Override
+	public List<PurchaseCompDTO> PurchCompInfo(Long purchase_id) throws Exception {
+		return ccd.PurchCompInfo(purchase_id);
+	}
 
 	
 }

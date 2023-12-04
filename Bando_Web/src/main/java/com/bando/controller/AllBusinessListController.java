@@ -23,6 +23,7 @@ public class AllBusinessListController {
 		
 		// 각 구매 관련 테이블의 purchase_id에 매칭된 모든데이터 출력
 		model.addAttribute("PurChaseMachingDataList", ccs.PurChaseMachingDataList());
+		
 		logger.info("구매처 정보 매칭");
 		
 		return "management/PurChaseList";
@@ -46,4 +47,8 @@ public class AllBusinessListController {
 		
 		return "management/StockList";
 	}
+	
+	
+	
+	
 }

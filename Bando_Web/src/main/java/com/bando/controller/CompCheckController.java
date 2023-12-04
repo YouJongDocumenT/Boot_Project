@@ -58,6 +58,10 @@ public class CompCheckController {
 		model.addAttribute("purchlistbyid", ccs.purchlistbyid(purchase_id));
 		logger.info("구매 정보 매칭");
 		
+		// 회사정보 조회
+		model.addAttribute("PurchCompInfo", ccs.PurchCompInfo(purchase_id));
+		logger.info("회사 정보 출력");
+		
 		return "management/purchasecompany";
 	}
 
@@ -103,6 +107,7 @@ public class CompCheckController {
 	// 고객사 화면단
 	@GetMapping("/clientcompany")
 	public String clientproductlist(@RequestParam("client_id") Long client_id, Model model) throws Exception {
+		
 		logger.info("purchasecompany");
 
 		System.out.println("client_id : "+client_id);
@@ -163,7 +168,7 @@ public class CompCheckController {
 		    }
 		}
 		model.addAttribute("sellAllDataList", sellAllDataList);
-
+		
 		return "management/clientcompany";
 	}
 	
