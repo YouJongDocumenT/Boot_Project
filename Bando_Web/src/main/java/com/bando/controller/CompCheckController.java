@@ -103,6 +103,21 @@ public class CompCheckController {
 		return "YES";
 	}
 	
+	// 구매처 구매 정보 수정
+	@PostMapping("/purchasecompany/update")
+	@ResponseBody
+	public String SellDetailUpdate(PurChasePdtDTO puchpdtdto) throws Exception {
+
+		System.out.println("1123123123");
+		System.out.println("PurChasePdtDTO: " + puchpdtdto);
+		logger.info("updatemanage");
+
+		ccs.SellDetailUpdate(puchpdtdto);
+
+		return "YES";
+
+	}
+	
 	
 	// 고객사 화면단
 	@GetMapping("/clientcompany")
@@ -197,6 +212,8 @@ public class CompCheckController {
 		ccs.machineadd(machinedto);
 		return "YES";
 	}
+	
+	
 		
 
 }

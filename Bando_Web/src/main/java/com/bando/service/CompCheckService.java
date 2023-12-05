@@ -59,6 +59,9 @@ public interface CompCheckService {
 	// 회사 정보 조회
 	public List<PurchaseCompDTO> PurchCompInfo(Long purchase_id) throws Exception;
 	
+	// 구매처 구매정보 수정
+	public void SellDetailUpdate(PurChasePdtDTO puchpdtdto) throws Exception;
+	
 }
 
 

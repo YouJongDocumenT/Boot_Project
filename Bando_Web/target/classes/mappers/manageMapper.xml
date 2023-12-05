@@ -172,6 +172,18 @@
 	   		FROM purchasecomp_table
 	   		WHERE purchase_id = #{purchase_id} 
    </select>
+   
+
+<!-- 구매처 구매정보 수정 -->
+<update id="SellDetailUpdate" parameterType="com.bando.dto.PurChasePdtDTO">
+    UPDATE purchase_table
+    SET Product = #{Product},
+        pur_quantity = #{pur_quantity},
+        purchase_price = #{purchase_price},
+        pur_length = #{pur_length},
+        pur_weight = #{pur_weight}
+    WHERE purchase_id = #{purchase_id}
+</update>
  
            
 </mapper>

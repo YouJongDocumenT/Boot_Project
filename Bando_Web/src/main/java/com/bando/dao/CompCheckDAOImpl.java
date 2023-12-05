@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -118,6 +119,11 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 		return sqlSession.selectList("manageMapper.PurchCompInfo", purchase_id);
 	}
 	
+	// 구매처 구매정보 수정 sql매핑
+	@Override
+	public void SellDetailUpdate(PurChasePdtDTO puchpdtdto) throws Exception {
+	    sqlSession.update("manageMapper.SellDetailUpdate", puchpdtdto);
+	}
 	
 }
 

@@ -106,6 +106,11 @@ public class CompCheckServiceImpl implements CompCheckService{
 		return ccd.PurchCompInfo(purchase_id);
 	}
 
+	// 구매처 구매정보 수정
+	@Override
+	public void SellDetailUpdate(PurChasePdtDTO puchpdtdto) throws Exception {
+		ccd.SellDetailUpdate(puchpdtdto);
+	}
 	
 }
 
