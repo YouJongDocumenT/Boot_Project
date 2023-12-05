@@ -460,7 +460,7 @@
 																		this.getAttribute('ph_number')
 											                    ])">
 											<th style="min-width: 50px">
-                                        		<input type="checkbox" name="RowCheck"/>
+                                        		<input type="checkbox" name="RowCheck" th:value="${sellData.resp_id}"/>
                                         	</th>
 											<td
 												th:text="${#dates.format(sellData.sell_date, 'yyyy-MM-dd')}"></td>
@@ -947,7 +947,7 @@
 	});
 
 	function deleteValue(){
-	    var url = "http://localhost:8090/IOmanage/deletemanage";
+	    var url = "http://localhost:8090/clientcompany/delete";
 	    var valueArr = new Array();
 	    var list = $("input[name='RowCheck']");
 	    for(var i=0; i<list.length; i++){
@@ -970,7 +970,7 @@
 	            success: function(data){
 	                if(data == 1){ // 수정: 비교 연산자 수정
 	                    alert("성공");
-	                    location.replace("/IOmanage/deletemanage")
+	                    location.reload();
 	                }else{
 	                    alert("실패");
 	                }

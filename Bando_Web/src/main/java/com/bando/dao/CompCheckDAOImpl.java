@@ -128,6 +128,17 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 		sqlSession.update("manageMapper.SellAllDataUpdate", sellalldatadto);
 	}
 	
+	// 구매정보 삭제 sql매핑
+	@Override
+	public void PurchaseDataDelete(int purchase_pdtnum) throws Exception {
+		sqlSession.delete("manageMapper.PurchaseDataDelete", purchase_pdtnum);
+	}
+	
+	// 판매정보 삭제 sql매핑
+	@Override
+	public void ClientDataDelete(int resp_id) throws Exception {
+		sqlSession.delete("manageMapper.ClientDataDelete", resp_id);
+	}
 	
 	
 }

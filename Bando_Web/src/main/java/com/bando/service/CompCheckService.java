@@ -65,6 +65,11 @@ public interface CompCheckService {
 	// 고객사 판매정보 수정
 	public void SellAllDataUpdate(SellAllDataDTO sellalldatadto) throws Exception;
 	
+	// 구매정보 삭제
+	public void PurchaseDataDelete(int purchase_pdtnum) throws Exception;
+	
+	// 판매정보 삭제
+	public void ClientDataDelete(int resp_id) throws Exception;
 	
 	
 }

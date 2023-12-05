@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -224,6 +226,53 @@ public class CompCheckController {
 
 		return "YES";
 
+	}
+	
+	
+	// 구매정보 삭제
+	@PostMapping("/purchasecompany/delete")
+	@ResponseBody
+	public String PurchaseDataDelete(HttpServletRequest request) throws Exception {
+		logger.info("delete_purchasecompany");
+
+		String[] ajaxMsg = request.getParameterValues("valueArr");
+		if (ajaxMsg != null) {
+			for (String str : ajaxMsg) {
+				try {
+					int intValue = Integer.parseInt(str.trim());
+					ccs.PurchaseDataDelete(intValue); // 정수값을 사용하여 삭제 메서드 호출
+				} catch (NumberFormatException e) {
+					// 정수로 변환할 수 없는 경우 처리
+					e.printStackTrace(); // 또는 로그 출력
+					// 오류 발생 시 어떻게 처리할지 결정
+				}
+			}
+		}
+
+		return "YES";
+	}
+	
+	// 판매정보 삭제
+	@PostMapping("/clientcompany/delete")
+	@ResponseBody
+	public String ClientDataDelete(HttpServletRequest request) throws Exception {
+		logger.info("delete_purchasecompany");
+
+		String[] ajaxMsg = request.getParameterValues("valueArr");
+		if (ajaxMsg != null) {
+			for (String str : ajaxMsg) {
+				try {
+					int intValue = Integer.parseInt(str.trim());
+					ccs.ClientDataDelete(intValue); // 정수값을 사용하여 삭제 메서드 호출
+				} catch (NumberFormatException e) {
+					// 정수로 변환할 수 없는 경우 처리
+					e.printStackTrace(); // 또는 로그 출력
+					// 오류 발생 시 어떻게 처리할지 결정
+				}
+			}
+		}
+
+		return "YES";
 	}
 		
 

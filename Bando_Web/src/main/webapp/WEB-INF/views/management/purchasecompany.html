@@ -417,7 +417,7 @@
                                     <tbody>
                                         <tr th:each="item : ${purchlistbyid}" data-toggle="modal" data-target="#PurchInfoModal">
                                         	<th style="min-width: 50px">
-                                        		<input type="checkbox" name="RowCheck"/>
+                                        		<input type="checkbox" name="RowCheck" th:value="${item.purchase_pdtnum}"/>
                                         	</th>
                                             <td th:text="${#dates.format(item.purchase_date, 'yyyy-MM-dd')}"></td>
                                             <td th:text="${item.Product}"></td>
@@ -753,7 +753,7 @@
 	});
 
 	function deleteValue(){
-	    var url = "http://localhost:8090/IOmanage/deletemanage";
+	    var url = "http://localhost:8090/purchasecompany/delete";
 	    var valueArr = new Array();
 	    var list = $("input[name='RowCheck']");
 	    for(var i=0; i<list.length; i++){
@@ -774,9 +774,9 @@
 	                valueArr : valueArr
 	            },
 	            success: function(data){
-	                if(data == 1){ // 수정: 비교 연산자 수정
+	                if(data.trim() === 'YES'){ // 수정: 비교 연산자 수정
 	                    alert("성공");
-	                    location.replace("/IOmanage/deletemanage")
+	                    location.reload();
 	                }else{
 	                    alert("실패");
 	                }

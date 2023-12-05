@@ -118,6 +118,18 @@ public class CompCheckServiceImpl implements CompCheckService{
 		ccd.SellAllDataUpdate(sellalldatadto);
 	}
 	
+	// 구매정보 삭제
+	@Override
+	public void PurchaseDataDelete(int purchase_pdtnum) throws Exception {
+		ccd.PurchaseDataDelete(purchase_pdtnum);
+	}
+	
+	// 판매정보 삭제
+	@Override
+	public void ClientDataDelete(int resp_id) throws Exception {
+		ccd.ClientDataDelete(resp_id);
+	}
+	
 	
 }
 

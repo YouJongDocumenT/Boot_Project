@@ -11,13 +11,14 @@ public class PurChasePdtDTO {
 	private int purchase_price;
 	private int pur_length;
 	private int pur_weight;
+	private int purchase_pdtnum;
 	
 	public PurChasePdtDTO() {
 
 	}
 
 	public PurChasePdtDTO(int purchase_id, String product, Date purchase_date, int pur_quantity, int purchase_price,
-			int pur_length, int pur_weight) {
+			int pur_length, int pur_weight, int purchase_pdtnum) {
 		super();
 		this.purchase_id = purchase_id;
 		Product = product;
@@ -26,6 +27,7 @@ public class PurChasePdtDTO {
 		this.purchase_price = purchase_price;
 		this.pur_length = pur_length;
 		this.pur_weight = pur_weight;
+		this.purchase_pdtnum = purchase_pdtnum;
 	}
 
 	public int getPurchase_id() {
@@ -84,12 +86,23 @@ public class PurChasePdtDTO {
 		this.pur_weight = pur_weight;
 	}
 
+	public int getPurchase_pdtnum() {
+		return purchase_pdtnum;
+	}
+
+	public void setPurchase_pdtnum(int purchase_pdtnum) {
+		this.purchase_pdtnum = purchase_pdtnum;
+	}
+
 	@Override
 	public String toString() {
 		return "PurChasePdtDTO [purchase_id=" + purchase_id + ", Product=" + Product + ", purchase_date="
 				+ purchase_date + ", pur_quantity=" + pur_quantity + ", purchase_price=" + purchase_price
-				+ ", pur_length=" + pur_length + ", pur_weight=" + pur_weight + "]";
+				+ ", pur_length=" + pur_length + ", pur_weight=" + pur_weight + ", purchase_pdtnum=" + purchase_pdtnum
+				+ "]";
 	}
+
+	
 
 	
 	

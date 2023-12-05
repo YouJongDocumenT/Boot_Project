@@ -69,9 +69,9 @@
    
 <!-- 구매처 회사 매칭해 거래내역 추가 -->
 <insert id="purchcomptradelist">
-	   INSERT INTO purchase_table (purchase_id, product, pur_quantity, 
+	   INSERT INTO purchase_table (purchase_pdtnum, purchase_id, product, pur_quantity, 
 	   								purchase_price, pur_length, pur_weight)
-	   			VALUES ( #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{pur_length}, #{pur_weight})
+	   			VALUES ( clientcomp_table_SEQ.NEXTVAL, #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{pur_length}, #{pur_weight})
    </insert>
    
 <!-- 구매처 회사 정보 조회 -->
@@ -83,7 +83,7 @@
  
 <!-- 구매 정보 조회 -->
    <select id="purchlistbyid" resultType="com.bando.dto.PurChasePdtDTO">
-	   SELECT Product, purchase_date, pur_quantity, purchase_price, pur_length, pur_weight
+	   SELECT Product, purchase_date, pur_quantity, purchase_price, pur_length, pur_weight, purchase_pdtnum
 	   		FROM purchase_table
 	   		WHERE purchase_id = #{purchase_id}
    </select>
@@ -118,8 +118,8 @@
    
 <!-- 판매 정보 작성 -->
    <insert id="selladd">
-	   INSERT INTO sell_product(client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt )
-	                 VALUES( sell_product_SEQ.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
+	   INSERT INTO sell_product(resp_id, client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt )
+	                 VALUES( resp_id.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
    
    </insert>   
         
@@ -204,7 +204,23 @@
 		    AND resp_id = #{resp_id}
     
 </update>
+
+<!-- 구매정보 삭제 -->
+   <delete id="PurchaseDataDelete" parameterType="int">
+	   DELETE 
+			FROM purchase_table
+		WHERE purchase_pdtnum = #{purchase_pdtnum}  
+	                 
+   </delete>
  
+ 
+<!-- 판매정보 삭제 -->
+   <delete id="ClientDataDelete" parameterType="int">
+	   DELETE 
+			FROM sell_product
+		WHERE resp_id = #{resp_id}  
+	                 
+   </delete>
            
 </mapper>
 
