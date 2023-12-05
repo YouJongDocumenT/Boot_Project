@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class SellAllDataDTO {
 	
+	private String client_id;
 	private String client_company;
     private String address;
     private String comp_number;
@@ -11,6 +12,7 @@ public class SellAllDataDTO {
     private String machine_id;
     private String machine_name;
     private String machine_memo;
+    private String resp_id;
     private String responsibility;
     private String ph_number;
     private Date sell_date;
@@ -25,10 +27,12 @@ public class SellAllDataDTO {
 
 	}
 
-	public SellAllDataDTO(String client_company, String address, String comp_number, String email, String machine_id,
-			String machine_name, String machine_memo, String responsibility, String ph_number, Date sell_date,
-			int sell_quantity, int sell_length, int sell_weight, int sell_price, int tax, String sell_pdt) {
+	public SellAllDataDTO(String client_id, String client_company, String address, String comp_number, String email,
+			String machine_id, String machine_name, String machine_memo, String resp_id, String responsibility,
+			String ph_number, Date sell_date, int sell_quantity, int sell_length, int sell_weight, int sell_price,
+			int tax, String sell_pdt) {
 		super();
+		this.client_id = client_id;
 		this.client_company = client_company;
 		this.address = address;
 		this.comp_number = comp_number;
@@ -36,6 +40,7 @@ public class SellAllDataDTO {
 		this.machine_id = machine_id;
 		this.machine_name = machine_name;
 		this.machine_memo = machine_memo;
+		this.resp_id = resp_id;
 		this.responsibility = responsibility;
 		this.ph_number = ph_number;
 		this.sell_date = sell_date;
@@ -45,6 +50,14 @@ public class SellAllDataDTO {
 		this.sell_price = sell_price;
 		this.tax = tax;
 		this.sell_pdt = sell_pdt;
+	}
+
+	public String getClient_id() {
+		return client_id;
+	}
+
+	public void setClient_id(String client_id) {
+		this.client_id = client_id;
 	}
 
 	public String getClient_company() {
@@ -101,6 +114,14 @@ public class SellAllDataDTO {
 
 	public void setMachine_memo(String machine_memo) {
 		this.machine_memo = machine_memo;
+	}
+
+	public String getResp_id() {
+		return resp_id;
+	}
+
+	public void setResp_id(String resp_id) {
+		this.resp_id = resp_id;
 	}
 
 	public String getResponsibility() {
@@ -177,25 +198,20 @@ public class SellAllDataDTO {
 
 	@Override
 	public String toString() {
-		return "SellAllDataDTO [client_company=" + client_company + ", address=" + address + ", comp_number="
-				+ comp_number + ", email=" + email + ", machine_id=" + machine_id + ", machine_name=" + machine_name
-				+ ", machine_memo=" + machine_memo + ", responsibility=" + responsibility + ", ph_number=" + ph_number
-				+ ", sell_date=" + sell_date + ", sell_quantity=" + sell_quantity + ", sell_length=" + sell_length
-				+ ", sell_weight=" + sell_weight + ", sell_price=" + sell_price + ", tax=" + tax + ", sell_pdt="
-				+ sell_pdt + "]";
+		return "SellAllDataDTO [client_id=" + client_id + ", client_company=" + client_company + ", address=" + address
+				+ ", comp_number=" + comp_number + ", email=" + email + ", machine_id=" + machine_id + ", machine_name="
+				+ machine_name + ", machine_memo=" + machine_memo + ", resp_id=" + resp_id + ", responsibility="
+				+ responsibility + ", ph_number=" + ph_number + ", sell_date=" + sell_date + ", sell_quantity="
+				+ sell_quantity + ", sell_length=" + sell_length + ", sell_weight=" + sell_weight + ", sell_price="
+				+ sell_price + ", tax=" + tax + ", sell_pdt=" + sell_pdt + "]";
 	}
 
 	
-
 	
 
 	
 
-	
-	
 
-	
-    
     
 
 }

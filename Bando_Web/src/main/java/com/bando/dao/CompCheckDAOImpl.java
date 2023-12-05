@@ -3,8 +3,6 @@ package com.bando.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,7 +15,6 @@ import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
-import com.bando.dto.manageDTO;
 
 @Repository
 public class CompCheckDAOImpl implements CompCheckDAO{
@@ -57,7 +54,7 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 		sqlSession.insert("manageMapper.clientinsert", clientdto);
 	}
 	
-	// 판매정보 작성 sql매핑 -------------------------------- 판매정보 sql매칭만하면됨
+	// 판매정보 작성 sql매핑
 	@Override
 	public void selladd(SellpdtDTO sellpdtdto) throws Exception {
 		sqlSession.insert("manageMapper.selladd", sellpdtdto);
@@ -124,6 +121,14 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	public void SellDetailUpdate(PurChasePdtDTO puchpdtdto) throws Exception {
 	    sqlSession.update("manageMapper.SellDetailUpdate", puchpdtdto);
 	}
+	
+	// 고객사 판매정보 수정 sql매핑
+	@Override
+	public void SellAllDataUpdate(SellAllDataDTO sellalldatadto) throws Exception {
+		sqlSession.update("manageMapper.SellAllDataUpdate", sellalldatadto);
+	}
+	
+	
 	
 }
 

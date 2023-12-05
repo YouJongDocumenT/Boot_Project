@@ -108,7 +108,6 @@ public class CompCheckController {
 	@ResponseBody
 	public String SellDetailUpdate(PurChasePdtDTO puchpdtdto) throws Exception {
 
-		System.out.println("1123123123");
 		System.out.println("PurChasePdtDTO: " + puchpdtdto);
 		logger.info("updatemanage");
 
@@ -213,7 +212,19 @@ public class CompCheckController {
 		return "YES";
 	}
 	
-	
+	// 고객사 판매 정보 수정
+	@PostMapping("/clientcompany/update")
+	@ResponseBody
+	public String SellAllDataUpdate(SellAllDataDTO sellalldatadto) throws Exception {
+
+		System.out.println("SellAllDataDTO: " + sellalldatadto);
+		logger.info("updatemanage");
+
+		ccs.SellAllDataUpdate(sellalldatadto);
+
+		return "YES";
+
+	}
 		
 
 }

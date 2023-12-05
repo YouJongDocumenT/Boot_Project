@@ -119,7 +119,7 @@
 <!-- 판매 정보 작성 -->
    <insert id="selladd">
 	   INSERT INTO sell_product(client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt )
-	                 VALUES( #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
+	                 VALUES( sell_product_SEQ.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
    
    </insert>   
         
@@ -142,7 +142,7 @@
  
 <!-- 매칭된 값의 판매 정보 조회 -->  
 <select id="sellAlldata" parameterType="map" resultType="com.bando.dto.SellAllDataDTO">
-    SELECT cc.client_company, cc.address, cc.comp_number, cc.email, mt.machine_id, mt.machine_name, mt.machine_memo, sp.sell_date, sp.responsibility, sp.ph_number, sp.sell_quantity, sp.sell_length, sp.sell_weight, sp.sell_price, sp.tax, sp.sell_pdt
+    SELECT cc.client_company, cc.address, cc.comp_number, cc.email, mt.machine_id, mt.machine_name, mt.machine_memo, sp.sell_date, sp.responsibility, sp.ph_number, sp.sell_quantity, sp.sell_length, sp.sell_weight, sp.sell_price, sp.tax, sp.sell_pdt, sp.resp_id
     FROM clientcomp_table cc
     JOIN machine_table mt ON cc.client_id = mt.client_id
     JOIN sell_product sp ON mt.machine_id = sp.machine_id
@@ -183,6 +183,26 @@
         pur_length = #{pur_length},
         pur_weight = #{pur_weight}
     WHERE purchase_id = #{purchase_id}
+</update>
+
+
+<!-- 고객사 판매정보 수정 -->
+<update id="SellAllDataUpdate" parameterType="com.bando.dto.SellAllDataDTO">
+
+		    UPDATE sell_product
+		SET 
+			responsibility = #{responsibility},
+		    sell_quantity = #{sell_quantity},
+		    sell_length = #{sell_length},
+		    sell_weight = #{sell_weight},
+		    sell_price = #{sell_price},
+		    tax = #{tax},
+		    sell_pdt = #{sell_pdt}
+		WHERE 
+		    client_id = #{client_id}
+		    AND machine_id = #{machine_id}
+		    AND resp_id = #{resp_id}
+    
 </update>
  
            

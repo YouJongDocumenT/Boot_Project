@@ -59,6 +59,10 @@ public interface CompCheckDAO {
 	// 구매처 구매정보 수정 dto매핑
 	public void SellDetailUpdate(PurChasePdtDTO puchpdtdto) throws Exception;
 	
+	// 고객사 판매정보 수정 dto매핑
+	public void SellAllDataUpdate(SellAllDataDTO sellalldatadto) throws Exception;
+
+	
 	
 }
 

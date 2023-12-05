@@ -112,6 +112,13 @@ public class CompCheckServiceImpl implements CompCheckService{
 		ccd.SellDetailUpdate(puchpdtdto);
 	}
 	
+	// 고객사 판매정보 수정
+	@Override
+	public void SellAllDataUpdate(SellAllDataDTO sellalldatadto) throws Exception {
+		ccd.SellAllDataUpdate(sellalldatadto);
+	}
+	
+	
 }
 
 

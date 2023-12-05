@@ -473,16 +473,35 @@
 											<td class="money" th:text="${sellData.sell_quantity + 'EA'}"></td>
 											<td class="money" th:text="${sellData.sell_price + '원'}"></td>
 											<td class="money" th:text="${sellData.tax + '원'}"></td>
+											
 											<td><a class="btn btn-outline-primary btn-sm"
-												data-toggle="modal" href="#ProductEditModal"
+												data-toggle="modal" href="#SellDataModal"
 												style="cursor: pointer;"
-												th:onclick="initProductEdit([
-											                        ${sellData.sell_pdt},
-											                        ${sellData.sell_length},
-											                        ${sellData.sell_weight},
-											                        ${sellData.sell_quantity},
-											                        ${sellData.sell_price},
-											                        ${sellData.tax}
+												th:sell_pdt="${sellData.sell_pdt}"
+												th:client_id="${client_id}"
+												th:client_company="${sellData.client_company}"
+												th:machine_id="${sellData.machine_id}"
+												th:machine_name="${sellData.machine_name}"
+												th:responsibility="${sellData.responsibility}"
+												th:sell_length="${sellData.sell_length}"
+												th:sell_weight="${sellData.sell_weight}"
+												th:sell_quantity="${sellData.sell_quantity}"
+												th:sell_price="${sellData.sell_price}"
+												th:tax="${sellData.tax}"
+												th:resp_id="${sellData.resp_id}"
+												th:onclick="initSellDataEdit([
+																	this.getAttribute('sell_pdt'),
+																	this.getAttribute('client_id'),
+											                        this.getAttribute('client_company'),
+											                        this.getAttribute('machine_id'),
+																	this.getAttribute('machine_name'),
+																	this.getAttribute('responsibility'),
+																	this.getAttribute('sell_length'),
+																	this.getAttribute('sell_weight'),
+																	this.getAttribute('sell_quantity'),
+																	this.getAttribute('sell_price'),
+																	this.getAttribute('tax'),
+																	this.getAttribute('resp_id')
 											                    ])">
 													수정 </a></td>
 										</tr>
@@ -703,14 +722,14 @@
 
 
 
-    <!-- 재고정보 수정모달 -->
-<div class="modal fade" id="ProductEditModal" tabindex="-1" role="dialog"
-     aria-labelledby="ProductEditModal"
+    <!-- 판매정보 수정모달 -->
+<div class="modal fade" id=SellDataModal tabindex="-1" role="dialog"
+     aria-labelledby="SellDataModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ProductEditLabel">재고 추가</h5>
+                <h5 class="modal-title" id="SellDataLabel">판매정보 수정</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -718,73 +737,69 @@
             <div class="modal-body">
             
             <!-- 추가 폼태그 -->
-                <form id="ProductEditLabelForm">
+                <form id="SellDataEditLabelForm">
                     <div class="mb-3 row">
                         <label for="EditProduct" class="col-sm-2 col-form-label">품명</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="EditProduct" name="Product" value="" require>
-                            <input type="hidden" class="form-control" id="Editpdtnum" name="pdtnum" value="" require>
+                            <input type="text" class="form-control" id="Editsell_pdt" name="sell_pdt" value="" readonly>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="editName" class="col-sm-2 col-form-label">구매처</label>
+                        <label for="editName" class="col-sm-2 col-form-label">고객사</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Editpurchasecomp" name="purchasecomp" value="" require>
+                            <input type="text" class="form-control" id="Editclient_company" name="client_company" value="" readonly>
+                            <input type="hidden" class="form-control" id="Editclient_id" name="client_id" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">기계명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Editmachine_name" name="machine_name" value="" readonly>
+                        	<input type="hidden" class="form-control" id="Editmachine_id" name="machine_id" value="" readonly>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">담당자</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditReposibility" name="reposibility" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPweight" name="pweight" value="" require>
+                            <input type="text" class="form-control" id="Editresponsibility" name="responsibility" value="" require>
+                            <input type="hidden" class="form-control" id="Editresp_id" name="resp_id" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">가로</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPlength" name="plength" value="" require>
+                            <input type="text" class="form-control" id="Editsell_length" name="sell_length" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Editsell_weight" name="sell_weight" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditQuantity" name="quantity" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">구매가</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPchprice" name="pchprice" value="" require>
+                            <input type="text" class="form-control" id="Editsell_quantity" name="sell_quantity" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPrice" name="price" value="" require>
+                            <input type="text" class="form-control" id="Editsell_price" name="sell_price" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">세액</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditTax" name="tax" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">차액</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditDifference" name="difference" value="" require>
+                            <input type="text" class="form-control" id="Edittax" name="tax" value="" require>
                         </div>
                     </div>
                 </form>
                </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" onclick="EditProductList()">수정</button>
+                <button type="button" class="btn btn-primary" onclick="EditSellData()">수정</button>
             </div>
         </div>
     </div>
@@ -1092,12 +1107,12 @@ function purchAddSuccess(result){
 }
 
 
-//재고 수정 로직
-function EditProductList(){
-const formData = $("#ProductEditLabelForm").serialize();
+// 판매정보 수정 로직
+function EditSellData(){
+const formData = $("#SellDataEditLabelForm").serialize();
 
 Swal.fire({
-    title: '재고 수정',
+    title: '판매정보 수정',
     text: "정말로 수정 하시겠습니까?",
     icon: 'info',
     showCancelButton: true,
@@ -1111,7 +1126,7 @@ Swal.fire({
 
     if(result.isConfirmed){
         $.ajax({
-            url: "http://localhost:8090/IOmanage/updatemanage",
+            url: "http://localhost:8090/clientcompany/update",
             type: "POST",
             data: formData, // 직렬화한 폼 데이터를 전송
             success: function (data) {
@@ -1210,6 +1225,38 @@ function initSellAdd(duct){
 	    document.querySelector("#EditTax").value = tax;
 	    document.querySelector("#EditDifference").value = difference;
 	}
+	
+	
+	
+	// 판매정보 수정 리스트 가져오기
+	function initSellDataEdit(duct){
+	    const sell_pdt = duct[0];
+	    const client_id = duct[1];
+	    const client_company = duct[2];
+	    const machine_id = duct[3];
+	    const machine_name = duct[4];
+	    const responsibility = duct[5];
+	    const sell_length = duct[6];
+	    const sell_weight = duct[7];
+	    const sell_quantity = duct[8];
+	    const sell_price = duct[9];
+	    const tax = duct[10];
+	    const resp_id = duct[11];
+
+	    document.querySelector("#Editsell_pdt").value = sell_pdt;
+	    document.querySelector("#Editclient_id").value = client_id;
+	    document.querySelector("#Editclient_company").value = client_company;
+	    document.querySelector("#Editmachine_id").value = machine_id;
+	    document.querySelector("#Editmachine_name").value = machine_name;
+	    document.querySelector("#Editresponsibility").value = responsibility;
+	    document.querySelector("#Editsell_length").value = sell_length;
+	    document.querySelector("#Editsell_weight").value = sell_weight;
+	    document.querySelector("#Editsell_quantity").value = sell_quantity;
+	    document.querySelector("#Editsell_price").value = sell_price;
+	    document.querySelector("#Edittax").value = tax;
+	    document.querySelector("#Editresp_id").value = resp_id;
+	}
+	
 	
 	</script>
 	
