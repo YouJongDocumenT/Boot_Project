@@ -69,6 +69,8 @@ public interface CompCheckDAO {
 	public void ClientDataDelete(int resp_id) throws Exception;
 	
 	
+	
+	
 }
 
 

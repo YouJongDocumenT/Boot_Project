@@ -36,6 +36,7 @@ public class ManageController {
 		logger.info("IOmanage");
 		
 		model.addAttribute("productlist", manageservice.productlist());
+		
 		model.addAttribute("saleslist", manageservice.saleslist());
 		
 		// 구매처 모델 호출

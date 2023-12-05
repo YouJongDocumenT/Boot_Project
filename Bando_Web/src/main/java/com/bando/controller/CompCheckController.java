@@ -40,7 +40,21 @@ public class CompCheckController {
 	// 거래처 화면단
 	@GetMapping("/purchasecompany")
 	public String purchaseproductlist(@RequestParam("purchase_id") Long purchase_id, Model model) throws Exception {
+		
 		logger.info("purchasecompany");
+		
+		// 예시로 model 객체가 null이거나 manageservice가 초기화되지 않았을 경우
+		if (model != null && manageservice != null) {
+			// 사이드바 구매처 리스트 호출
+			model.addAttribute("purchasecomplist", manageservice.purchasecomplist());
+			// 사이드바 고객사 리스트 호출
+			model.addAttribute("clientlist", manageservice.clientlist());
+		} else {
+			// 모델이나 manageservice가 null인 경우 예외 처리
+			// 예: 로그 기록 또는 적절한 예외 처리
+			logger.error("Model or ManageService is null");
+			// 예외 상황에 대한 처리 추가
+		}
 		
 		System.out.println(purchase_id);
 		
@@ -125,6 +139,20 @@ public class CompCheckController {
 	public String clientproductlist(@RequestParam("client_id") Long client_id, Model model) throws Exception {
 		
 		logger.info("purchasecompany");
+		
+		// 예시로 model 객체가 null이거나 manageservice가 초기화되지 않았을 경우
+		if (model != null && manageservice != null) {
+			// 사이드바 구매처 리스트 호출
+			model.addAttribute("purchasecomplist", manageservice.purchasecomplist());
+			// 사이드바 고객사 리스트 호출
+			model.addAttribute("clientlist", manageservice.clientlist());
+		} else {
+			// 모델이나 manageservice가 null인 경우 예외 처리
+			// 예: 로그 기록 또는 적절한 예외 처리
+			logger.error("Model or ManageService is null");
+			// 예외 상황에 대한 처리 추가
+		}
+		
 
 		System.out.println("client_id : "+client_id);
 
@@ -184,7 +212,7 @@ public class CompCheckController {
 		    }
 		}
 		model.addAttribute("sellAllDataList", sellAllDataList);
-		
+
 		return "management/clientcompany";
 	}
 	
