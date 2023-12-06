@@ -73,7 +73,7 @@ public class CompCheckController {
 		logger.info("매칭된 이름 리스트로 출력");
 		
 		// purchase_id에 매칭된 구매처 구매 정보 호출
-		System.out.println(cri);
+		System.out.println(purchase_id);
 		model.addAttribute("purchlistbyid", ccs.purchlistbyid(purchase_id, cri));
 		logger.info("구매 정보 매칭");
 		

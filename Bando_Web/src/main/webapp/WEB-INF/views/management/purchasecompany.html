@@ -509,21 +509,20 @@
                                 </table>
 								<div>
 									<ul>
-										<th:block th:if="${pageMaker.prev}">
-											<li><a
-												th:href="@{'list' + ${pageMaker.makeQuery(pageMaker.startPage - 1)}}">이전</a></li>
-										</th:block>
+										<li th:if="${pageMaker.prev}"><a
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${pageMaker.startPage - 1})}">이전</a>
+										</li>
 
-										<th:block
+										<li
 											th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
-											<li><a th:href="@{'list' + ${pageMaker.makeQuery(idx)}}"
-												th:text="${idx}"></a></li>
-										</th:block>
+											<a
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${idx})}"
+											th:text="${idx}"></a>
+										</li>
 
-										<th:block th:if="${pageMaker.next && pageMaker.endPage > 0}">
-											<li><a
-												th:href="@{'list' + ${pageMaker.makeQuery(pageMaker.endPage + 1)}}">다음</a></li>
-										</th:block>
+										<li th:if="${pageMaker.next && pageMaker.endPage > 0}"><a
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${pageMaker.endPage + 1})}">다음</a>
+										</li>
 									</ul>
 								</div>
 							</div>
