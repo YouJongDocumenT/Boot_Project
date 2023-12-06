@@ -52,11 +52,9 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	    return sqlSession.selectList("manageMapper.purchlistbyid", parameters);
 	}
 
-	// 게시물 총 갯수
-	@Override
-	public int listCount() throws Exception{
-		return sqlSession.selectOne("manageMapper.listCount");
-	}
+	
+	
+	
 	
 	
 	
@@ -102,15 +100,17 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	
 	// 총 판매 정보 조회 sql매핑
 	@Override
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id) throws Exception {
+	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, Criteria cri) throws Exception {
 	    Map<String, Object> parameters = new HashMap<String, Object>();
 	    parameters.put("client_id", client_id);
 	    parameters.put("machine_id", machineList_id);
-
+	    parameters.put("rowStart", cri.getRowStart()); // rowStart 매개변수 추가
+	    parameters.put("rowEnd", cri.getRowEnd()); // rowEnd 매개변수 추가
+	    
 	    return sqlSession.selectList("manageMapper.sellAlldata", parameters);
 	}
 	
-	// 총 판매 정보 조회 sql매핑
+	// 매칭된 구매처 데이터 정보 조회 sql매핑
 	@Override
 	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception {
 		return sqlSession.selectList("manageMapper.PurChaseMachingDataList");
@@ -152,6 +152,25 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 		sqlSession.delete("manageMapper.ClientDataDelete", resp_id);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 게시물 총 갯수
+	@Override
+	public int listCount() throws Exception {
+		return sqlSession.selectOne("manageMapper.listCount");
+	}
 	
 	
 	

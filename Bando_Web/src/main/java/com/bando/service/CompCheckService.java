@@ -27,8 +27,8 @@ public interface CompCheckService {
 	
 	// 구매 정보 조회
 	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception;
-	// 게시물 총 갯수
-	public int listCount() throws Exception;
+	
+	
 	
 	
 	// 고객사 추가
@@ -50,7 +50,10 @@ public interface CompCheckService {
 	public List<SellpdtDTO> sellListbyid(Long client_id) throws Exception;
 		
 	// 종합 판매 정보 조회
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id) throws Exception;
+	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, Criteria cri) throws Exception;
+	
+	
+	
 	
 	// 종합 판매 정보 조회
 	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception;
@@ -73,6 +76,17 @@ public interface CompCheckService {
 	// 판매정보 삭제
 	public void ClientDataDelete(int resp_id) throws Exception;
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 게시물 총 갯수
+	public int listCount() throws Exception;
 	
 }
 

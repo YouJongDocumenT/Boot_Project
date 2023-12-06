@@ -148,7 +148,7 @@ public class CompCheckController {
 	
 	// 고객사 화면단
 	@GetMapping("/clientcompany")
-	public String clientproductlist(@RequestParam("client_id") Long client_id, Model model) throws Exception {
+	public String clientproductlist(@RequestParam("client_id") Long client_id, Criteria cri, Model model) throws Exception {
 		
 		logger.info("purchasecompany");
 		
@@ -198,12 +198,13 @@ public class CompCheckController {
 		model.addAttribute("sellListbyid", ccs.sellListbyid(client_id));
 		logger.info("구매 정보 매칭");
 		
+		System.out.println("client_id"+client_id);
 		// client_id에 매칭된 모든 판매 정보 호출
 		Map<Integer, List<SellAllDataDTO>> sellAllDataMap = new HashMap<Integer, List<SellAllDataDTO>>();
 
 		for (int i = 0; i < mcdto.size(); i++) {
 		    int machineList_id = mcdto.get(i).getMachine_id();
-		    List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id);
+		    List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id, cri);
 		    
 		    sellAllDataMap.put(machineList_id, sellAllData);
 		    
@@ -224,6 +225,15 @@ public class CompCheckController {
 		    }
 		}
 		model.addAttribute("sellAllDataList", sellAllDataList);
+		
+
+		// 페이징
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(ccs.listCount());
+
+		model.addAttribute("pageMaker", pageMaker);
+		logger.info("페이징");
 
 		return "management/clientcompany";
 	}

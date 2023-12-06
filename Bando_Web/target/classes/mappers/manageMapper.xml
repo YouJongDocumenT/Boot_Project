@@ -168,11 +168,56 @@
  
 <!-- 매칭된 값의 판매 정보 조회 -->  
 <select id="sellAlldata" parameterType="map" resultType="com.bando.dto.SellAllDataDTO">
-    SELECT cc.client_company, cc.address, cc.comp_number, cc.email, mt.machine_id, mt.machine_name, mt.machine_memo, sp.sell_date, sp.responsibility, sp.ph_number, sp.sell_quantity, sp.sell_length, sp.sell_weight, sp.sell_price, sp.tax, sp.sell_pdt, sp.resp_id
-    FROM clientcomp_table cc
-    JOIN machine_table mt ON cc.client_id = mt.client_id
-    JOIN sell_product sp ON mt.machine_id = sp.machine_id
-    WHERE cc.client_id = #{client_id} AND mt.machine_id = #{machine_id}
+    <!-- SELECT cc.client_company, cc.address, cc.comp_number, cc.email, mt.machine_id, mt.machine_name, mt.machine_memo, sp.sell_date, sp.responsibility, sp.ph_number, sp.sell_quantity, sp.sell_length, sp.sell_weight, sp.sell_price, sp.tax, sp.sell_pdt, sp.resp_id
+	    FROM clientcomp_table cc
+	    JOIN machine_table mt ON cc.client_id = mt.client_id
+	    JOIN sell_product sp ON mt.machine_id = sp.machine_id
+	    WHERE cc.client_id = #{client_id} AND mt.machine_id = #{machine_id} -->
+    
+    
+			    SELECT MP.client_company, 
+			       MP.address, 
+			       MP.comp_number, 
+			       MP.email, 
+			       MP.machine_id, 
+			       MP.machine_name, 
+			       MP.machine_memo, 
+			       MP.sell_date, 
+			       MP.responsibility, 
+			       MP.ph_number, 
+			       MP.sell_quantity, 
+			       MP.sell_length, 
+			       MP.sell_weight, 
+			       MP.sell_price, 
+			       MP.tax, 
+			       MP.sell_pdt, 
+			       MP.resp_id
+			FROM (
+			    SELECT cc.client_company, 
+			           cc.address, 
+			           cc.comp_number, 
+			           cc.email, 
+			           mt.machine_id, 
+			           mt.machine_name, 
+			           mt.machine_memo, 
+			           sp.sell_date, 
+			           sp.responsibility, 
+			           sp.ph_number, 
+			           sp.sell_quantity, 
+			           sp.sell_length, 
+			           sp.sell_weight, 
+			           sp.sell_price, 
+			           sp.tax, 
+			           sp.sell_pdt, 
+			           sp.resp_id,
+			           ROW_NUMBER() OVER(ORDER BY sp.resp_id DESC) AS RNUM
+			    FROM clientcomp_table cc
+			    JOIN machine_table mt ON cc.client_id = mt.client_id
+			    JOIN sell_product sp ON mt.machine_id = sp.machine_id
+			    WHERE cc.client_id = #{client_id} AND mt.machine_id = #{machine_id}
+			) MP
+			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+			ORDER BY MP.resp_id DESC
 </select>  
 
 

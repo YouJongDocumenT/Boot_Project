@@ -561,6 +561,24 @@
 
 									</tbody>
 								</table>
+								<div>
+									<ul>
+										<li th:if="${pageMaker.prev}"><a
+											th:href="@{clientcompany(client_id=${client_id}, page=${pageMaker.startPage - 1})}">이전</a>
+										</li>
+
+										<li
+											th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+											<a
+											th:href="@{clientcompany(client_id=${client_id}, page=${idx})}"
+											th:text="${idx}"></a>
+										</li>
+
+										<li th:if="${pageMaker.next && pageMaker.endPage > 0}"><a
+											th:href="@{clientcompany(client_id=${client_id}, page=${pageMaker.endPage + 1})}">다음</a>
+										</li>
+									</ul>
+								</div>
                             </div>
                         </div>
                     </div>

@@ -46,11 +46,8 @@ public class CompCheckServiceImpl implements CompCheckService{
 	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception {
 		return ccd.purchlistbyid(purchase_id, cri);
 	}
-	// 게시물 총 갯수
-	@Override
-	public int listCount() throws Exception{
-		return ccd.listCount();
-	}
+	
+	
 	
 	
 	
@@ -92,9 +89,12 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	// 종합 판매 정보 조회
 	@Override
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id) throws Exception {
-		return ccd.sellAlldata(client_id, machineList_id);
+	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, Criteria cri) throws Exception {
+		return ccd.sellAlldata(client_id, machineList_id, cri);
 	}
+	
+	
+	
 	
 	// 모든 구매처 정보 조회
 	@Override
@@ -138,6 +138,21 @@ public class CompCheckServiceImpl implements CompCheckService{
 		ccd.ClientDataDelete(resp_id);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 게시물 총 갯수
+	@Override
+	public int listCount() throws Exception {
+		return ccd.listCount();
+	}
 	
 	
 }

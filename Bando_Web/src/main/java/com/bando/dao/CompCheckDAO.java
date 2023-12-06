@@ -49,8 +49,13 @@ public interface CompCheckDAO {
 	public List<SellpdtDTO> sellListbyid(Long client_id) throws Exception;
 	
 	// 종합 판매 정보 조회 dto매핑
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id) throws Exception;
+	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, Criteria cri) throws Exception;
 
+	
+	
+	
+	
+	
 	// 모든 구매처 정보 조회 dto매핑
 	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception;
 	
