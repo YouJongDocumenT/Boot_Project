@@ -82,11 +82,37 @@
    </select>
  
 <!-- 구매 정보 조회 -->
-   <select id="purchlistbyid" resultType="com.bando.dto.PurChasePdtDTO">
-	   SELECT Product, purchase_date, pur_quantity, purchase_price, pur_length, pur_weight, purchase_pdtnum
-	   		FROM purchase_table
-	   		WHERE purchase_id = #{purchase_id}
+   <select id="purchlistbyid" resultType="com.bando.dto.PurChasePdtDTO" parameterType="java.util.Map">
+   		SELECT Product, 
+		       purchase_date, 
+		       pur_quantity, 
+		       purchase_price, 
+		       pur_length, 
+		       pur_weight, 
+		       purchase_pdtnum
+		FROM (
+      			SELECT Product, 
+		               purchase_date, 
+		               pur_quantity, 
+		               purchase_price, 
+		               pur_length, 
+		               pur_weight, 
+		               purchase_pdtnum,
+		               ROW_NUMBER() OVER(ORDER BY purchase_pdtnum DESC) AS RNUM
+		        FROM purchase_table
+		        WHERE purchase_id = #{purchase_id}
+     		  ) MP
+			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+			ORDER BY purchase_pdtnum DESC
    </select>
+<!-- 게시물 총 갯수 -->
+<select id="listCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(purchase_pdtnum)
+		  FROM purchase_table
+		 WHERE purchase_pdtnum > 0
+	]]>
+	</select>
    
 <!-- 고객사 회사 정보 작성 -->
    <insert id="clientinsert">

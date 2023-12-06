@@ -507,7 +507,26 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+								<div>
+									<ul>
+										<th:block th:if="${pageMaker.prev}">
+											<li><a
+												th:href="@{'list' + ${pageMaker.makeQuery(pageMaker.startPage - 1)}}">이전</a></li>
+										</th:block>
+
+										<th:block
+											th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+											<li><a th:href="@{'list' + ${pageMaker.makeQuery(idx)}}"
+												th:text="${idx}"></a></li>
+										</th:block>
+
+										<th:block th:if="${pageMaker.next && pageMaker.endPage > 0}">
+											<li><a
+												th:href="@{'list' + ${pageMaker.makeQuery(pageMaker.endPage + 1)}}">다음</a></li>
+										</th:block>
+									</ul>
+								</div>
+							</div>
                         </div>
                     </div>
 

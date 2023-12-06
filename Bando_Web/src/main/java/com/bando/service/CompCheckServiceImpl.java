@@ -9,6 +9,7 @@ import com.bando.dao.CompCheckDAO;
 import com.bando.dto.AllPurchaseDataDTO;
 import com.bando.dto.AllSellDataDTO;
 import com.bando.dto.ClientDTO;
+import com.bando.dto.Criteria;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
@@ -42,9 +43,16 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	// 구매 정보 조회
 	@Override
-	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id) throws Exception {
-		return ccd.purchlistbyid(purchase_id);
+	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception {
+		return ccd.purchlistbyid(purchase_id, cri);
 	}
+	// 게시물 총 갯수
+	@Override
+	public int listCount() throws Exception{
+		return ccd.listCount();
+	}
+	
+	
 	
 	// 고객사 추가
 	@Override

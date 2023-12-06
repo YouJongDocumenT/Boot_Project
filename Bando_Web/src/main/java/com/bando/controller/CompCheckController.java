@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bando.dto.ClientDTO;
+import com.bando.dto.Criteria;
 import com.bando.dto.MachineDTO;
+import com.bando.dto.PageMaker;
 import com.bando.dto.PruchCommonDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
@@ -39,7 +41,7 @@ public class CompCheckController {
 	
 	// 거래처 화면단
 	@GetMapping("/purchasecompany")
-	public String purchaseproductlist(@RequestParam("purchase_id") Long purchase_id, Model model) throws Exception {
+	public String purchaseproductlist(@RequestParam("purchase_id") Long purchase_id, Criteria cri, Model model) throws Exception {
 		
 		logger.info("purchasecompany");
 		
@@ -68,11 +70,21 @@ public class CompCheckController {
 		List<PurchaseCompDTO> pccdto = ccs.purchcompbyid(purchase_id); // 가정: PurchaseCompDTO 객체 리스트 반환
 		String PurchaseCompany = pccdto.get(0).getPurchase_company();
 		model.addAttribute("PurchaseCompany", PurchaseCompany);
-
+		logger.info("매칭된 이름 리스트로 출력");
 		
 		// purchase_id에 매칭된 구매처 구매 정보 호출
-		model.addAttribute("purchlistbyid", ccs.purchlistbyid(purchase_id));
+		System.out.println(cri);
+		model.addAttribute("purchlistbyid", ccs.purchlistbyid(purchase_id, cri));
 		logger.info("구매 정보 매칭");
+		
+		// 페이징
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(ccs.listCount());
+		
+		model.addAttribute("pageMaker", pageMaker);
+		logger.info("페이징");
+		
 		
 		// 회사정보 조회
 		model.addAttribute("PurchCompInfo", ccs.PurchCompInfo(purchase_id));

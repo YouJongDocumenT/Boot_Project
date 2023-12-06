@@ -5,6 +5,7 @@ import java.util.List;
 import com.bando.dto.AllPurchaseDataDTO;
 import com.bando.dto.AllSellDataDTO;
 import com.bando.dto.ClientDTO;
+import com.bando.dto.Criteria;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
@@ -24,7 +25,10 @@ public interface CompCheckDAO {
 	public List<PurchaseCompDTO> purchcompbyid(Long purchase_id) throws Exception;
 	
 	// 구매 정보 조회 dto매핑
-	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id) throws Exception;
+	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception;
+	// 게시물 총 갯수
+	public int listCount() throws Exception;
+	
 	
 	// 고객사 추가 dto매핑
 	public void clientadd(ClientDTO clientdto) throws Exception;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.bando.dto.AllPurchaseDataDTO;
 import com.bando.dto.AllSellDataDTO;
 import com.bando.dto.ClientDTO;
+import com.bando.dto.Criteria;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
@@ -43,10 +44,21 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	
 	// 구매 정보 조회 sql매핑
 	@Override
-	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id) throws Exception {
-		return sqlSession.selectList("manageMapper.purchlistbyid", purchase_id);
-
+	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+	    parameters.put("purchase_id", purchase_id);
+	    parameters.put("rowStart", cri.getRowStart()); // rowStart 매개변수 추가
+	    parameters.put("rowEnd", cri.getRowEnd()); // rowEnd 매개변수 추가
+	    return sqlSession.selectList("manageMapper.purchlistbyid", parameters);
 	}
+
+	// 게시물 총 갯수
+	@Override
+	public int listCount() throws Exception{
+		return sqlSession.selectOne("manageMapper.listCount");
+	}
+	
+	
 	
 	// 고객사 작성 sql매핑
 	@Override
