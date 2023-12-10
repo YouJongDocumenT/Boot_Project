@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bando.dao.StockDAO;
+import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.StockListDTO;
 
 @Service
@@ -18,6 +19,12 @@ public class StockServiceImpl implements StockService{
 	@Override
 	public List<StockListDTO> StockList() throws Exception {
 		return std.StockList();
+	}
+	
+	// 재고 추가
+	@Override
+	public void AddStock(String PurchaseCompany) throws Exception {
+		std.AddStock(PurchaseCompany);
 	}
 
 }

@@ -28,23 +28,26 @@ import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.manageDTO;
 import com.bando.service.CompCheckService;
+import com.bando.service.StockService;
 import com.bando.service.manageService;
 
 @Controller
 public class CompCheckController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ManageController.class);
-	
+
 	@Autowired
 	CompCheckService ccs;
 	manageService manageservice;
-	
+	StockService sts;
+
 	// 거래처 화면단
 	@GetMapping("/purchasecompany")
-	public String purchaseproductlist(@RequestParam("purchase_id") Long purchase_id, Criteria cri, Model model) throws Exception {
-		
+	public String purchaseproductlist(@RequestParam("purchase_id") Long purchase_id, Criteria cri, Model model)
+			throws Exception {
+
 		logger.info("purchasecompany");
-		
+
 		// 예시로 model 객체가 null이거나 manageservice가 초기화되지 않았을 경우
 		if (model != null && manageservice != null) {
 			// 사이드바 구매처 리스트 호출
@@ -57,39 +60,38 @@ public class CompCheckController {
 			logger.error("Model or ManageService is null");
 			// 예외 상황에 대한 처리 추가
 		}
-		
+
 		System.out.println(purchase_id);
-		
+
 		model.addAttribute("purchase_id", purchase_id);
-		
+
 		// purchase_id에 매칭된 구매처 정보 호출
 		model.addAttribute("purchcompbyid", ccs.purchcompbyid(purchase_id));
 		logger.info("구매처 정보 매칭");
-		
+
 		// purchase_id에 매칭된 구매처 이름만 리스트에서 빼오는 로직
 		List<PurchaseCompDTO> pccdto = ccs.purchcompbyid(purchase_id); // 가정: PurchaseCompDTO 객체 리스트 반환
 		String PurchaseCompany = pccdto.get(0).getPurchase_company();
 		model.addAttribute("PurchaseCompany", PurchaseCompany);
 		logger.info("매칭된 이름 리스트로 출력");
-		
+
 		// purchase_id에 매칭된 구매처 구매 정보 호출
 		System.out.println(purchase_id);
 		model.addAttribute("purchlistbyid", ccs.purchlistbyid(purchase_id, cri));
 		logger.info("구매 정보 매칭");
-		
+
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(ccs.listCount());
-		
+
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("페이징");
-		
-		
+
 		// 회사정보 조회
 		model.addAttribute("PurchCompInfo", ccs.PurchCompInfo(purchase_id));
 		logger.info("회사 정보 출력");
-		
+
 		return "management/purchasecompany";
 	}
 
@@ -104,21 +106,29 @@ public class CompCheckController {
 		ccs.purchasecompadd(purchcompdto);
 		return "YES";
 	}
-	
+
 	// 구매정보 추가
 	@PostMapping("/purchasecompany/purchadd")
 	@ResponseBody
-	public String AddPurch(PurChasePdtDTO purchpdtdto) throws Exception {
+	public String AddPurch(@RequestParam("purchase_id") Long purchase_id, PurChasePdtDTO purchpdtdto) throws Exception {
 
 		System.out.println("PurChasePdtDTO: " + purchpdtdto);
 		logger.info("add");
+		
 		// 구매처 추가
 		ccs.purchpdtadd(purchpdtdto);
+		
+		// purchase_id에 매칭된 구매처 이름만 리스트에서 빼오는 로직
+		List<PurchaseCompDTO> pccdto = ccs.purchcompbyid(purchase_id); // 가정: PurchaseCompDTO 객체 리스트 반환
+		String PurchaseCompany = pccdto.get(0).getPurchase_company();
+		logger.info("매칭된 이름 리스트로 저장");
+		
+		sts.AddStock(PurchaseCompany);
+		logger.info("재고 테이블에 추가");
+		
 		return "YES";
 	}
-	
-	
-	
+
 	// 고객사 추가
 	@PostMapping("/purchasecompany/addClient")
 	@ResponseBody
@@ -130,7 +140,7 @@ public class CompCheckController {
 		ccs.clientadd(clientdto);
 		return "YES";
 	}
-	
+
 	// 구매처 구매 정보 수정
 	@PostMapping("/purchasecompany/update")
 	@ResponseBody
@@ -144,14 +154,14 @@ public class CompCheckController {
 		return "YES";
 
 	}
-	
-	
+
 	// 고객사 화면단
 	@GetMapping("/clientcompany")
-	public String clientproductlist(@RequestParam("client_id") Long client_id, Criteria cri, Model model) throws Exception {
-		
+	public String clientproductlist(@RequestParam("client_id") Long client_id, Criteria cri, Model model)
+			throws Exception {
+
 		logger.info("purchasecompany");
-		
+
 		// 예시로 model 객체가 null이거나 manageservice가 초기화되지 않았을 경우
 		if (model != null && manageservice != null) {
 			// 사이드바 구매처 리스트 호출
@@ -164,12 +174,11 @@ public class CompCheckController {
 			logger.error("Model or ManageService is null");
 			// 예외 상황에 대한 처리 추가
 		}
-		
 
-		System.out.println("client_id : "+client_id);
+		System.out.println("client_id : " + client_id);
 
 		model.addAttribute("client_id", client_id);
-		
+
 		// client_id에 매칭된 고객사 정보 가져옴
 		model.addAttribute("clientbyid", ccs.clientbyid(client_id));
 		logger.info("고객사 정보 매칭");
@@ -178,38 +187,38 @@ public class CompCheckController {
 		List<ClientDTO> pccdto = ccs.clientbyid(client_id); // 가정: PurchaseCompDTO 객체 리스트 반환
 		String clientCompany = pccdto.get(0).getClient_company();
 		model.addAttribute("clientCompany", clientCompany);
-		
+
 		// client_id에 매칭된 기계 정보 가져옴
 		model.addAttribute("machinebyid", ccs.machinebyid(client_id));
 		logger.info("고객사 정보 매칭");
-		
+
 		// client_id에 매칭된 기계 이름과 id값만 리스트에서 빼오는 로직
 		List<MachineDTO> mcdto = ccs.machinebyid(client_id); // 가정: PurchaseCompDTO 객체 리스트 반환
 		String machine_name = mcdto.get(0).getMachine_name();
 		int machine_id = mcdto.get(0).getMachine_id();
-		
+
 		// client_id에 매칭된 기계정보 가져옴
 		model.addAttribute("machinelist", ccs.machinebyid(client_id));
-		
+
 		model.addAttribute("machine_name", machine_name);
 		model.addAttribute("machine_id", machine_id);
-		
+
 		// client_id에 매칭된 고객사 판매 정보 호출
 		model.addAttribute("sellListbyid", ccs.sellListbyid(client_id));
 		logger.info("구매 정보 매칭");
-		
-		System.out.println("client_id"+client_id);
+
+		System.out.println("client_id" + client_id);
 		// client_id에 매칭된 모든 판매 정보 호출
 		Map<Integer, List<SellAllDataDTO>> sellAllDataMap = new HashMap<Integer, List<SellAllDataDTO>>();
 
 		for (int i = 0; i < mcdto.size(); i++) {
-		    int machineList_id = mcdto.get(i).getMachine_id();
-		    List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id, cri);
-		    
-		    sellAllDataMap.put(machineList_id, sellAllData);
-		    
-		    System.out.println("아이디 : " + sellAllData);
-		    logger.info("구매 정보 매칭 : " + i);
+			int machineList_id = mcdto.get(i).getMachine_id();
+			List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id, cri);
+
+			sellAllDataMap.put(machineList_id, sellAllData);
+
+			System.out.println("아이디 : " + sellAllData);
+			logger.info("구매 정보 매칭 : " + i);
 		}
 
 		// SellAllDataDTO 형식의 리스트를 생성합니다.
@@ -217,15 +226,14 @@ public class CompCheckController {
 
 		// sellAllDataMap에서 값들을 가져와서 리스트에 추가합니다.
 		for (Map.Entry<Integer, List<SellAllDataDTO>> entry : sellAllDataMap.entrySet()) {
-		    List<SellAllDataDTO> sellAllData = entry.getValue();
-		    
-		    // sellAllData가 null이 아니고 비어 있지 않은 경우에만 리스트에 추가합니다.
-		    if (sellAllData != null && !sellAllData.isEmpty()) {
-		        sellAllDataList.addAll(sellAllData);
-		    }
+			List<SellAllDataDTO> sellAllData = entry.getValue();
+
+			// sellAllData가 null이 아니고 비어 있지 않은 경우에만 리스트에 추가합니다.
+			if (sellAllData != null && !sellAllData.isEmpty()) {
+				sellAllDataList.addAll(sellAllData);
+			}
 		}
 		model.addAttribute("sellAllDataList", sellAllDataList);
-		
 
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
@@ -237,9 +245,7 @@ public class CompCheckController {
 
 		return "management/clientcompany";
 	}
-	
-	
-	
+
 	// 판매정보 추가
 	@PostMapping("/clientcompany/selladd")
 	@ResponseBody
@@ -251,7 +257,7 @@ public class CompCheckController {
 		ccs.selladd(sellpdtdto);
 		return "YES";
 	}
-		
+
 	// 기계정보 추가
 	@PostMapping("/clientcompany/machineadd")
 	@ResponseBody
@@ -263,7 +269,7 @@ public class CompCheckController {
 		ccs.machineadd(machinedto);
 		return "YES";
 	}
-	
+
 	// 고객사 판매 정보 수정
 	@PostMapping("/clientcompany/update")
 	@ResponseBody
@@ -277,8 +283,7 @@ public class CompCheckController {
 		return "YES";
 
 	}
-	
-	
+
 	// 구매정보 삭제
 	@PostMapping("/purchasecompany/delete")
 	@ResponseBody
@@ -301,7 +306,7 @@ public class CompCheckController {
 
 		return "YES";
 	}
-	
+
 	// 판매정보 삭제
 	@PostMapping("/clientcompany/delete")
 	@ResponseBody
@@ -324,6 +329,5 @@ public class CompCheckController {
 
 		return "YES";
 	}
-		
 
 }

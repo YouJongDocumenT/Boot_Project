@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.StockListDTO;
 
 @Repository
@@ -24,6 +25,12 @@ public class StockDAOImpl implements StockDAO{
 		
 		return sqlSession.selectList("manageMapper.StockList");
 
+	}
+	
+	// 재고 추가 sql매핑
+	@Override
+	public void AddStock(String PurchaseCompany) throws Exception {
+		sqlSession.insert("manageMapper.AddStock", PurchaseCompany);
 	}
 		
 }
