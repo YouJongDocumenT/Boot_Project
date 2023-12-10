@@ -148,10 +148,16 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	
 	
-	// 게시물 총 갯수
+	// 구매처 게시물 총 갯수
 	@Override
 	public int listCount() throws Exception {
 		return ccd.listCount();
+	}
+
+	// 판매처 게시물 총 갯수
+	@Override
+	public int SelllistCount() throws Exception {
+		return ccd.SelllistCount();
 	}
 	
 	

@@ -26,9 +26,6 @@ public interface CompCheckDAO {
 	
 	// 구매 정보 조회 dto매핑
 	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception;
-	// 게시물 총 갯수
-	public int listCount() throws Exception;
-	
 	
 	// 고객사 추가 dto매핑
 	public void clientadd(ClientDTO clientdto) throws Exception;
@@ -78,6 +75,11 @@ public interface CompCheckDAO {
 	public void ClientDataDelete(int resp_id) throws Exception;
 	
 	
+	// 구매처 게시물 총 갯수
+	public int listCount() throws Exception;
+
+	// 판매처 게시물 총 갯수
+	public int SelllistCount() throws Exception;
 	
 	
 }

@@ -218,8 +218,15 @@
 			) MP
 			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 			ORDER BY MP.resp_id DESC
-</select>  
-
+</select> 
+<select id="SelllistCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(resp_id)
+		  FROM sell_product
+		 WHERE resp_id > 0
+	]]>
+	</select>
+	
 
 <!-- 각 구매 관련 테이블의 purchase_id에 매칭된 모든데이터 출력 -->
    <select id="PurChaseMachingDataList" resultType="com.bando.dto.AllPurchaseDataDTO" parameterType="com.bando.dto.Criteria">
@@ -256,10 +263,12 @@
 		    FROM purchasecomp_table pc
 		    JOIN purchase_table pt ON pc.purchase_id = pt.purchase_id
 		) MP
-		WHERE RNUM BETWEEN 1 AND 3
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		ORDER BY MP.purchase_pdtnum DESC
 		
    </select>
+	
+	
    
 <!-- 각 구매 관련 테이블의 client_id및 machine_id에 매칭된 모든데이터 출력 -->
    <select id="SellMachingDataList" resultType="com.bando.dto.AllSellDataDTO" parameterType="com.bando.dto.Criteria">
@@ -302,7 +311,7 @@
             JOIN machine_table mt ON cc.client_id = mt.client_id
             JOIN sell_product sp ON mt.machine_id = sp.machine_id
        ) MP
-         WHERE RNUM BETWEEN 1 AND 3
+         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
          ORDER BY MP.resp_id DESC
    </select>
    

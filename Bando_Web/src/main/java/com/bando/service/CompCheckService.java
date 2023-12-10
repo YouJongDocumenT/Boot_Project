@@ -61,6 +61,7 @@ public interface CompCheckService {
 	// 종합 판매 정보 조회
 	public List<AllSellDataDTO> SellMachingDataList(Criteria cri) throws Exception;
 	
+	
 	// 회사 정보 조회
 	public List<PurchaseCompDTO> PurchCompInfo(Long purchase_id) throws Exception;
 	
@@ -85,8 +86,11 @@ public interface CompCheckService {
 	
 	
 	
-	// 게시물 총 갯수
+	// 구매처 게시물 총 갯수
 	public int listCount() throws Exception;
+
+	// 구매처 게시물 총 갯수
+	public int SelllistCount() throws Exception;
 	
 }
 

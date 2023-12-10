@@ -230,7 +230,7 @@ public class CompCheckController {
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(ccs.listCount());
+		pageMaker.setTotalCount(ccs.SelllistCount());
 
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("페이징");
