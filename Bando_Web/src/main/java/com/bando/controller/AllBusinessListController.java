@@ -60,14 +60,4 @@ public class AllBusinessListController {
 	}
 	
 	
-	// 재고 내역 화면단
-	@GetMapping("StockList")
-	public String AllStockList() throws Exception {
-		
-		return "management/StockList";
-	}
-	
-	
-	
-	
 }

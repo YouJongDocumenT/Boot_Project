@@ -371,7 +371,16 @@
 		WHERE resp_id = #{resp_id}  
 	                 
    </delete>
-
+   
+   
+   
+<!-- 재고테이블 조회 -->
+   <select id="StockList" resultType="com.bando.dto.StockListDTO">
+	   SELECT length, weight, purchase_price, quantity, purchase_company, product, purchase_pdtnum, stock_date
+	   		FROM STOCK_TABLE
+	        ORDER BY PURCHASE_PDTNUM DESC  
+   </select>
+   
      
 </mapper>
 

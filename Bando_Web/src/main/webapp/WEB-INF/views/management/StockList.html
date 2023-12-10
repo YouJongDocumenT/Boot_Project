@@ -435,17 +435,16 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr >
+                                        <tr th:each="item : ${StockList}">
                                         	<th style="min-width: 50px">
-                                        		<input type="checkbox" name="RowCheck" />
+                                        		<input type="checkbox" name="RowCheck" th:value="${item.purchase_pdtnum}"/>
                                         	</th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td th:text="${#dates.format(item.stock_date, 'yyyy-MM-dd')}"></td>
+                                            <td th:text="${item.product}"></td>
+                                            <td th:text="${item.purchase_company}"></td>
+                                            <td class="money" type="text"th:text="${item.length + '*' + item.weight + '(mm)'}"></td>
+                                            <td th:text="${item.quantity}"></td>
+                                            <td th:text="${item.purchase_price}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
