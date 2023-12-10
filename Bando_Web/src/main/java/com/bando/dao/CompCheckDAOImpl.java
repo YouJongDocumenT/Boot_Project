@@ -112,13 +112,13 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	
 	// 매칭된 구매처 데이터 정보 조회 sql매핑
 	@Override
-	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception {
+	public List<AllPurchaseDataDTO> PurChaseMachingDataList(Criteria cri) throws Exception {
 		return sqlSession.selectList("manageMapper.PurChaseMachingDataList");
 	}
 	
 	// 총 고객사 정보 조회 sql매핑
 	@Override
-	public List<AllSellDataDTO> SellMachingDataList() throws Exception {
+	public List<AllSellDataDTO> SellMachingDataList(Criteria cri) throws Exception {
 		return sqlSession.selectList("manageMapper.SellMachingDataList");
 	}
 	

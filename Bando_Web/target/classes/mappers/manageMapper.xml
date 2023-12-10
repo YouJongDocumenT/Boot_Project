@@ -222,14 +222,47 @@
 
 
 <!-- 각 구매 관련 테이블의 purchase_id에 매칭된 모든데이터 출력 -->
-   <select id="PurChaseMachingDataList" resultType="com.bando.dto.AllPurchaseDataDTO">
-	   SELECT *
+   <select id="PurChaseMachingDataList" resultType="com.bando.dto.AllPurchaseDataDTO" parameterType="com.bando.dto.Criteria">
+	   <!-- SELECT *
 		FROM purchasecomp_table pc
-		JOIN purchase_table pt ON pc.purchase_id = pt.purchase_id
+		JOIN purchase_table pt ON pc.purchase_id = pt.purchase_id -->
+				
+				SELECT MP.purchase_id,
+		           MP.purchase_company,
+		           MP.adress,
+		           MP.comp_number,
+		           MP.email,
+		           MP.pur_quantity,
+		           MP.purchase_price,
+		           MP.pur_length,
+		           MP.pur_weight,
+		           MP.product,
+		           MP.purchase_date,
+		           MP.purchase_pdtnum
+		FROM (
+		    SELECT pc.purchase_id,
+		           pc.purchase_company,
+		           pc.adress,
+		           pc.comp_number,
+		           pc.email,
+		           pt.pur_quantity,
+		           pt.purchase_price,
+		           pt.pur_length,
+		           pt.pur_weight,
+		           pt.product,
+		           pt.purchase_date,
+		           pt.purchase_pdtnum,
+		           ROW_NUMBER() OVER (ORDER BY pt.purchase_pdtnum DESC) AS RNUM
+		    FROM purchasecomp_table pc
+		    JOIN purchase_table pt ON pc.purchase_id = pt.purchase_id
+		) MP
+		WHERE RNUM BETWEEN 1 AND 3
+		ORDER BY MP.purchase_pdtnum DESC
+		
    </select>
    
 <!-- 각 구매 관련 테이블의 client_id및 machine_id에 매칭된 모든데이터 출력 -->
-   <select id="SellMachingDataList" resultType="com.bando.dto.AllSellDataDTO">
+   <select id="SellMachingDataList" resultType="com.bando.dto.AllSellDataDTO" parameterType="com.bando.dto.Criteria">
 	   SELECT cc.client_company, mt.machine_name, sp.*
 		FROM clientcomp_table cc
 		JOIN machine_table mt ON cc.client_id = mt.client_id

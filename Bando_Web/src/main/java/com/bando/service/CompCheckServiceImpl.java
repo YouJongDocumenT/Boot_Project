@@ -98,14 +98,14 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	// 모든 구매처 정보 조회
 	@Override
-	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception {
-		return ccd.PurChaseMachingDataList();
+	public List<AllPurchaseDataDTO> PurChaseMachingDataList(Criteria cri) throws Exception {
+		return ccd.PurChaseMachingDataList(cri);
 	}
 	
 	// 모든 고객사 정보 조회
 	@Override
-	public List<AllSellDataDTO> SellMachingDataList() throws Exception {
-		return ccd.SellMachingDataList();
+	public List<AllSellDataDTO> SellMachingDataList(Criteria cri) throws Exception {
+		return ccd.SellMachingDataList(cri);
 	}
 	
 	// 회사 정보 조회

@@ -57,10 +57,10 @@ public interface CompCheckDAO {
 	
 	
 	// 모든 구매처 정보 조회 dto매핑
-	public List<AllPurchaseDataDTO> PurChaseMachingDataList() throws Exception;
+	public List<AllPurchaseDataDTO> PurChaseMachingDataList(Criteria cri) throws Exception;
 	
 	// 모든 고객사 정보 조회 dto매핑
-	public List<AllSellDataDTO> SellMachingDataList() throws Exception;
+	public List<AllSellDataDTO> SellMachingDataList(Criteria cri) throws Exception;
 	
 	// 회사 정보 조회 dto매핑
 	public List<PurchaseCompDTO> PurchCompInfo(Long purchase_id) throws Exception;
