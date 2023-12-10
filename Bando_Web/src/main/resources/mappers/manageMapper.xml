@@ -263,10 +263,47 @@
    
 <!-- 각 구매 관련 테이블의 client_id및 machine_id에 매칭된 모든데이터 출력 -->
    <select id="SellMachingDataList" resultType="com.bando.dto.AllSellDataDTO" parameterType="com.bando.dto.Criteria">
-	   SELECT cc.client_company, mt.machine_name, sp.*
+	   <!-- SELECT cc.client_company, mt.machine_name, sp.*
 		FROM clientcomp_table cc
 		JOIN machine_table mt ON cc.client_id = mt.client_id
-		JOIN sell_product sp ON mt.machine_id = sp.machine_id
+		JOIN sell_product sp ON mt.machine_id = sp.machine_id -->
+
+		SELECT MP.client_company,
+         MP.machine_name,
+         MP.client_id,
+         MP.machine_id,
+         MP.responsibility,
+         MP.ph_number,
+         MP.sell_date,
+         MP.sell_quantity,
+         MP.sell_length,
+         MP.sell_weight,
+         MP.sell_price,
+         MP.tax,
+         MP.sell_pdt,
+         MP.resp_id
+       FROM(
+            SELECT cc.client_company,
+                   cc.client_id,
+                   mt.machine_id,
+                   mt.machine_name,
+                   sp.responsibility,
+                   sp.ph_number,
+                   sp.sell_date,
+                   sp.sell_quantity,
+                   sp.sell_length,
+                   sp.sell_weight,
+                   sp.sell_price,
+                   sp.tax,
+                   sp.sell_pdt,
+                   sp.resp_id,
+                   ROW_NUMBER() OVER(ORDER BY sp.resp_id DESC) AS RNUM
+            FROM clientcomp_table cc
+            JOIN machine_table mt ON cc.client_id = mt.client_id
+            JOIN sell_product sp ON mt.machine_id = sp.machine_id
+       ) MP
+         WHERE RNUM BETWEEN 1 AND 3
+         ORDER BY MP.resp_id DESC
    </select>
    
    

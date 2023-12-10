@@ -474,7 +474,7 @@
                                 <div>
 									<ul>
 										<li th:if="${pageMaker.prev}"><a
-											th:href="@{PurChaseList, page=${pageMaker.startPage - 1})}">이전</a>
+											th:href="@{PurChaseList(page=${pageMaker.startPage - 1})}">이전</a>
 										</li>
 
 										<li
@@ -485,7 +485,7 @@
 										</li>
 
 										<li th:if="${pageMaker.next && pageMaker.endPage > 0}"><a
-											th:href="@{PurChaseList, page=${pageMaker.endPage + 1})}">다음</a>
+											th:href="@{PurChaseList(page=${pageMaker.endPage + 1})}">다음</a>
 										</li>
 									</ul>
 								</div>

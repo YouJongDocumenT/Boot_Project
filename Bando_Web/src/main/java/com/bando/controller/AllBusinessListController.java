@@ -45,7 +45,16 @@ public class AllBusinessListController {
 		
 		// 각 판매 관련 테이블의 client_id및 machine_id에 매칭된 모든데이터 출력
 		model.addAttribute("SellMachingDataList", ccs.SellMachingDataList(cri));
-		logger.info("구매처 정보 매칭");
+		
+		// 페이징
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(ccs.listCount());
+
+		model.addAttribute("pageMaker", pageMaker);
+		logger.info("페이징");
+				
+		logger.info("판매 정보 매칭");
 
 		return "management/SellList";
 	}
