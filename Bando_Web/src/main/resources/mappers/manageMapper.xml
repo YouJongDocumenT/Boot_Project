@@ -381,7 +381,7 @@
    
    <!-- 현재 수정중 -->
 <!-- 최근에 추가된 구매테이블의 값을 재고테이블에 추가 -->
-   <insert id="AddStock">
+   <insert id="AddStock" parameterType="String">
 		INSERT INTO STOCK_TABLE (LENGTH, WEIGHT, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_company)
 			SELECT 
 			    pur_length AS LENGTH,
