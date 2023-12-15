@@ -22,7 +22,6 @@ public class StockManageController {
 	public String StockList(Model model) throws Exception {
 		
 		logger.info("StockList");
-		
 		// 구매한 제품 데이터 모델 등록
 		model.addAttribute("StockList", sts.StockList());
 

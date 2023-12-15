@@ -24,7 +24,9 @@ public class StockServiceImpl implements StockService{
 	// 재고 추가
 	@Override
 	public void AddStock(String PurchaseCompany) throws Exception {
+		System.out.println("asdasdasd");
 		std.AddStock(PurchaseCompany);
 	}
-
+	
+	
 }

@@ -379,9 +379,8 @@
 	        ORDER BY PURCHASE_PDTNUM DESC  
    </select>
    
-   <!-- 현재 수정중 -->
 <!-- 최근에 추가된 구매테이블의 값을 재고테이블에 추가 -->
-   <insert id="AddStock" parameterType="String">
+   <insert id="AddStock">
 		INSERT INTO STOCK_TABLE (LENGTH, WEIGHT, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_company)
 			SELECT 
 			    pur_length AS LENGTH,
@@ -389,14 +388,13 @@
 			    purchase_price AS PURCHASE_PRICE,
 			    pur_quantity AS QUANTITY,
 			    product AS PRODUCT,
-			    purchase_pdtnum AS PURCHASE_PDTNUM,
+			    purchase_pdtnum AS purchase_pdtnum,
 			    #{PurchaseCompany} AS purchase_company
 			FROM purchase_table
 			WHERE purchase_pdtnum = (
 			    SELECT MAX(purchase_pdtnum)
 			    FROM purchase_table
 			)
-   
    </insert>
      
 </mapper>

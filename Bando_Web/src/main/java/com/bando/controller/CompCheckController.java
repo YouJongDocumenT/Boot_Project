@@ -39,7 +39,10 @@ public class CompCheckController {
 	@Autowired
 	CompCheckService ccs;
 	manageService manageservice;
+	
+	@Autowired
 	StockService sts;
+	
 
 	// 거래처 화면단
 	@GetMapping("/purchasecompany")
@@ -121,7 +124,7 @@ public class CompCheckController {
 		// purchase_id에 매칭된 구매처 이름만 리스트에서 빼오는 로직
 		List<PurchaseCompDTO> pccdto = ccs.purchcompbyid(purchase_id); // 가정: PurchaseCompDTO 객체 리스트 반환
 		String PurchaseCompany = pccdto.get(0).getPurchase_company();
-		logger.info("매칭된 이름 리스트로 저장");
+		logger.info("매칭된 이름 리스트로 저장 : " + PurchaseCompany);
 		
 		sts.AddStock(PurchaseCompany);
 		logger.info("재고 테이블에 추가");
