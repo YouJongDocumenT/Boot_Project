@@ -38,6 +38,8 @@ public class CompCheckController {
 
 	@Autowired
 	CompCheckService ccs;
+	
+	@Autowired
 	manageService manageservice;
 	
 	@Autowired
@@ -128,6 +130,12 @@ public class CompCheckController {
 		
 		sts.AddStock(PurchaseCompany);
 		logger.info("재고 테이블에 추가");
+		
+		sts.allpurchcnt();
+		logger.info("구매금액 총액테이블에 추가");
+		
+		sts.stock_price();
+		logger.info("구매-> 재고금액 총액테이블에 추가");
 		
 		return "YES";
 	}
@@ -256,8 +264,13 @@ public class CompCheckController {
 
 		System.out.println("SellpdtDTO: " + sellpdtdto);
 		logger.info("add");
+		
 		// 구매처 추가
 		ccs.selladd(sellpdtdto);
+		
+		sts.allsellcnt();
+		logger.info("판매금액 총액테이블에 추가");
+		
 		return "YES";
 	}
 

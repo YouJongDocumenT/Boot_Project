@@ -137,6 +137,31 @@
 				</div>
 
 			</li>
+			
+			<!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                	재고관리 List
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="true" aria-controls="collapseFour">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>재고관리</span>
+                </a>
+                <div id="collapseFour" class="collapse"
+					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">재고관리:</h6>
+						<a class="collapse-item" href="StockList">재고</a>					
+					</div>
+				</div>
+
+			</li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -418,20 +443,18 @@
                                             <th>구매처</th>
                                             <th>규격(mm)</th>                                          
                                             <th>수량</th>
-                                            <th>재고 금액</th>
-                                            <th></th>                                           
+                                            <th>재고 금액</th>                             
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr >
 											<th></th>
-											<th></th>
-											<th></th>
-											<th></th>
-                                            <th></th>
-                                            <th>총 재고금액(원)</th>
-                                            <th></th>
-                                            <th></th>
+											<th>총 재고금액(원)</th>
+											<th class="money" th:text="${PriceList[0].stock_price}"></th>
+											<th>총 구매액(원)</th>
+                                            <th class="money" th:text="${PriceList[0].allpurchcnt}"></th>
+                                            <th>총 매출(원)</th>
+                                            <th class="money" th:text="${PriceList[0].allsellcnt}"></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -442,9 +465,9 @@
                                             <td th:text="${#dates.format(item.stock_date, 'yyyy-MM-dd')}"></td>
                                             <td th:text="${item.product}"></td>
                                             <td th:text="${item.purchase_company}"></td>
-                                            <td class="money" type="text"th:text="${item.length + '*' + item.weight + '(mm)'}"></td>
-                                            <td th:text="${item.quantity}"></td>
-                                            <td th:text="${item.purchase_price}"></td>
+                                            <td class="money" type="text" th:text="${item.length + '*' + item.weight + '(mm)'}"></td>
+                                            <td class="money" th:text="${item.quantity}"></td>
+                                            <td class="money" th:text="${item.purchase_price}"></td>
                                         </tr>
                                     </tbody>
                                 </table>

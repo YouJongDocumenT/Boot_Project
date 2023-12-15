@@ -75,9 +75,11 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">구매처 명:</h6>
 						<div th:each="purch : ${purchasecomplist}">
-							<a class="collapse-item" th:if="${purch != null}" th:text="${purch.purchase_company}"
-								th:href="'/purchasecompany/' + ${purch.purchase_id}"> 거래처명이 없습니다. </a> <span
-								th:unless="${purch != null}"> 거래처 객체가 없습니다. </span>
+							<a class="collapse-item" th:if="${purch != null}"
+								th:text="${purch.purchase_company}"
+								th:href="@{purchasecompany(purchase_id=${purch.purchase_id})}">
+								<span th:unless="${purch != null}">거래처명이 없습니다.</span>
+							</a> <span th:unless="${purch != null}">거래처 객체가 없습니다.</span>
 						</div>
 					</div>
 				</div>

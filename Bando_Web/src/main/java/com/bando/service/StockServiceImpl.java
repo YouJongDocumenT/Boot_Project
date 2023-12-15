@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bando.dao.StockDAO;
+import com.bando.dto.PriceDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.StockListDTO;
 
@@ -28,5 +29,35 @@ public class StockServiceImpl implements StockService{
 		std.AddStock(PurchaseCompany);
 	}
 	
+	// 구매금액 총액테이블에 추가
+	@Override
+	public void allpurchcnt() throws Exception {
+		std.allpurchcnt();
+	}
+	
+	// 구매-> 재고금액 총액테이블에 추가
+	@Override
+	public void stock_price() throws Exception {
+		std.stock_price();
+	}
+	
+	// 판매금액 총액테이블에 추가
+	@Override
+	public void allsellcnt() throws Exception {
+		std.allsellcnt();
+	}
+	
+	// 총액테이블 호출
+	@Override
+	public List<PriceDTO> PriceList() throws Exception {
+		return std.PriceList();
+	}
 	
 }
+
+
+
+
+
+
+

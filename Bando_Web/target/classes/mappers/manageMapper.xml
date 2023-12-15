@@ -396,6 +396,54 @@
 			    FROM purchase_table
 			)
    </insert>
+   
+   
+   
+   <!-- purchase_table에 purchase_date을 기준으로 최근에 저장됬던 purchase_price값을 price_table의 allpurchcnt와 합하여 price_table의 allpurchcnt에 값을 저장하는 로직을 구현 -->
+   <insert id="allpurchcnt">
+   		UPDATE price_table pt
+		SET pt.allpurchcnt = (
+		    SELECT NVL(pt.allpurchcnt, 0) + NVL(purchase_price, 0) AS total_purch
+		    FROM purchase_table
+		    WHERE purchase_date = (
+		        SELECT MAX(purchase_date) FROM purchase_table
+		    )
+		)
+   </insert>
+   
+   
+   
+   <!-- sell_product에 sell_date을 기준으로 최근에 저장됬던 sell_price값을 price_table의 allsellcnt와 합하여 price_table의 allsellcnt에 값을 저장하는 로직을 구현 -->
+   <insert id="allsellcnt">
+   		UPDATE price_table pt
+		SET pt.allsellcnt = (
+		    SELECT NVL(pt.allsellcnt, 0) + NVL(sell_price, 0) AS total_sell
+		    FROM sell_product
+		    WHERE sell_date = (
+		        SELECT MAX(sell_date) FROM sell_product
+		    )
+		)
+   </insert>
+   
+   
+   
+   <!-- purchase_table에 purchase_date을 기준으로 최근에 저장됬던 purchase_price값을 price_table의 stock_price와 합하여 price_table의 stock_price에 값을 저장하는 로직을 구현 -->
+   <insert id="stock_price">
+   		UPDATE price_table pt
+		SET pt.stock_price = (
+		    SELECT NVL(pt.stock_price, 0) + NVL(purchase_price, 0) AS total_stock_price
+		    FROM purchase_table
+		    WHERE purchase_date = (
+		        SELECT MAX(purchase_date) FROM purchase_table
+		    )
+		)
+   </insert>
+   
+   <!-- 총액테이블 호출 -->
+   <select id="PriceList" resultType="com.bando.dto.PriceDTO">
+	   SELECT stock_price, allpurchcnt, allsellcnt
+	   		FROM price_table
+   </select>
      
 </mapper>
 
