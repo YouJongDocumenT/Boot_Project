@@ -454,13 +454,13 @@
 											<th></th>
 											<th></th>
 											<th>총 세액(원)</th>
-											<th></th>
+											<th class="money" th:text="${PriceList[0].tax} + ' 원'"></th>
 											<th>총수익(세전)</th>
-											<th></th>
+											<th class="money" th:text="${PriceList[0].allsellcnt} + ' 원'"></th>
 											<th>총수익(세후)</th>
-                                            <th></th>
+                                            <th class="money" th:text="(${PriceList[0].allsellcnt}-${PriceList[0].tax}) + ' 원'"></th>
                                             <th>순수익(원)</th>
-                                            <th></th>
+                                            <th>[준비중]</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>

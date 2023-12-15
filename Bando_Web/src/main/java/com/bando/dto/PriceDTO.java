@@ -5,15 +5,17 @@ public class PriceDTO {
 	private int stock_price;
 	private int allpurchcnt;
 	private int allsellcnt;
+	private int tax;
 	
 	public PriceDTO() {
 	}
 
-	public PriceDTO(int stock_price, int allpurchcnt, int allsellcnt) {
+	public PriceDTO(int stock_price, int allpurchcnt, int allsellcnt, int tax) {
 		super();
 		this.stock_price = stock_price;
 		this.allpurchcnt = allpurchcnt;
 		this.allsellcnt = allsellcnt;
+		this.tax = tax;
 	}
 
 	public int getStock_price() {
@@ -40,11 +42,21 @@ public class PriceDTO {
 		this.allsellcnt = allsellcnt;
 	}
 
+	public int getTax() {
+		return tax;
+	}
+
+	public void setTax(int tax) {
+		this.tax = tax;
+	}
+
 	@Override
 	public String toString() {
 		return "PriceDTO [stock_price=" + stock_price + ", allpurchcnt=" + allpurchcnt + ", allsellcnt=" + allsellcnt
-				+ "]";
+				+ ", tax=" + tax + "]";
 	}
+
+	
 	
 	
 	

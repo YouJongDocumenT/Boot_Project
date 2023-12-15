@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bando.dto.PriceDTO;
 import com.bando.dto.PurChasePdtDTO;
+import com.bando.dto.SellpdtDTO;
 import com.bando.dto.StockListDTO;
 
 @Repository
@@ -56,11 +57,31 @@ public class StockDAOImpl implements StockDAO{
 	@Override
 	public List<PriceDTO> PriceList() throws Exception {
 		return sqlSession.selectList("manageMapper.PriceList");
-
+	}
+	
+	// 세금 총액테이블에 추가
+	@Override
+	public List<PriceDTO> tax() throws Exception {
+		return sqlSession.selectList("manageMapper.tax");
+	}
+	
+	// purchase_id에 매칭된 총액 출력
+	@Override
+	public List<PurChasePdtDTO> PurChasePdtById(Long purchase_id) throws Exception {
+		return sqlSession.selectList("manageMapper.PurChasePdtById", purchase_id);
+	}
+	
+	// client_id에 매칭된 총액 출력
+	@Override
+	public List<SellpdtDTO> SellPdtById(Long client_id) throws Exception {
+		return sqlSession.selectList("manageMapper.SellPdtById", client_id);
 	}
 	
 	
 }
+
+
+
 
 
 

@@ -96,6 +96,9 @@ public class CompCheckController {
 		// 회사정보 조회
 		model.addAttribute("PurchCompInfo", ccs.PurchCompInfo(purchase_id));
 		logger.info("회사 정보 출력");
+		
+		model.addAttribute("PurChasePdtById", sts.PurChasePdtById(purchase_id));
+		logger.info("purchase_id에 매칭된 총액 출력");
 
 		return "management/purchasecompany";
 	}
@@ -253,6 +256,9 @@ public class CompCheckController {
 
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("페이징");
+		
+		model.addAttribute("SellPdtById", sts.SellPdtById(client_id));
+		logger.info("client_id에 매칭된 총액 출력");
 
 		return "management/clientcompany";
 	}
@@ -270,6 +276,9 @@ public class CompCheckController {
 		
 		sts.allsellcnt();
 		logger.info("판매금액 총액테이블에 추가");
+		
+		sts.tax();
+		logger.info("세금 총액테이블에 추가");
 		
 		return "YES";
 	}

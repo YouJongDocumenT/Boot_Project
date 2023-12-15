@@ -439,10 +439,52 @@
 		)
    </insert>
    
+   
+   <!-- sell_product에 sell_date을 기준으로 최근에 저장됬던 tax값을 price_table의 tax와 합하여 price_table의 tax에 값을 저장하는 로직을 구현 -->
+   <insert id="tax">
+   		UPDATE price_table pt
+		SET pt.tax = (
+		    SELECT NVL(pt.tax, 0) + NVL(tax, 0) AS total_tax
+		    FROM sell_product
+		    WHERE sell_date = (
+		        SELECT MAX(sell_date) FROM sell_product
+		    )
+		)
+   </insert>
+   
+   
    <!-- 총액테이블 호출 -->
    <select id="PriceList" resultType="com.bando.dto.PriceDTO">
-	   SELECT stock_price, allpurchcnt, allsellcnt
+	   SELECT stock_price, allpurchcnt, allsellcnt, tax
 	   		FROM price_table
+   </select>
+   
+   
+   <!-- sell_product테이블의 client_id값에 매칭된 sell_price값들의 합과 tax값들의 합을 각각 조회하는 로직 구현 -->
+   <select id="SellPdtById" resultType="com.bando.dto.SellpdtDTO">
+	   SELECT 
+		    client_id,
+		    SUM(sell_price) AS total_sell_price,
+		    SUM(tax) AS total_tax
+		FROM 
+		    sell_product
+		WHERE 
+		    client_id = #{client_id}
+		GROUP BY 
+		    client_id
+   </select>
+   
+    <!-- purchase_table테이블의 purchase_id값에 매칭된 purchase_price값들의 합을 조회하는 로직 구현   -->
+   <select id="PurChasePdtById" resultType="com.bando.dto.PurChasePdtDTO">
+	   SELECT 
+		    purchase_id,
+		    SUM(purchase_price) AS total_purchase_price
+		FROM 
+		    purchase_table
+		WHERE 
+		    purchase_id = #{purchase_id}
+		GROUP BY 
+		    purchase_id
    </select>
      
 </mapper>

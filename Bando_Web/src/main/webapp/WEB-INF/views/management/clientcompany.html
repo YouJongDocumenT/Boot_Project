@@ -74,11 +74,15 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">구매처 명:</h6>
+						
 						<div th:each="purch : ${purchasecomplist}">
-							<a class="collapse-item" th:if="${purch != null}" th:text="${purch.purchase_company}"
-								th:href="'/purchasecompany/' + ${purch.purchase_id}"> 거래처명이 없습니다. </a> <span
-								th:unless="${purch != null}"> 거래처 객체가 없습니다. </span>
+							<a class="collapse-item" th:if="${purch != null}"
+								th:text="${purch.purchase_company}"
+								th:href="@{purchasecompany(purchase_id=${purch.purchase_id})}">
+								<span th:unless="${purch != null}">거래처명이 없습니다.</span>
+							</a> <span th:unless="${purch != null}">거래처 객체가 없습니다.</span>
 						</div>
+						
 					</div>
 				</div>
 
@@ -479,10 +483,10 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th>총 구매(건)</th>
-                                            <th></th>
-                                            <th>총 지출(원)</th>
-                                            <th></th>
+                                            <th>총 세액(원)</th>
+                                            <th class="money" th:text="${SellPdtById[0].total_tax} + ' 원'"></th>
+                                            <th>총 판매(원)</th>
+                                            <th class="money" th:text="${SellPdtById[0].total_sell_price} + ' 원'"></th>
 											<th>
                                             	<a class="btn btn-outline-primary btn-sm">저장</a>
 											</th>
@@ -766,13 +770,13 @@
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addSell_price" name="sell_price" value="" require>
+                            <input type="text" class="form-control" id="addSell_price" name="sell_price" value="" oninput="calculatePercentage()" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">세액</label>
+                        <label for="editEmail" class="col-sm-2 col-form-label">세액(10%)</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addTax" name="tax" value="" require>
+                            <input type="text" class="form-control" id="addTax" name="tax" value="" readonly>
                         </div>
                     </div>
                 </form>
@@ -1327,6 +1331,21 @@ function initSellAdd(duct){
 	    document.querySelector("#Edittax").value = tax;
 	    document.querySelector("#Editresp_id").value = resp_id;
 	}
+	
+	// 세액 계산
+	function calculatePercentage() {
+	      // 첫 번째 input에서 값을 가져옵니다.
+	      const firstInputValue = document.getElementById('addSell_price').value;
+
+	      // 두 번째 input에 10% 값을 출력합니다.
+	      const secondInput = document.getElementById('addTax');
+	      if (!isNaN(firstInputValue)) {
+	        const tenPercent = Math.round(parseFloat(firstInputValue) * 0.1); // 입력값의 10%를 계산합니다.
+	        secondInput.value = tenPercent; // 두 번째 input에 결과를 출력합니다.
+	      } else {
+	        secondInput.value = ''; // 유효하지 않은 입력일 경우 두 번째 input을 비웁니다.
+	      }
+	    }
 	
 	
 	</script>

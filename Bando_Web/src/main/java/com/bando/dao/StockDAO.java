@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bando.dto.PriceDTO;
 import com.bando.dto.PurChasePdtDTO;
+import com.bando.dto.SellpdtDTO;
 import com.bando.dto.StockListDTO;
 
 public interface StockDAO {
@@ -26,6 +27,15 @@ public interface StockDAO {
 	// 총액테이블 호출
 	public List<PriceDTO> PriceList() throws Exception;
 	
+	// 세금 총액테이블에 추가
+	public List<PriceDTO> tax() throws Exception;
+	
+	// purchase_id에 매칭된 총액 출력
+	public List<PurChasePdtDTO> PurChasePdtById(Long purchase_id) throws Exception;
+		
+	// client_id에 매칭된 총액 출력
+	public List<SellpdtDTO> SellPdtById(Long client_id) throws Exception;
+		
 }
 
 

@@ -450,11 +450,11 @@
                                         <tr >
 											<th></th>
 											<th>총 재고금액(원)</th>
-											<th class="money" th:text="${PriceList[0].stock_price}"></th>
+											<th class="money" th:text="${PriceList[0].stock_price} + ' 원'"></th>
 											<th>총 구매액(원)</th>
-                                            <th class="money" th:text="${PriceList[0].allpurchcnt}"></th>
+                                            <th class="money" th:text="${PriceList[0].allpurchcnt} + ' 원'"></th>
                                             <th>총 매출(원)</th>
-                                            <th class="money" th:text="${PriceList[0].allsellcnt}"></th>
+                                            <th class="money" th:text="${PriceList[0].allsellcnt} + ' 원'"></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -467,7 +467,7 @@
                                             <td th:text="${item.purchase_company}"></td>
                                             <td class="money" type="text" th:text="${item.length + '*' + item.weight + '(mm)'}"></td>
                                             <td class="money" th:text="${item.quantity}"></td>
-                                            <td class="money" th:text="${item.purchase_price}"></td>
+                                            <td class="money" th:text="${item.purchase_price} + '원'"></td>
                                         </tr>
                                     </tbody>
                                 </table>
