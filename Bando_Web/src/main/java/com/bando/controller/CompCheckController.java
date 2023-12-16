@@ -97,9 +97,18 @@ public class CompCheckController {
 		model.addAttribute("PurchCompInfo", ccs.PurchCompInfo(purchase_id));
 		logger.info("회사 정보 출력");
 		
-		model.addAttribute("PurChasePdtById", sts.PurChasePdtById(purchase_id));
-		logger.info("purchase_id에 매칭된 총액 출력");
-
+		List<PurChasePdtDTO> state = sts.PurChasePdtById(purchase_id);
+		
+		if(state == null || state.isEmpty()) {
+		    int Total_purchase_price = 0;
+		    model.addAttribute("PurChasePdtById", Total_purchase_price);
+		    logger.info("PurChasePdtById : null or empty");
+		} else {
+		    int Total_purchase_price = state.get(0).getTotal_purchase_price();
+		    model.addAttribute("PurChasePdtById", Total_purchase_price);
+		    logger.info("purchase_id에 매칭된 총액 출력");
+		}
+		
 		return "management/purchasecompany";
 	}
 
@@ -257,8 +266,23 @@ public class CompCheckController {
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("페이징");
 		
-		model.addAttribute("SellPdtById", sts.SellPdtById(client_id));
-		logger.info("client_id에 매칭된 총액 출력");
+		List<SellpdtDTO> SellState = sts.SellPdtById(client_id);
+		
+		if(SellState == null || SellState.isEmpty()) {
+		    int Total_sell_price = 0;
+		    int Total_tax = 0;
+		    model.addAttribute("Total_sell_price", Total_sell_price);
+		    model.addAttribute("Total_tax", Total_tax);
+		    
+		    logger.info("SellPdtById : null or empty");
+		} else {
+		    int Total_sell_price = SellState.get(0).getTotal_sell_price();
+		    int Total_tax = SellState.get(0).getTotal_tax();
+		    model.addAttribute("Total_sell_price", Total_sell_price);
+		    model.addAttribute("Total_tax", Total_tax);
+		    
+		    logger.info("client_id에 매칭된 총액 출력");
+		}
 
 		return "management/clientcompany";
 	}
