@@ -26,6 +26,7 @@ import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
 import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
+import com.bando.dto.StockListDTO;
 import com.bando.dto.manageDTO;
 import com.bando.service.CompCheckService;
 import com.bando.service.StockService;
@@ -283,6 +284,10 @@ public class CompCheckController {
 		    
 		    logger.info("client_id에 매칭된 총액 출력");
 		}
+		
+		// 재고테이블에 재고 가져
+		List<StockListDTO> StockProductlist = sts.StockList();
+		model.addAttribute("StockProductlist", StockProductlist);
 
 		return "management/clientcompany";
 	}

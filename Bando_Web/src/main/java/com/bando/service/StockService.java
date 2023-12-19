@@ -36,7 +36,6 @@ public interface StockService {
 	// client_id에 매칭된 총액 출력
 	public List<SellpdtDTO> SellPdtById(Long client_id) throws Exception;
 	
-	
 }
 
 
