@@ -285,7 +285,7 @@ public class CompCheckController {
 		    logger.info("client_id에 매칭된 총액 출력");
 		}
 		
-		// 재고테이블에 재고 가져
+		// 재고테이블에 재고 가져옴
 		List<StockListDTO> StockProductlist = sts.StockList();
 		model.addAttribute("StockProductlist", StockProductlist);
 
@@ -300,7 +300,7 @@ public class CompCheckController {
 		System.out.println("SellpdtDTO: " + sellpdtdto);
 		logger.info("add");
 		
-		// 구매처 추가
+		// 판매정보 추가
 		ccs.selladd(sellpdtdto);
 		
 		sts.allsellcnt();

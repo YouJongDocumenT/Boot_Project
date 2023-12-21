@@ -443,11 +443,13 @@
                                             <th>구매처</th>
                                             <th>규격(mm)</th>                                          
                                             <th>수량</th>
+                                            <th>개당 금액</th>
                                             <th>재고 금액</th>                             
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr >
+											<th></th>
 											<th></th>
 											<th>총 재고금액(원)</th>
 											<th class="money" th:text="${PriceList[0].stock_price} + ' 원'"></th>
@@ -467,6 +469,7 @@
                                             <td th:text="${item.purchase_company}"></td>
                                             <td class="money" type="text" th:text="${item.length + '*' + item.weight + '(mm)'}"></td>
                                             <td class="money" th:text="${item.quantity}"></td>
+                                            <td class="money" th:text="${item.purchase_EAprice} + ' 원'"></td>
                                             <td class="money" th:text="${item.purchase_price} + ' 원'"></td>
                                         </tr>
                                     </tbody>

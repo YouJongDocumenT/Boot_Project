@@ -13,13 +13,14 @@ public class PurChasePdtDTO {
 	private int pur_weight;
 	private int purchase_pdtnum;
 	private int total_purchase_price;
+	private int purchase_EAprice;
 	
 	public PurChasePdtDTO() {
 
 	}
 
 	public PurChasePdtDTO(int purchase_id, String product, Date purchase_date, int pur_quantity, int purchase_price,
-			int pur_length, int pur_weight, int purchase_pdtnum, int total_purchase_price) {
+			int pur_length, int pur_weight, int purchase_pdtnum, int total_purchase_price, int purchase_EAprice) {
 		super();
 		this.purchase_id = purchase_id;
 		Product = product;
@@ -30,6 +31,7 @@ public class PurChasePdtDTO {
 		this.pur_weight = pur_weight;
 		this.purchase_pdtnum = purchase_pdtnum;
 		this.total_purchase_price = total_purchase_price;
+		this.purchase_EAprice = purchase_EAprice;
 	}
 
 	public int getPurchase_id() {
@@ -104,13 +106,23 @@ public class PurChasePdtDTO {
 		this.total_purchase_price = total_purchase_price;
 	}
 
+	public int getPurchase_EAprice() {
+		return purchase_EAprice;
+	}
+
+	public void setPurchase_EAprice(int purchase_EAprice) {
+		this.purchase_EAprice = purchase_EAprice;
+	}
+
 	@Override
 	public String toString() {
 		return "PurChasePdtDTO [purchase_id=" + purchase_id + ", Product=" + Product + ", purchase_date="
 				+ purchase_date + ", pur_quantity=" + pur_quantity + ", purchase_price=" + purchase_price
 				+ ", pur_length=" + pur_length + ", pur_weight=" + pur_weight + ", purchase_pdtnum=" + purchase_pdtnum
-				+ ", total_purchase_price=" + total_purchase_price + "]";
+				+ ", total_purchase_price=" + total_purchase_price + ", purchase_EAprice=" + purchase_EAprice + "]";
 	}
+
+	
 
 	
 

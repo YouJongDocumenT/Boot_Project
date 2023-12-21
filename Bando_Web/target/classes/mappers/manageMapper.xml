@@ -70,8 +70,8 @@
 <!-- 구매처 회사 매칭해 거래내역 추가 -->
 <insert id="purchcomptradelist">
 	   INSERT INTO purchase_table (purchase_pdtnum, purchase_id, product, pur_quantity, 
-	   								purchase_price, pur_length, pur_weight)
-	   			VALUES ( clientcomp_table_SEQ.NEXTVAL, #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{pur_length}, #{pur_weight})
+	   								purchase_price, pur_length, pur_weight, purchase_EAprice)
+	   			VALUES ( clientcomp_table_SEQ.NEXTVAL, #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{pur_length}, #{pur_weight}, #{purchase_EAprice})
    </insert>
    
 <!-- 구매처 회사 정보 조회 -->
@@ -89,7 +89,8 @@
 		       purchase_price, 
 		       pur_length, 
 		       pur_weight, 
-		       purchase_pdtnum
+		       purchase_pdtnum,
+		       purchase_EAprice
 		FROM (
       			SELECT Product, 
 		               purchase_date, 
@@ -98,6 +99,7 @@
 		               pur_length, 
 		               pur_weight, 
 		               purchase_pdtnum,
+		               purchase_EAprice,
 		               ROW_NUMBER() OVER(ORDER BY purchase_pdtnum DESC) AS RNUM
 		        FROM purchase_table
 		        WHERE purchase_id = #{purchase_id}
@@ -374,14 +376,14 @@
 
 <!-- 재고테이블 조회 -->
    <select id="StockList" resultType="com.bando.dto.StockListDTO">
-	   SELECT length, weight, purchase_price, quantity, purchase_company, product, purchase_pdtnum, stock_date
+	   SELECT length, weight, purchase_price, quantity, purchase_company, product, purchase_pdtnum, stock_date, purchase_EAprice
 	   		FROM STOCK_TABLE
 	        ORDER BY PURCHASE_PDTNUM DESC  
    </select>
    
 <!-- 최근에 추가된 구매테이블의 값을 재고테이블에 추가 -->
    <insert id="AddStock">
-		INSERT INTO STOCK_TABLE (LENGTH, WEIGHT, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_company)
+		INSERT INTO STOCK_TABLE (LENGTH, WEIGHT, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_EAprice, purchase_company)
 			SELECT 
 			    pur_length AS LENGTH,
 			    pur_weight AS WEIGHT,
@@ -389,6 +391,7 @@
 			    pur_quantity AS QUANTITY,
 			    product AS PRODUCT,
 			    purchase_pdtnum AS purchase_pdtnum,
+			    purchase_EAprice AS purchase_EAprice,
 			    #{PurchaseCompany} AS purchase_company
 			FROM purchase_table
 			WHERE purchase_pdtnum = (

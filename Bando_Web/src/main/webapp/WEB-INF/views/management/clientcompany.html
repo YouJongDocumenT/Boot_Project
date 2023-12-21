@@ -27,6 +27,16 @@
     <script defer src="/resources/modal/js/adminList.js"></script>
     <script defer src="/resources/modal/js/adminModal.js"></script>
 
+	<style type="text/css">
+		.product-name {
+    font-size: 100%;
+}
+
+.quantity {
+    font-size: 30%;
+}
+	</style>
+
 </head>
 
 <body id="page-top">
@@ -728,7 +738,7 @@
 									th:if="${machine != null}" th:value="${machine.machine_id}"
 									th:text="${machine.machine_name}"></option>
 							</select>
-                            <input type="hidden" class="form-control" id="machine_id" name="machine_id" value="" readonly>
+                            <input type="text" class="form-control" id="machine_id" name="machine_id" value="" readonly>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -745,19 +755,22 @@
                     </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">품명</label>
-                        
-                        
-                        <div class="col-sm-10">
-                            <select id="sellPdtDropdown" class="form-control">
-								<option value="">제품을 선택하세요</option>
-								<option th:each="Stock_Product : ${StockProductlist}"
-									th:if="${Stock_Product != null}" th:value="${Stock_Product.purchase_pdtnum}"
-									th:text="${Stock_Product.product}"></option>
-							</select>
-                            <input type="text" class="form-control" id="addsell_pdt" name="sell_pdt" value="" readonly>
-                        </div>
-                        
-                    </div>
+
+
+							<div class="col-sm-10">
+							    <select id="sellPdtDropdown" class="form-control" onchange="updateValues()">
+							        <option value="">제품을 선택하세요</option>
+							        <!-- th:each와 th:if로 인해 StockProductlist에서 가져온 데이터를 반복하여 option 태그로 생성 -->
+							        <option th:each="Stock_Product : ${StockProductlist}" th:if="${Stock_Product != null}"
+							            th:value="${Stock_Product.purchase_pdtnum}"
+							            th:text="${Stock_Product.product + ' - 잔여수량 : ' + Stock_Product.quantity}">
+							        </option>
+							    </select>
+							    <input type="text" class="form-control" id="selectedProduct" name="sell_pdt">
+							    <input type="text" class="form-control" id="selectedPurchasePdtnum" name="purchase_pdtnum">
+							</div>
+							<!-- @@@@@@@@@@@@@ -->
+						</div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
                         <div class="col-sm-10">
@@ -1377,6 +1390,27 @@ function initSellAdd(duct){
     });
 </script>
 
+<script>
+function updateValues() {
+    var dropdown = document.getElementById("sellPdtDropdown");
+    var selectedOption = dropdown.options[dropdown.selectedIndex];
+
+    if (selectedOption) {
+        var selectedText = selectedOption.textContent.trim();
+        var purchasePdtnum = selectedOption.value;
+
+        // '-'를 기준으로 제품명과 잔여수량을 분리
+        var parts = selectedText.split(' - ');
+        var productName = parts[0].trim();
+        
+        // 가져온 정보를 각각의 입력 필드에 출력
+        document.getElementById("selectedProduct").value = productName;
+        document.getElementById("selectedPurchasePdtnum").value = purchasePdtnum;
+    } else {
+        console.error("선택된 옵션이 없습니다.");
+    }
+}
+</script>
 
 
 
