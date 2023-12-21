@@ -454,6 +454,7 @@
                                             <th>규격(mm)</th>
                                             <th>수량</th>
                                             <th>단가</th>
+                                            <th>총 판매액</th>
                                             <th>세액</th>
                                             <th style="min-width: 50px">
                                             	<a class="btn btn-outline-primary btn-sm" 
@@ -489,6 +490,7 @@
                                         <tr>
 											<th></th>
 											<th></th>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
@@ -538,6 +540,7 @@
 											<td th:text="${sellData.responsibility}"></td>
 											<td class="money" th:text="${sellData.sell_length + ' * ' + sellData.sell_weight + ' (mm)'}"></td>
 											<td class="money" th:text="${sellData.sell_quantity + 'EA'}"></td>
+											<td class="money" th:text="${sellData.sell_EAprice + '원'}"></td>
 											<td class="money" th:text="${sellData.sell_price + '원'}"></td>
 											<td class="money" th:text="${sellData.tax + '원'}"></td>
 											
@@ -738,7 +741,7 @@
 									th:if="${machine != null}" th:value="${machine.machine_id}"
 									th:text="${machine.machine_name}"></option>
 							</select>
-                            <input type="text" class="form-control" id="machine_id" name="machine_id" value="" readonly>
+                            <input type="hidden" class="form-control" id="machine_id" name="machine_id" value="" readonly>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -766,8 +769,8 @@
 							            th:text="${Stock_Product.product + ' - 잔여수량 : ' + Stock_Product.quantity}">
 							        </option>
 							    </select>
-							    <input type="text" class="form-control" id="selectedProduct" name="sell_pdt">
-							    <input type="text" class="form-control" id="selectedPurchasePdtnum" name="purchase_pdtnum">
+							    <input type="hidden" class="form-control" id="selectedProduct" name="sell_pdt">
+							    <input type="hidden" class="form-control" id="selectedPurchasePdtnum" name="purchase_pdtnum">
 							</div>
 							<!-- @@@@@@@@@@@@@ -->
 						</div>
@@ -775,6 +778,12 @@
                         <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addSell_quantity" name="sell_quantity" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addSell_EAprice" name="sell_EAprice" value="" oninput="calculatePercentage()" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -790,7 +799,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
+                        <label for="editEmail" class="col-sm-2 col-form-label">총 판매액</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addSell_price" name="sell_price" value="" oninput="calculatePercentage()" require>
                         </div>
@@ -1354,20 +1363,33 @@ function initSellAdd(duct){
 	    document.querySelector("#Editresp_id").value = resp_id;
 	}
 	
-	// 세액 계산
-	function calculatePercentage() {
-	      // 첫 번째 input에서 값을 가져옵니다.
-	      const firstInputValue = document.getElementById('addSell_price').value;
+	
+	// 개수 * 단가
+	document.addEventListener('DOMContentLoaded', function() {
+    const priceInput = document.getElementById('addSell_EAprice');
+    const quantityInput = document.getElementById('addSell_quantity');
 
-	      // 두 번째 input에 10% 값을 출력합니다.
-	      const secondInput = document.getElementById('addTax');
-	      if (!isNaN(firstInputValue)) {
-	        const tenPercent = Math.round(parseFloat(firstInputValue) * 0.1); // 입력값의 10%를 계산합니다.
-	        secondInput.value = tenPercent; // 두 번째 input에 결과를 출력합니다.
-	      } else {
-	        secondInput.value = ''; // 유효하지 않은 입력일 경우 두 번째 input을 비웁니다.
-	      }
-	    }
+    priceInput.addEventListener('input', calculateTotalPrice);
+    quantityInput.addEventListener('input', calculateTotalPrice);
+});
+
+function calculateTotalPrice() {
+    const SellEAprice = parseFloat(document.getElementById('addSell_EAprice').value);
+    const SellQuantity = parseFloat(document.getElementById('addSell_quantity').value);
+
+    const totalPrice = Math.round(SellEAprice * SellQuantity); // 결과를 정수로 변환
+
+    const SellPriceField = document.getElementById('addSell_price');
+    const TaxField = document.getElementById('addTax');
+    if (!isNaN(totalPrice)) {
+    	SellPriceField.value = totalPrice.toString(); // 정수로 출력
+    	TaxField.value = (totalPrice * 0.1).toString();
+    } else {
+    	SellPriceField.value = ''; // 잘못된 입력이면 빈 값으로 설정
+    	TaxField.value = ''; // 잘못된 입력이면 빈 값으로 설정
+    }
+}
+	
 	
 	
 	</script>

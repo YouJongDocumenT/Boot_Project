@@ -146,8 +146,8 @@
    
 <!-- 판매 정보 작성 -->
    <insert id="selladd">
-	   INSERT INTO sell_product(resp_id, client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt )
-	                 VALUES( resp_id.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt} )
+	   INSERT INTO sell_product(resp_id, client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt, sell_EAprice )
+	                 VALUES( resp_id.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt}, #{sell_EAprice} )
    
    </insert>   
         
@@ -162,7 +162,7 @@
         
 <!-- 매칭된 machine_id값의 판매 정보 조회 -->
    <select id="sellListbyid" resultType="com.bando.dto.SellpdtDTO">
-	   SELECT responsibility, ph_number, sell_date, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt
+	   SELECT responsibility, ph_number, sell_date, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt, sell_EAprice
 	   		FROM sell_product
 	   		WHERE client_id = #{client_id}
    </select> 
@@ -193,7 +193,8 @@
 			       MP.sell_price, 
 			       MP.tax, 
 			       MP.sell_pdt, 
-			       MP.resp_id
+			       MP.resp_id,
+			       MP.sell_EAprice
 			FROM (
 			    SELECT cc.client_company, 
 			           cc.address, 
@@ -212,6 +213,7 @@
 			           sp.tax, 
 			           sp.sell_pdt, 
 			           sp.resp_id,
+			           sp.sell_EAprice,
 			           ROW_NUMBER() OVER(ORDER BY sp.resp_id DESC) AS RNUM
 			    FROM clientcomp_table cc
 			    JOIN machine_table mt ON cc.client_id = mt.client_id
