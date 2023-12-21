@@ -47,12 +47,36 @@ public class StockDAOImpl implements StockDAO{
 		sqlSession.insert("manageMapper.stock_price");
 	}
 	
+	// 순수익 총액테이블에 추가
+	@Override
+	public void revenue() throws Exception {
+		sqlSession.insert("manageMapper.revenue");
+	}
+	
+	// 재고수량 카운트 감소
+	@Override
+	public void St_Quantity_Cnt() throws Exception {
+		sqlSession.insert("manageMapper.St_Quantity_Cnt");
+	}
+
+	// 재고수량이 0일시 재고 열 삭제
+	@Override
+	public void ChangeStockValue() throws Exception {
+		sqlSession.insert("manageMapper.ChangeStockValue");
+	}
+
+	// 재고금액 변경
+	@Override
+	public void DeleteStock() throws Exception {
+		sqlSession.insert("manageMapper.DeleteStock");
+	}
+
 	// 판매금액 총액테이블에 추가
 	@Override
 	public void allsellcnt() throws Exception {
 		sqlSession.insert("manageMapper.allsellcnt");
 	}
-	
+
 	// 총액테이블 호출
 	@Override
 	public List<PriceDTO> PriceList() throws Exception {

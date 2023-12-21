@@ -24,6 +24,18 @@ public interface StockDAO {
 	// 판매금액 총액테이블에 추가
 	public void allsellcnt() throws Exception;
 	
+	// 순수익 총액테이블에 추가
+	public void revenue() throws Exception;
+
+	// 재고수량 카운트 감소
+	public void St_Quantity_Cnt() throws Exception;
+	
+	// 재고수량이 0일시 재고 열 삭제
+	public void DeleteStock() throws Exception;
+
+	// 재고금액 변경
+	public void ChangeStockValue() throws Exception;
+
 	// 총액테이블 호출
 	public List<PriceDTO> PriceList() throws Exception;
 	

@@ -146,8 +146,8 @@
    
 <!-- 판매 정보 작성 -->
    <insert id="selladd">
-	   INSERT INTO sell_product(resp_id, client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt, sell_EAprice )
-	                 VALUES( resp_id.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt}, #{sell_EAprice} )
+	   INSERT INTO sell_product(resp_id, client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt, sell_EAprice, purchase_pdtnum )
+	                 VALUES( resp_id.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt}, #{sell_EAprice}, #{purchase_pdtnum} )
    
    </insert>   
         
@@ -430,7 +430,82 @@
 		)
    </insert>
    
+    <!-- 순수익 계산 -->
+   <insert id="revenue">
+   		UPDATE price_table pt
+		SET pt.REVENUE = COALESCE(pt.REVENUE, 0) + (
+		    SELECT (sp.SELL_EAPRICE * sp.SELL_QUANTITY) - (st.PURCHASE_EAPRICE * sp.SELL_QUANTITY)
+		    FROM sell_product sp
+		    JOIN stock_table st ON sp.purchase_pdtnum = st.purchase_pdtnum
+		    WHERE sp.purchase_pdtnum = (
+		        SELECT MAX(purchase_pdtnum)
+		        FROM sell_product
+		    )
+		    AND sp.sell_date = (
+		        SELECT MAX(sell_date)
+		        FROM sell_product
+		        WHERE purchase_pdtnum = (
+		            SELECT MAX(purchase_pdtnum)
+		            FROM sell_product
+		        )
+		    )
+		)
+   </insert>
    
+   
+    <!-- 재고수량 카운트 -->
+   <insert id="St_Quantity_Cnt">
+	    UPDATE stock_table st
+		SET st.QUANTITY = (
+		    SELECT st.QUANTITY - sp.SELL_QUANTITY
+		    FROM sell_product sp
+		    WHERE sp.purchase_pdtnum = st.purchase_pdtnum
+		    AND sp.purchase_pdtnum = (
+		        SELECT MAX(purchase_pdtnum)
+		        FROM sell_product
+		    )
+		    AND sp.sell_date = (
+		        SELECT MAX(sell_date)
+		        FROM sell_product
+		        WHERE purchase_pdtnum = (
+		            SELECT MAX(purchase_pdtnum)
+		            FROM sell_product
+		        )
+		    )
+		)
+	</insert>
+	
+	<!-- 재고수량이 0일시 재고 열 삭제 -->
+   <delete id="DeleteStock" parameterType="int">
+	   DELETE FROM stock_table
+		WHERE QUANTITY = 0
+		AND purchase_pdtnum IN (
+		    SELECT purchase_pdtnum
+		    FROM stock_table
+		    WHERE QUANTITY = 0
+		)            
+   </delete>
+   
+   
+   <!-- 재고금액 변경 -->
+   <insert id="ChangeStockValue">
+	    UPDATE price_table pt
+		SET pt.Stock_price = (
+		    SELECT pt.Stock_price - NVL((sp.sell_quantity * st.purchase_eaprice), 0)
+		    FROM sell_product sp
+		    JOIN stock_table st ON sp.purchase_pdtnum = st.purchase_pdtnum
+		    WHERE sp.sell_date = (
+		        SELECT MAX(sell_date)
+		        FROM sell_product
+		        WHERE purchase_pdtnum = sp.purchase_pdtnum
+		    )
+		    AND sp.purchase_pdtnum IN (
+		        SELECT purchase_pdtnum
+		        FROM stock_table
+		    )
+		)
+	</insert>
+	
    
    <!-- purchase_table에 purchase_date을 기준으로 최근에 저장됬던 purchase_price값을 price_table의 stock_price와 합하여 price_table의 stock_price에 값을 저장하는 로직을 구현 -->
    <insert id="stock_price">
@@ -460,7 +535,7 @@
    
    <!-- 총액테이블 호출 -->
    <select id="PriceList" resultType="com.bando.dto.PriceDTO">
-	   SELECT stock_price, allpurchcnt, allsellcnt, tax
+	   SELECT stock_price, allpurchcnt, allsellcnt, tax, revenue
 	   		FROM price_table
    </select>
    

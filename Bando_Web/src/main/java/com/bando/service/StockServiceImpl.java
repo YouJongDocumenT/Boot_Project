@@ -48,6 +48,31 @@ public class StockServiceImpl implements StockService{
 		std.allsellcnt();
 	}
 	
+	// 순수익 총액테이블에 추가
+	@Override
+	public void revenue() throws Exception {
+		std.revenue();
+	}
+
+	// 재고수량 카운트 감소
+	@Override
+	public void St_Quantity_Cnt() throws Exception {
+		std.St_Quantity_Cnt();
+	}
+	
+	// 재고수량이 0일시 재고 열 삭제
+	@Override
+	public void DeleteStock() throws Exception {
+		std.DeleteStock();
+	}
+
+	// 재고금액 변경
+	@Override
+	public void ChangeStockValue() throws Exception {
+		std.ChangeStockValue();
+	}
+
+	
 	// 총액테이블 호출
 	@Override
 	public List<PriceDTO> PriceList() throws Exception {

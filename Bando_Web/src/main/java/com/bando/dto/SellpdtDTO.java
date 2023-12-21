@@ -18,6 +18,7 @@ public class SellpdtDTO {
 	private int total_sell_price;
 	private int total_tax;
 	private int sell_EAprice;
+	private int purchase_pdtnum;
 	
 	public SellpdtDTO() {
 
@@ -25,7 +26,7 @@ public class SellpdtDTO {
 
 	public SellpdtDTO(int client_id, int machine_id, String responsibility, int ph_number, Date sell_date,
 			int sell_quantity, int sell_length, int sell_weight, int sell_price, int tax, String sell_pdt,
-			int total_sell_price, int total_tax, int sell_EAprice) {
+			int total_sell_price, int total_tax, int sell_EAprice, int purchase_pdtnum) {
 		super();
 		this.client_id = client_id;
 		this.machine_id = machine_id;
@@ -41,6 +42,7 @@ public class SellpdtDTO {
 		this.total_sell_price = total_sell_price;
 		this.total_tax = total_tax;
 		this.sell_EAprice = sell_EAprice;
+		this.purchase_pdtnum = purchase_pdtnum;
 	}
 
 	public int getClient_id() {
@@ -155,14 +157,25 @@ public class SellpdtDTO {
 		this.sell_EAprice = sell_EAprice;
 	}
 
+	public int getPurchase_pdtnum() {
+		return purchase_pdtnum;
+	}
+
+	public void setPurchase_pdtnum(int purchase_pdtnum) {
+		this.purchase_pdtnum = purchase_pdtnum;
+	}
+
 	@Override
 	public String toString() {
 		return "SellpdtDTO [client_id=" + client_id + ", machine_id=" + machine_id + ", responsibility="
 				+ responsibility + ", ph_number=" + ph_number + ", sell_date=" + sell_date + ", sell_quantity="
 				+ sell_quantity + ", sell_length=" + sell_length + ", sell_weight=" + sell_weight + ", sell_price="
 				+ sell_price + ", tax=" + tax + ", sell_pdt=" + sell_pdt + ", total_sell_price=" + total_sell_price
-				+ ", total_tax=" + total_tax + ", sell_EAprice=" + sell_EAprice + "]";
+				+ ", total_tax=" + total_tax + ", sell_EAprice=" + sell_EAprice + ", purchase_pdtnum=" + purchase_pdtnum
+				+ "]";
 	}
+
+	
 
 	
 
