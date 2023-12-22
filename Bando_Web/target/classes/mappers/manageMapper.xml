@@ -103,18 +103,30 @@
 		               ROW_NUMBER() OVER(ORDER BY purchase_pdtnum DESC) AS RNUM
 		        FROM purchase_table
 		        WHERE purchase_id = #{purchase_id}
+		        <include refid="PurchaseSearch"></include>	
      		  ) MP
 			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 			ORDER BY purchase_pdtnum DESC
    </select>
+   
+   
 <!-- 게시물 총 갯수 -->
 <select id="listCount" resultType="int">
-	<![CDATA[
+<!-- <![CDATA[ ]]> -->
 		SELECT COUNT(purchase_pdtnum)
 		  FROM purchase_table
 		 WHERE purchase_pdtnum > 0
-	]]>
+		 <include refid="PurchaseSearch"></include>	
 	</select>
+	
+<sql id="PurchaseSearch">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>	
    
 <!-- 고객사 회사 정보 작성 -->
    <insert id="clientinsert">

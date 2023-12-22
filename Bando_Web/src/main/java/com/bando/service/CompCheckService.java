@@ -9,6 +9,7 @@ import com.bando.dto.Criteria;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
+import com.bando.dto.SearchCriteria;
 import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.manageDTO;
@@ -26,7 +27,7 @@ public interface CompCheckService {
 	public List<PurchaseCompDTO> purchcompbyid(Long purchase_id) throws Exception;
 	
 	// 구매 정보 조회
-	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception;
+	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, SearchCriteria scri) throws Exception;
 	
 	
 	
@@ -86,10 +87,10 @@ public interface CompCheckService {
 	
 	
 	
-	// 구매처 게시물 총 갯수
-	public int listCount() throws Exception;
+	// 구매 게시물 총 갯수
+	public int listCount(SearchCriteria scri) throws Exception;
 
-	// 구매처 게시물 총 갯수
+	// 판매 게시물 총 갯수
 	public int SelllistCount() throws Exception;
 	
 }

@@ -13,6 +13,7 @@ import com.bando.dto.Criteria;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
+import com.bando.dto.SearchCriteria;
 import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.manageDTO;
@@ -43,8 +44,8 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	// 구매 정보 조회
 	@Override
-	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception {
-		return ccd.purchlistbyid(purchase_id, cri);
+	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, SearchCriteria scri) throws Exception {
+		return ccd.purchlistbyid(purchase_id, scri);
 	}
 	
 	
@@ -150,8 +151,8 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	// 구매처 게시물 총 갯수
 	@Override
-	public int listCount() throws Exception {
-		return ccd.listCount();
+	public int listCount(SearchCriteria scri) throws Exception {
+		return ccd.listCount(scri);
 	}
 
 	// 판매처 게시물 총 갯수

@@ -14,6 +14,7 @@ import com.bando.dto.Criteria;
 import com.bando.dto.MachineDTO;
 import com.bando.dto.PurChasePdtDTO;
 import com.bando.dto.PurchaseCompDTO;
+import com.bando.dto.SearchCriteria;
 import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
 
@@ -44,11 +45,13 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	
 	// 구매 정보 조회 sql매핑
 	@Override
-	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, Criteria cri) throws Exception {
+	public List<PurChasePdtDTO> purchlistbyid(Long purchase_id, SearchCriteria scri) throws Exception {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 	    parameters.put("purchase_id", purchase_id);
-	    parameters.put("rowStart", cri.getRowStart()); // rowStart 매개변수 추가
-	    parameters.put("rowEnd", cri.getRowEnd()); // rowEnd 매개변수 추가
+	    parameters.put("rowStart", scri.getRowStart()); // rowStart 매개변수 추가
+	    parameters.put("rowEnd", scri.getRowEnd()); // rowEnd 매개변수 추가
+	    parameters.put("keyword", scri.getKeyword()); // rowEnd 매개변수 추가
+	    System.out.println("asd"+sqlSession.selectList("manageMapper.purchlistbyid", parameters));
 	    return sqlSession.selectList("manageMapper.purchlistbyid", parameters);
 	}
 
@@ -168,8 +171,8 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	
 	// 구매처 게시물 총 갯수
 	@Override
-	public int listCount() throws Exception {
-		return sqlSession.selectOne("manageMapper.listCount");
+	public int listCount(SearchCriteria scri) throws Exception {
+		return sqlSession.selectOne("manageMapper.listCount", scri);
 	}
 
 	// 판매처 게시물 총 갯수

@@ -428,6 +428,7 @@
                                         <a class="btn btn-sm btn-outline-danger" type="button" 
                                         				onclick="deleteValue();" th:text="삭제"></a>
                                     </div>
+                                <form role="form" method="get">
                                 <table class="table table-hover" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -512,24 +513,43 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                
+                                <div class="search">
+								    <select name="searchType" th:field="*{scri.searchType}">
+								        <option value="n" th:selected="${scri.searchType == null}">-----</option>
+								        <option value="t" th:selected="${scri.searchType == 't'}">제목</option>
+								        <option value="c" th:selected="${scri.searchType == 'c'}">내용</option>
+								        <option value="w" th:selected="${scri.searchType == 'w'}">작성자</option>
+								        <option value="tc" th:selected="${scri.searchType == 'tc'}">제목+내용</option>
+								    </select>
+								
+								    <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}" />
+								
+								    <button id="searchBtn" type="button">검색</button>
+								</div>
+								
+                                </form>
 								<div>
 									<ul>
 										<li th:if="${pageMaker.prev}"><a
-											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${pageMaker.startPage - 1})}">이전</a>
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page.makeSearch=${pageMaker.startPage - 1})}">이전</a>
 										</li>
 
 										<li
 											th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
 											<a
-											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${idx})}"
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page.makeSearch=${idx})}"
 											th:text="${idx}"></a>
 										</li>
 
 										<li th:if="${pageMaker.next && pageMaker.endPage > 0}"><a
-											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${pageMaker.endPage + 1})}">다음</a>
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page.makeSearch=${pageMaker.endPage + 1})}">다음</a>
 										</li>
 									</ul>
 								</div>
+								
+								
+								
 							</div>
                         </div>
                     </div>
@@ -1018,6 +1038,30 @@ function calculateTotalPrice() {
 }
 	
 	</script>
+	
+	
+
+
+
+	<script th:inline="javascript">
+		$(function(){
+			$('#searchBtn').click(function() {
+					var pageQuery = /*[[ ${pageMaker.makeQuery(1)} ]]*/;
+					var searchType = $("select[name='searchType']").val();
+					var keyword = encodeURIComponent($('#keywordInput').val());
+					var location = /*[[ @{('purchasecompany(purchase_id=${purchase_id}' + pageQuery)} ]]*/ + "&searchType=" + searchType + "&keyword=" + keyword;
+					self.location = location;
+			});
+		});
+	</script>
+
+th:href="@{purchasecompany(purchase_id=${purchase_id}, page.makeSearch=${pageMaker.startPage - 1})}">이전</a>
+
+
+
+
+
+
 </body>
 
 </html>
