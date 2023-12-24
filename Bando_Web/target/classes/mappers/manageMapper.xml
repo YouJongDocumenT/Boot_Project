@@ -536,64 +536,47 @@
    </insert>
    
    
-    <!-- 재고수량 카운트 -->
-   <insert id="St_Quantity_Cnt">
-	    UPDATE stock_table st
-		SET st.QUANTITY = (
-		    SELECT CASE 
-		        WHEN sp.purchase_pdtnum IS NOT NULL THEN st.QUANTITY - sp.SELL_QUANTITY
-		        ELSE st.QUANTITY
-		    END
-		    FROM sell_product sp
-		    WHERE sp.purchase_pdtnum = st.purchase_pdtnum
-		    AND sp.purchase_pdtnum = (
-		        SELECT MAX(purchase_pdtnum)
-		        FROM sell_product
-		    )
-		    AND sp.sell_date = (
-		        SELECT MAX(sell_date)
-		        FROM sell_product
-		        WHERE purchase_pdtnum = (
-		            SELECT MAX(purchase_pdtnum)
-		            FROM sell_product
-		        )
-		    )
-		)
-		WHERE st.purchase_pdtnum IN (
-		    SELECT sp.purchase_pdtnum
-		    FROM sell_product sp
-		    WHERE sp.purchase_pdtnum = (
-		        SELECT MAX(purchase_pdtnum)
-		        FROM sell_product
-		    )
-		    AND sp.sell_date = (
-		        SELECT MAX(sell_date)
-		        FROM sell_product
-		        WHERE purchase_pdtnum = (
-		            SELECT MAX(purchase_pdtnum)
-		            FROM sell_product
-		        )
-		    )
-		)
-	</insert>
+	<!-- 재고수량 카운트 -->
+		<insert id="St_Quantity_Cnt">
+		     UPDATE stock_table
+				SET QUANTITY = QUANTITY - (
+				    SELECT SELL_QUANTITY
+				    FROM sell_product
+				    WHERE sell_date = (
+				        SELECT MAX(sell_date)
+				        FROM sell_product
+				    )
+				)
+				WHERE stock_table.purchase_pdtnum = (
+				    SELECT purchase_pdtnum
+				    FROM sell_product
+				    WHERE sell_date = (
+				        SELECT MAX(sell_date)
+				        FROM sell_product
+				    )
+				)
+		</insert>
+
 	
 	<!-- 재고수량이 0일시 재고 열 삭제 -->
    <delete id="DeleteStock" parameterType="int">
 	   DELETE FROM stock_table
 		WHERE QUANTITY = 0
-		AND purchase_pdtnum IN (
-		    SELECT purchase_pdtnum
-		    FROM stock_table
-		    WHERE QUANTITY = 0
-		)            
+		  AND purchase_pdtnum IN (
+		      SELECT purchase_pdtnum
+		      FROM stock_table
+		      WHERE QUANTITY = 0
+		      GROUP BY purchase_pdtnum
+		      HAVING COUNT(*) > 1
+		  )           
    </delete>
    
    
    <!-- 재고금액 변경 -->
    <insert id="ChangeStockValue">
 	    UPDATE price_table pt
-		SET pt.Stock_price = pt.Stock_price - NVL((
-		    SELECT SUM(sp.sell_quantity * st.purchase_eaprice)
+		SET pt.Stock_price = (
+		    SELECT pt.Stock_price - NVL(SUM(sp.SELL_QUANTITY * st.purchase_eaprice), 0)
 		    FROM sell_product sp
 		    JOIN stock_table st ON sp.purchase_pdtnum = st.purchase_pdtnum
 		    WHERE sp.sell_date = (
@@ -602,7 +585,18 @@
 		        WHERE purchase_pdtnum = sp.purchase_pdtnum
 		        GROUP BY purchase_pdtnum
 		    )
-		), 0)
+		)
+		WHERE EXISTS (
+		    SELECT 1
+		    FROM sell_product sp
+		    JOIN stock_table st ON sp.purchase_pdtnum = st.purchase_pdtnum
+		    WHERE sp.sell_date = (
+		        SELECT MAX(sell_date)
+		        FROM sell_product
+		        WHERE purchase_pdtnum = sp.purchase_pdtnum
+		        GROUP BY purchase_pdtnum
+		    )
+		)
 	</insert>
 	
    
