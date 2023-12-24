@@ -108,12 +108,17 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	
 	// 총 판매 정보 조회 sql매핑
 	@Override
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, Criteria cri) throws Exception {
+	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, SearchCriteria scri) throws Exception {
 	    Map<String, Object> parameters = new HashMap<String, Object>();
 	    parameters.put("client_id", client_id);
 	    parameters.put("machine_id", machineList_id);
-	    parameters.put("rowStart", cri.getRowStart()); // rowStart 매개변수 추가
-	    parameters.put("rowEnd", cri.getRowEnd()); // rowEnd 매개변수 추가
+	    parameters.put("rowStart", scri.getRowStart()); // rowStart 매개변수 추가
+	    parameters.put("rowEnd", scri.getRowEnd()); // rowEnd 매개변수 추가
+	    parameters.put("keyword", scri.getKeyword()); // keyword 매개변수 추가
+	    parameters.put("searchType", scri.getSearchType()); // searchType 매개변수 추가
+	    
+	    System.out.println("검색 키워드 : " + scri.getKeyword());
+	    System.out.println("검색 타입 : " + scri.getSearchType());
 	    
 	    return sqlSession.selectList("manageMapper.sellAlldata", parameters);
 	}
@@ -182,8 +187,8 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 
 	// 판매처 게시물 총 갯수
 	@Override
-	public int SelllistCount() throws Exception {
-		return sqlSession.selectOne("manageMapper.SelllistCount");
+	public int SelllistCount(SearchCriteria scri) throws Exception {
+		return sqlSession.selectOne("manageMapper.SelllistCount", scri);
 	}
 	
 	

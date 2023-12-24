@@ -90,8 +90,8 @@ public class CompCheckServiceImpl implements CompCheckService{
 	
 	// 종합 판매 정보 조회
 	@Override
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, Criteria cri) throws Exception {
-		return ccd.sellAlldata(client_id, machineList_id, cri);
+	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, SearchCriteria scri) throws Exception {
+		return ccd.sellAlldata(client_id, machineList_id, scri);
 	}
 	
 	
@@ -157,8 +157,8 @@ public class CompCheckServiceImpl implements CompCheckService{
 
 	// 판매처 게시물 총 갯수
 	@Override
-	public int SelllistCount() throws Exception {
-		return ccd.SelllistCount();
+	public int SelllistCount(SearchCriteria scri) throws Exception {
+		return ccd.SelllistCount(scri);
 	}
 	
 	

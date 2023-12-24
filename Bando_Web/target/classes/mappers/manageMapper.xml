@@ -231,18 +231,27 @@
 			    JOIN machine_table mt ON cc.client_id = mt.client_id
 			    JOIN sell_product sp ON mt.machine_id = sp.machine_id
 			    WHERE cc.client_id = #{client_id} AND mt.machine_id = #{machine_id}
+			    <include refid="SellSearch"></include>
 			) MP
 			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 			ORDER BY MP.resp_id DESC
 </select> 
 <select id="SelllistCount" resultType="int">
-	<![CDATA[
 		SELECT COUNT(resp_id)
 		  FROM sell_product
 		 WHERE resp_id > 0
-	]]>
+		 <include refid="SellSearch"></include>
 	</select>
 	
+	
+<sql id="SellSearch">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND RESPONSIBILITY LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND SELL_PDT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND SELL_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (RESPONSIBILITY LIKE '%' || #{keyword} || '%') or (SELL_PDT LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
 
 <!-- 각 구매 관련 테이블의 purchase_id에 매칭된 모든데이터 출력 -->
    <select id="PurChaseMachingDataList" resultType="com.bando.dto.AllPurchaseDataDTO" parameterType="com.bando.dto.Criteria">

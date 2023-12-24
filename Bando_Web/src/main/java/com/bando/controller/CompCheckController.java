@@ -187,7 +187,7 @@ public class CompCheckController {
 
 	// 고객사 화면단
 	@GetMapping("/clientcompany")
-	public String clientproductlist(@RequestParam("client_id") Long client_id, Criteria cri, Model model)
+	public String clientproductlist(@RequestParam("client_id") Long client_id,  @ModelAttribute("scri") SearchCriteria scri, Model model)
 			throws Exception {
 
 		logger.info("purchasecompany");
@@ -243,7 +243,7 @@ public class CompCheckController {
 
 		for (int i = 0; i < mcdto.size(); i++) {
 			int machineList_id = mcdto.get(i).getMachine_id();
-			List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id, cri);
+			List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id, scri);
 
 			sellAllDataMap.put(machineList_id, sellAllData);
 
@@ -267,8 +267,8 @@ public class CompCheckController {
 
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(ccs.SelllistCount());
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(ccs.SelllistCount(scri));
 
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("페이징");

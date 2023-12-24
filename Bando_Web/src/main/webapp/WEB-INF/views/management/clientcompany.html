@@ -440,6 +440,7 @@
                                         <a class="btn btn-sm btn-outline-danger" type="button" 
                                         				onclick="deleteValue();" th:text="삭제"></a>
                                     </div>
+                                <form role="form" method="get">
                                 <table class="table table-hover" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -578,6 +579,23 @@
 
 									</tbody>
 								</table>
+								<div class="search">
+								    <select name="searchType">
+								        <option value="n" th:selected="${scri.searchType == null}">-----</option>
+								        <option value="t" th:selected="${scri.searchType == 't'}">담당자</option>
+								        <option value="c" th:selected="${scri.searchType == 'c'}">품명</option>
+								        <option value="w" th:selected="${scri.searchType == 'w'}">년도 검색</option>
+								        <option value="tc" th:selected="${scri.searchType == 'tc'}">담당자+품명</option>
+								    </select>
+								
+								    <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}"/>
+								
+								    <button id="searchBtn" type="button" th:attr="data-url=@{/clientcompany(client_id=${client_id})}">검색</button>
+								
+								    <!-- @@@@@@@@@@@@@@@@@@@@@ -->
+								</div>
+								
+                                </form>
 								<div>
 									<ul>
 										<li th:if="${pageMaker.prev}"><a
@@ -1465,7 +1483,33 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
+<script th:inline="javascript">
+    $(function(){
+        $('#searchBtn').click(function() {
+            var clientId = /*[[${client_id}]]*/ '';
+            var selectedOption = $("select option:selected").val();
+            var keyword = encodeURIComponent($('#keywordInput').val());
+            var url = /*[[@{clientcompany}]]*/ '';
+            var query = /*[[${pageMaker.makeQuery(1)}]]*/ '';
+            
+            var queryString = "";
 
+            // Add purchase_id parameter only if purchaseId is not empty
+            if (clientId !== '') {
+                queryString += "client_id=" + clientId + "&";
+            }
+
+            // Remove '?' from query if it exists
+            if (query.startsWith('?')) {
+                query = query.substring(1);
+            }
+
+            queryString += query + "&searchType=" + selectedOption + "&keyword=" + keyword;
+
+            self.location = url + "?" + queryString;
+        });
+    });
+</script>
 
 
 
