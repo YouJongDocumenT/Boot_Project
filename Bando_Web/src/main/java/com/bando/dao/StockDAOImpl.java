@@ -1,6 +1,8 @@
 package com.bando.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.bando.dto.PriceDTO;
 import com.bando.dto.PurChasePdtDTO;
+import com.bando.dto.SearchCriteria;
+import com.bando.dto.SellAllDataDTO;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.StockListDTO;
 
@@ -101,6 +105,33 @@ public class StockDAOImpl implements StockDAO{
 		return sqlSession.selectList("manageMapper.SellPdtById", client_id);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 재고 정보 조회 sql매핑 페이징
+	@Override
+	public List<StockListDTO> StockList_P(SearchCriteria scri) throws Exception {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("rowStart", scri.getRowStart()); // rowStart 매개변수 추가
+		parameters.put("rowEnd", scri.getRowEnd()); // rowEnd 매개변수 추가
+		parameters.put("keyword", scri.getKeyword()); // keyword 매개변수 추가
+		parameters.put("searchType", scri.getSearchType()); // searchType 매개변수 추가
+
+		System.out.println("검색 키워드 : " + scri.getKeyword());
+		System.out.println("검색 타입 : " + scri.getSearchType());
+
+		return sqlSession.selectList("manageMapper.StockList_P", parameters);
+	}
+	// 재고 총 갯수
+	@Override
+	public int StockListCount(SearchCriteria scri) throws Exception {
+		return sqlSession.selectOne("manageMapper.StockListCount", scri);
+	}
 	
 }
 

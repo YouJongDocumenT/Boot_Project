@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bando.dto.PriceDTO;
 import com.bando.dto.PurChasePdtDTO;
+import com.bando.dto.SearchCriteria;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.StockListDTO;
 
@@ -47,6 +48,17 @@ public interface StockDAO {
 		
 	// client_id에 매칭된 총액 출력
 	public List<SellpdtDTO> SellPdtById(Long client_id) throws Exception;
+	
+	
+	
+	
+	
+	
+	// 재고 조회 dto매핑 페이징
+	public List<StockListDTO> StockList_P(SearchCriteria scri) throws Exception;
+
+	// 재고 총 갯수
+	public int StockListCount(SearchCriteria scri) throws Exception;
 		
 }
 

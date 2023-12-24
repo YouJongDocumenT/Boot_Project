@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bando.dao.StockDAO;
 import com.bando.dto.PriceDTO;
 import com.bando.dto.PurChasePdtDTO;
+import com.bando.dto.SearchCriteria;
 import com.bando.dto.SellpdtDTO;
 import com.bando.dto.StockListDTO;
 
@@ -95,6 +96,21 @@ public class StockServiceImpl implements StockService{
 	@Override
 	public List<SellpdtDTO> SellPdtById(Long client_id) throws Exception {
 		return std.SellPdtById(client_id);
+	}
+	
+	
+	
+	
+	
+	// 재고 조회 페이징
+	@Override
+	public List<StockListDTO> StockList_P(SearchCriteria scri) throws Exception {
+		return std.StockList_P(scri);
+	}
+	// 구매처 게시물 총 갯수
+	@Override
+	public int StockListCount(SearchCriteria scri) throws Exception {
+		return std.StockListCount(scri);
 	}
 	
 	

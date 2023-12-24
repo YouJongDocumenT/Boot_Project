@@ -404,6 +404,68 @@
 	        ORDER BY PURCHASE_PDTNUM DESC  
    </select>
    
+   
+   
+ <!-- 재고테이블 조회 -->
+   <select id="StockList_P" resultType="com.bando.dto.StockListDTO">
+		   SELECT length, 
+			       weight, 
+			       purchase_price, 
+			       quantity, 
+			       purchase_company, 
+			       product, 
+			       purchase_pdtnum, 
+			       stock_date, 
+			       purchase_EAprice
+			FROM (
+			    SELECT length, 
+			           weight, 
+			           purchase_price, 
+			           quantity, 
+			           purchase_company, 
+			           product, 
+			           purchase_pdtnum, 
+			           stock_date, 
+			           purchase_EAprice,
+			           ROW_NUMBER() OVER(ORDER BY purchase_pdtnum DESC) AS RNUM
+			    FROM STOCK_TABLE
+			    <include refid="StockSearch_P"></include>
+			) MP
+			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+			ORDER BY PURCHASE_PDTNUM DESC
+   </select>
+   
+   
+   
+<!-- 게시물 총 갯수 -->
+<select id="StockListCount" resultType="int">
+<!-- <![CDATA[ ]]> -->
+		SELECT COUNT(purchase_pdtnum)
+		  FROM STOCK_TABLE
+		 WHERE purchase_pdtnum > 0
+		 <include refid="StockSearch"></include>	
+	</select>
+	
+<sql id="StockSearch_P">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">WHERE PRODUCT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">WHERE STOCK_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">WHERE PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">WHERE (PRODUCT LIKE '%' || #{keyword} || '%') or (PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>	  
+<sql id="StockSearch">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND PRODUCT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND STOCK_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (PRODUCT LIKE '%' || #{keyword} || '%') or (PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>	   
+   
+   
+   
+   
 <!-- 최근에 추가된 구매테이블의 값을 재고테이블에 추가 -->
    <insert id="AddStock">
 		INSERT INTO STOCK_TABLE (LENGTH, WEIGHT, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_EAprice, purchase_company)

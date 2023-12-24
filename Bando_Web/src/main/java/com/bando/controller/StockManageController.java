@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.bando.dto.PageMaker;
+import com.bando.dto.SearchCriteria;
 import com.bando.service.StockService;
 import com.bando.service.manageService;
 
@@ -23,7 +26,7 @@ public class StockManageController {
 	
 	// 재고 내역 화면단
 	@GetMapping("/StockList")
-	public String StockList(Model model) throws Exception {
+	public String StockList(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		
 		logger.info("StockList");
 		
@@ -45,8 +48,16 @@ public class StockManageController {
 		logger.info("총액테이블 호출");
 		
 		// 구매한 제품 데이터 모델 등록
-		model.addAttribute("StockList", sts.StockList());
+		model.addAttribute("StockList", sts.StockList_P(scri));
 		logger.info("재고테이블 호출");
+		
+		// 페이징
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(sts.StockListCount(scri));
+
+		model.addAttribute("pageMaker", pageMaker);
+		logger.info("페이징");
 		
 		return "management/StockList";
 	}
