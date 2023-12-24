@@ -540,10 +540,29 @@
    <insert id="St_Quantity_Cnt">
 	    UPDATE stock_table st
 		SET st.QUANTITY = (
-		    SELECT st.QUANTITY - sp.SELL_QUANTITY
+		    SELECT CASE 
+		        WHEN sp.purchase_pdtnum IS NOT NULL THEN st.QUANTITY - sp.SELL_QUANTITY
+		        ELSE st.QUANTITY
+		    END
 		    FROM sell_product sp
 		    WHERE sp.purchase_pdtnum = st.purchase_pdtnum
 		    AND sp.purchase_pdtnum = (
+		        SELECT MAX(purchase_pdtnum)
+		        FROM sell_product
+		    )
+		    AND sp.sell_date = (
+		        SELECT MAX(sell_date)
+		        FROM sell_product
+		        WHERE purchase_pdtnum = (
+		            SELECT MAX(purchase_pdtnum)
+		            FROM sell_product
+		        )
+		    )
+		)
+		WHERE st.purchase_pdtnum IN (
+		    SELECT sp.purchase_pdtnum
+		    FROM sell_product sp
+		    WHERE sp.purchase_pdtnum = (
 		        SELECT MAX(purchase_pdtnum)
 		        FROM sell_product
 		    )
@@ -573,20 +592,17 @@
    <!-- 재고금액 변경 -->
    <insert id="ChangeStockValue">
 	    UPDATE price_table pt
-		SET pt.Stock_price = (
-		    SELECT pt.Stock_price - NVL((sp.sell_quantity * st.purchase_eaprice), 0)
+		SET pt.Stock_price = pt.Stock_price - NVL((
+		    SELECT SUM(sp.sell_quantity * st.purchase_eaprice)
 		    FROM sell_product sp
 		    JOIN stock_table st ON sp.purchase_pdtnum = st.purchase_pdtnum
 		    WHERE sp.sell_date = (
 		        SELECT MAX(sell_date)
 		        FROM sell_product
 		        WHERE purchase_pdtnum = sp.purchase_pdtnum
+		        GROUP BY purchase_pdtnum
 		    )
-		    AND sp.purchase_pdtnum IN (
-		        SELECT purchase_pdtnum
-		        FROM stock_table
-		    )
-		)
+		), 0)
 	</insert>
 	
    

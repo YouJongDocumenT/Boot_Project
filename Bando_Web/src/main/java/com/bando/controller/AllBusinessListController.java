@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.bando.dto.Criteria;
 import com.bando.dto.PageMaker;
+import com.bando.dto.SearchCriteria;
 import com.bando.service.CompCheckService;
 import com.bando.service.StockService;
 import com.bando.service.manageService;
@@ -29,7 +31,7 @@ public class AllBusinessListController {
 	
 	// 총 구매 내역 화면단
 	@GetMapping("PurChaseList")
-	public String AllPruChaseList(Model model, Criteria cri) throws Exception {
+	public String AllPruChaseList(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		
 		// 예시로 model 객체가 null이거나 manageservice가 초기화되지 않았을 경우
 		if (model != null && manageservice != null) {
@@ -45,12 +47,12 @@ public class AllBusinessListController {
 		}
 		
 		// 각 구매 관련 테이블의 purchase_id에 매칭된 모든데이터 출력
-		model.addAttribute("PurChaseMachingDataList", ccs.PurChaseMachingDataList(cri));
+		model.addAttribute("PurChaseMachingDataList", ccs.PurChaseMachingDataList(scri));
 		
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(ccs.listCount());
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(ccs.listCount(scri));
 
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("페이징");
@@ -66,7 +68,7 @@ public class AllBusinessListController {
 	
 	// 총 판매 내역 화면단
 	@GetMapping("SellList")
-	public String AllSellList(Model model, Criteria cri) throws Exception {
+	public String AllSellList(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		
 		// 예시로 model 객체가 null이거나 manageservice가 초기화되지 않았을 경우
 		if (model != null && manageservice != null) {
@@ -84,12 +86,12 @@ public class AllBusinessListController {
 				
 		
 		// 각 판매 관련 테이블의 client_id및 machine_id에 매칭된 모든데이터 출력
-		model.addAttribute("SellMachingDataList", ccs.SellMachingDataList(cri));
+		model.addAttribute("SellMachingDataList", ccs.SellMachingDataList(scri));
 		
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(ccs.SelllistCount());
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(ccs.SelllistCount(scri));
 
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("페이징");
