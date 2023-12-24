@@ -121,10 +121,10 @@
 	
 <sql id="PurchaseSearch">
 		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
+			<if test="searchType == 't'.toString()">AND PRODUCT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND PURCHASE_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND PURCHASE_ID LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (PRODUCT LIKE '%' || #{keyword} || '%') or (PURCHASE_ID LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>	
    

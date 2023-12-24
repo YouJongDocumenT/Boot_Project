@@ -50,8 +50,13 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	    parameters.put("purchase_id", purchase_id);
 	    parameters.put("rowStart", scri.getRowStart()); // rowStart 매개변수 추가
 	    parameters.put("rowEnd", scri.getRowEnd()); // rowEnd 매개변수 추가
-	    parameters.put("keyword", scri.getKeyword()); // rowEnd 매개변수 추가
+	    parameters.put("keyword", scri.getKeyword()); // keyword 매개변수 추가
+	    parameters.put("searchType", scri.getSearchType()); // searchType 매개변수 추가
+	    
+	    System.out.println("검색 키워드 : " + scri.getKeyword());
+	    System.out.println("검색 타입 : " + scri.getSearchType());
 	    System.out.println("asd"+sqlSession.selectList("manageMapper.purchlistbyid", parameters));
+	    
 	    return sqlSession.selectList("manageMapper.purchlistbyid", parameters);
 	}
 
