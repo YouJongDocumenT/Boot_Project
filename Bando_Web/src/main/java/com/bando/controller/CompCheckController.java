@@ -114,6 +114,8 @@ public class CompCheckController {
 		    logger.info("purchase_id에 매칭된 총액 출력");
 		}
 		
+		
+		
 		return "management/purchasecompany";
 	}
 
