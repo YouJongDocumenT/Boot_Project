@@ -560,15 +560,10 @@
 	
 	<!-- 재고수량이 0일시 재고 열 삭제 -->
    <delete id="DeleteStock" parameterType="int">
+   <![CDATA[
 	   DELETE FROM stock_table
-		WHERE QUANTITY = 0
-		  AND purchase_pdtnum IN (
-		      SELECT purchase_pdtnum
-		      FROM stock_table
-		      WHERE QUANTITY = 0
-		      GROUP BY purchase_pdtnum
-		      HAVING COUNT(*) > 1
-		  )           
+		WHERE QUANTITY <= 0       
+	]]>  
    </delete>
    
    
