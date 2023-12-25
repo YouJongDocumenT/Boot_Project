@@ -432,6 +432,7 @@
                                         <a class="btn btn-sm btn-outline-danger" type="button" 
                                         				onclick="deleteValue();" th:text="삭제"></a>
                                     </div>
+                                <form role="form" method="get">
                                 <table class="table table-hover" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -439,16 +440,14 @@
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
                                             <th>구매일</th>
-                                            <th>품명</th>
+                                            <th>품명 | 규격</th>
                                             <th>구매처</th>
-                                            <th>규격(mm)</th>
                                             <th>수량</th>                                           
                                             <th>구매가격</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr >
-											<th></th>
 											<th></th>
 											<th></th>
 											<th></th>
@@ -463,14 +462,30 @@
                                         		<input type="checkbox" name="RowCheck" />
                                         	</th>
                                             <td th:text="${#dates.format(item.purchase_date, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${item.Product}"></td>
+                                            <td th:text="${item.Product + ' | ' + item.standard}"></td>
                                             <td th:text="${item.purchase_company}"></td>
-                                            <td class="money" type="text" th:text="${item.pur_length + '*' + item.pur_weight + '(mm)'}"></td>
                                             <td class="money" th:text="${item.pur_quantity + 'EA'}"></td>
                                             <td class="money" th:text="${item.purchase_price + '원'}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="search">
+								    <select name="searchType">
+								        <option value="n" th:selected="${scri.searchType == null}">-----</option>
+								        <option value="t" th:selected="${scri.searchType == 't'}">품명</option>
+								        <option value="c" th:selected="${scri.searchType == 'c'}">규격</option>
+								        <option value="w" th:selected="${scri.searchType == 'w'}">년도 검색</option>
+								        <option value="tc" th:selected="${scri.searchType == 'tc'}">품명+규격</option>
+								    </select>
+								
+								    <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}"/>
+								
+								    <button id="searchBtn" type="button" th:attr="data-url=@{/PurChaseList}">검색</button>
+								
+								    <!-- @@@@@@@@@@@@@@@@@@@@@ -->
+								</div>
+								
+                                </form>
                                 <div>
 									<ul>
 										<li th:if="${pageMaker.prev}"><a
@@ -855,6 +870,34 @@ Swal.fire(
 
 	
 	</script>
+	
+	
+	
+	<script th:inline="javascript">
+    $(function(){
+        $('#searchBtn').click(function() {
+            var selectedOption = $("select option:selected").val();
+            var keyword = encodeURIComponent($('#keywordInput').val());
+            var url = /*[[@{PurChaseList}]]*/ '';
+            var query = /*[[${pageMaker.makeQuery(1)}]]*/ '';
+            
+            var queryString = "";
+
+            // Add purchase_id parameter only if purchaseId is not empty
+
+            // Remove '?' from query if it exists
+            if (query.startsWith('?')) {
+                query = query.substring(1);
+            }
+
+            queryString += query + "&searchType=" + selectedOption + "&keyword=" + keyword;
+
+            self.location = url + "?" + queryString;
+        });
+    });
+</script>
+
+
 </body>
 
 </html>

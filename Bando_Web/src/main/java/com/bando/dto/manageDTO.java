@@ -16,13 +16,14 @@ public class manageDTO {
 	private int price;			 // 단가
 	private int tax; 			 // 세액
 	private int difference; 	 // 차액
+	private String standard;
 	
 	public manageDTO() {
 		
 	}
 
 	public manageDTO(int pdtnum, Date butdate, String product, String purchasecomp, String reposibility, int pweight,
-			int plength, int quantity, int pchprice, int price, int tax, int difference) {
+			int plength, int quantity, int pchprice, int price, int tax, int difference, String standard) {
 		super();
 		this.pdtnum = pdtnum;
 		this.butdate = butdate;
@@ -36,6 +37,7 @@ public class manageDTO {
 		this.price = price;
 		this.tax = tax;
 		this.difference = difference;
+		this.standard = standard;
 	}
 
 	public int getPdtnum() {
@@ -134,14 +136,23 @@ public class manageDTO {
 		this.difference = difference;
 	}
 
+	public String getStandard() {
+		return standard;
+	}
+
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+
 	@Override
 	public String toString() {
 		return "manageDTO [pdtnum=" + pdtnum + ", butdate=" + butdate + ", product=" + product + ", purchasecomp="
 				+ purchasecomp + ", reposibility=" + reposibility + ", pweight=" + pweight + ", plength=" + plength
 				+ ", quantity=" + quantity + ", pchprice=" + pchprice + ", price=" + price + ", tax=" + tax
-				+ ", difference=" + difference + "]";
+				+ ", difference=" + difference + ", standard=" + standard + "]";
 	}
 
+	
 	
 
 	

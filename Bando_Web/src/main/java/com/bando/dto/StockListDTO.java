@@ -13,6 +13,7 @@ public class StockListDTO {
 	private int purchase_pdtnum;
 	private Date stock_date;
 	private int purchase_EAprice;
+	private String standard;
 	
 	
 	public StockListDTO() {
@@ -20,7 +21,7 @@ public class StockListDTO {
 
 
 	public StockListDTO(int length, int weight, int purchase_price, int quantity, String purchase_company,
-			String product, int purchase_pdtnum, Date stock_date, int purchase_EAprice) {
+			String product, int purchase_pdtnum, Date stock_date, int purchase_EAprice, String standard) {
 		super();
 		this.length = length;
 		this.weight = weight;
@@ -31,6 +32,7 @@ public class StockListDTO {
 		this.purchase_pdtnum = purchase_pdtnum;
 		this.stock_date = stock_date;
 		this.purchase_EAprice = purchase_EAprice;
+		this.standard = standard;
 	}
 
 
@@ -124,13 +126,26 @@ public class StockListDTO {
 	}
 
 
+	public String getStandard() {
+		return standard;
+	}
+
+
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+
+
 	@Override
 	public String toString() {
 		return "StockListDTO [length=" + length + ", weight=" + weight + ", purchase_price=" + purchase_price
 				+ ", quantity=" + quantity + ", purchase_company=" + purchase_company + ", product=" + product
 				+ ", purchase_pdtnum=" + purchase_pdtnum + ", stock_date=" + stock_date + ", purchase_EAprice="
-				+ purchase_EAprice + "]";
+				+ purchase_EAprice + ", standard=" + standard + "]";
 	}
+
+
+	
 
 	
 

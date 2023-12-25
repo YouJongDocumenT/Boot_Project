@@ -23,6 +23,7 @@ public class SellAllDataDTO {
     private int tax;
     private String sell_pdt;
     private int sell_EAprice;
+    private String standard;
     
 	public SellAllDataDTO() {
 
@@ -31,7 +32,7 @@ public class SellAllDataDTO {
 	public SellAllDataDTO(String client_id, String client_company, String address, String comp_number, String email,
 			String machine_id, String machine_name, String machine_memo, String resp_id, String responsibility,
 			String ph_number, Date sell_date, int sell_quantity, int sell_length, int sell_weight, int sell_price,
-			int tax, String sell_pdt, int sell_EAprice) {
+			int tax, String sell_pdt, int sell_EAprice, String standard) {
 		super();
 		this.client_id = client_id;
 		this.client_company = client_company;
@@ -52,6 +53,7 @@ public class SellAllDataDTO {
 		this.tax = tax;
 		this.sell_pdt = sell_pdt;
 		this.sell_EAprice = sell_EAprice;
+		this.standard = standard;
 	}
 
 	public String getClient_id() {
@@ -206,6 +208,14 @@ public class SellAllDataDTO {
 		this.sell_EAprice = sell_EAprice;
 	}
 
+	public String getStandard() {
+		return standard;
+	}
+
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+
 	@Override
 	public String toString() {
 		return "SellAllDataDTO [client_id=" + client_id + ", client_company=" + client_company + ", address=" + address
@@ -213,8 +223,11 @@ public class SellAllDataDTO {
 				+ machine_name + ", machine_memo=" + machine_memo + ", resp_id=" + resp_id + ", responsibility="
 				+ responsibility + ", ph_number=" + ph_number + ", sell_date=" + sell_date + ", sell_quantity="
 				+ sell_quantity + ", sell_length=" + sell_length + ", sell_weight=" + sell_weight + ", sell_price="
-				+ sell_price + ", tax=" + tax + ", sell_pdt=" + sell_pdt + ", sell_EAprice=" + sell_EAprice + "]";
+				+ sell_price + ", tax=" + tax + ", sell_pdt=" + sell_pdt + ", sell_EAprice=" + sell_EAprice
+				+ ", standard=" + standard + "]";
 	}
+
+	
 
 	
 

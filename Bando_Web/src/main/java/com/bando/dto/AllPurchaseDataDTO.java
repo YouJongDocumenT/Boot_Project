@@ -15,25 +15,28 @@ public class AllPurchaseDataDTO {
 	private int purchase_price;
 	private int pur_length;
 	private int pur_weight;
+	private String standard;
 	
 	public AllPurchaseDataDTO() {
 
 	}
 
 	public AllPurchaseDataDTO(int purchase_id, String purchase_company, String address, int comp_number, String email,
-			String product, Date purchase_date, int pur_quantity, int purchase_price, int pur_length, int pur_weight) {
+			String product, Date purchase_date, int pur_quantity, int purchase_price, int pur_length, int pur_weight,
+			String standard) {
 		super();
 		this.purchase_id = purchase_id;
 		this.purchase_company = purchase_company;
 		this.address = address;
 		this.comp_number = comp_number;
 		this.email = email;
-		this.Product = product;
+		Product = product;
 		this.purchase_date = purchase_date;
 		this.pur_quantity = pur_quantity;
 		this.purchase_price = purchase_price;
 		this.pur_length = pur_length;
 		this.pur_weight = pur_weight;
+		this.standard = standard;
 	}
 
 	public int getPurchase_id() {
@@ -124,16 +127,23 @@ public class AllPurchaseDataDTO {
 		this.pur_weight = pur_weight;
 	}
 
+	public String getStandard() {
+		return standard;
+	}
+
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+
 	@Override
 	public String toString() {
 		return "AllPurchaseDataDTO [purchase_id=" + purchase_id + ", purchase_company=" + purchase_company
 				+ ", address=" + address + ", comp_number=" + comp_number + ", email=" + email + ", Product=" + Product
 				+ ", purchase_date=" + purchase_date + ", pur_quantity=" + pur_quantity + ", purchase_price="
-				+ purchase_price + ", pur_length=" + pur_length + ", pur_weight=" + pur_weight + "]";
+				+ purchase_price + ", pur_length=" + pur_length + ", pur_weight=" + pur_weight + ", standard="
+				+ standard + "]";
 	}
 
-	
-	
 	
 	
 

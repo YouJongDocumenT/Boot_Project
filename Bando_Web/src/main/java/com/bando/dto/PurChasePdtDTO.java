@@ -14,13 +14,15 @@ public class PurChasePdtDTO {
 	private int purchase_pdtnum;
 	private int total_purchase_price;
 	private int purchase_EAprice;
+	private String standard;
 	
 	public PurChasePdtDTO() {
 
 	}
 
 	public PurChasePdtDTO(int purchase_id, String product, Date purchase_date, int pur_quantity, int purchase_price,
-			int pur_length, int pur_weight, int purchase_pdtnum, int total_purchase_price, int purchase_EAprice) {
+			int pur_length, int pur_weight, int purchase_pdtnum, int total_purchase_price, int purchase_EAprice,
+			String standard) {
 		super();
 		this.purchase_id = purchase_id;
 		Product = product;
@@ -32,6 +34,7 @@ public class PurChasePdtDTO {
 		this.purchase_pdtnum = purchase_pdtnum;
 		this.total_purchase_price = total_purchase_price;
 		this.purchase_EAprice = purchase_EAprice;
+		this.standard = standard;
 	}
 
 	public int getPurchase_id() {
@@ -114,22 +117,23 @@ public class PurChasePdtDTO {
 		this.purchase_EAprice = purchase_EAprice;
 	}
 
+	public String getStandard() {
+		return standard;
+	}
+
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+
 	@Override
 	public String toString() {
 		return "PurChasePdtDTO [purchase_id=" + purchase_id + ", Product=" + Product + ", purchase_date="
 				+ purchase_date + ", pur_quantity=" + pur_quantity + ", purchase_price=" + purchase_price
 				+ ", pur_length=" + pur_length + ", pur_weight=" + pur_weight + ", purchase_pdtnum=" + purchase_pdtnum
-				+ ", total_purchase_price=" + total_purchase_price + ", purchase_EAprice=" + purchase_EAprice + "]";
+				+ ", total_purchase_price=" + total_purchase_price + ", purchase_EAprice=" + purchase_EAprice
+				+ ", standard=" + standard + "]";
 	}
 
-	
-
-	
-
-	
-
-	
-	
 	
 	
 	

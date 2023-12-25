@@ -8,15 +8,13 @@
    <insert id="productinsert">
 	   INSERT INTO TEST_ALLBOARD(PDTNUM, PRODUCT, PURCHASECOMP, REPOSIBILITY, PWEIGHT
 	   							, PLENGTH, QUANTITY, PCHPRICE, PRICE, TAX, DIFFERENCE)
-	                 VALUES( TEST_ALLBOARD_SEQ.NEXTVAL, #{product}, #{purchasecomp}, #{reposibility}, #{pweight}
-	                 		, #{plength}, #{quantity}, #{pchprice}, #{price}, #{tax}, #{difference} )
+	                 VALUES( TEST_ALLBOARD_SEQ.NEXTVAL, #{product}, #{purchasecomp}, #{reposibility}, #{standard}, #{quantity}, #{pchprice}, #{price}, #{tax}, #{difference} )
    
    </insert>
    
 <!-- 재고 조회 -->
    <select id="productlist" resultType="com.bando.dto.manageDTO">
-	   SELECT PDTNUM, BUTDATE, PRODUCT, PURCHASECOMP, REPOSIBILITY, PWEIGHT
-	   			, PLENGTH, QUANTITY, PCHPRICE, PRICE, TAX, DIFFERENCE
+	   SELECT PDTNUM, BUTDATE, PRODUCT, PURCHASECOMP, REPOSIBILITY, standard, QUANTITY, PCHPRICE, PRICE, TAX, DIFFERENCE
 	   		FROM TEST_ALLBOARD
 	        ORDER BY PDTNUM DESC  
    </select>
@@ -27,8 +25,7 @@
 	   		SET PRODUCT = #{product},
 	   			PURCHASECOMP = #{purchasecomp},
 	   			REPOSIBILITY = #{reposibility},
-	   			PWEIGHT = #{pweight},
-	   			PLENGTH = #{plength},
+	   			STANDARD = #{standard},
 	   			QUANTITY = #{quantity},
 	   			PCHPRICE = #{pchprice},
 	   			PRICE = #{price},
@@ -70,8 +67,8 @@
 <!-- 구매처 회사 매칭해 거래내역 추가 -->
 <insert id="purchcomptradelist">
 	   INSERT INTO purchase_table (purchase_pdtnum, purchase_id, product, pur_quantity, 
-	   								purchase_price, pur_length, pur_weight, purchase_EAprice)
-	   			VALUES ( clientcomp_table_SEQ.NEXTVAL, #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{pur_length}, #{pur_weight}, #{purchase_EAprice})
+	   								purchase_price, standard, purchase_EAprice)
+	   			VALUES ( clientcomp_table_SEQ.NEXTVAL, #{purchase_id}, #{product}, #{pur_quantity}, #{purchase_price}, #{standard}, #{purchase_EAprice})
    </insert>
    
 <!-- 구매처 회사 정보 조회 -->
@@ -87,8 +84,7 @@
 		       purchase_date, 
 		       pur_quantity, 
 		       purchase_price, 
-		       pur_length, 
-		       pur_weight, 
+		       standard, 
 		       purchase_pdtnum,
 		       purchase_EAprice
 		FROM (
@@ -96,8 +92,7 @@
 		               purchase_date, 
 		               pur_quantity, 
 		               purchase_price, 
-		               pur_length, 
-		               pur_weight, 
+		               standard, 
 		               purchase_pdtnum,
 		               purchase_EAprice,
 		               ROW_NUMBER() OVER(ORDER BY purchase_pdtnum DESC) AS RNUM
@@ -158,8 +153,8 @@
    
 <!-- 판매 정보 작성 -->
    <insert id="selladd">
-	   INSERT INTO sell_product(resp_id, client_id, machine_id, responsibility, ph_number, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt, sell_EAprice, purchase_pdtnum )
-	                 VALUES( resp_id.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{sell_length}, #{sell_weight}, #{sell_price}, #{tax}, #{sell_pdt}, #{sell_EAprice}, #{purchase_pdtnum} )
+	   INSERT INTO sell_product(resp_id, client_id, machine_id, responsibility, ph_number, sell_quantity, standard, sell_price, tax, sell_pdt, sell_EAprice, purchase_pdtnum )
+	                 VALUES( resp_id.NEXTVAL, #{client_id}, #{machine_id}, #{responsibility}, #{ph_number}, #{sell_quantity}, #{standard}, #{sell_price}, #{tax}, #{sell_pdt}, #{sell_EAprice}, #{purchase_pdtnum} )
    
    </insert>   
         
@@ -174,7 +169,7 @@
         
 <!-- 매칭된 machine_id값의 판매 정보 조회 -->
    <select id="sellListbyid" resultType="com.bando.dto.SellpdtDTO">
-	   SELECT responsibility, ph_number, sell_date, sell_quantity, sell_length, sell_weight, sell_price, tax, sell_pdt, sell_EAprice
+	   SELECT responsibility, ph_number, sell_date, sell_quantity, standard, sell_price, tax, sell_pdt, sell_EAprice
 	   		FROM sell_product
 	   		WHERE client_id = #{client_id}
    </select> 
@@ -200,8 +195,7 @@
 			       MP.responsibility, 
 			       MP.ph_number, 
 			       MP.sell_quantity, 
-			       MP.sell_length, 
-			       MP.sell_weight, 
+			       MP.standard, 
 			       MP.sell_price, 
 			       MP.tax, 
 			       MP.sell_pdt, 
@@ -219,8 +213,7 @@
 			           sp.responsibility, 
 			           sp.ph_number, 
 			           sp.sell_quantity, 
-			           sp.sell_length, 
-			           sp.sell_weight, 
+			           sp.standard, 
 			           sp.sell_price, 
 			           sp.tax, 
 			           sp.sell_pdt, 
@@ -266,8 +259,7 @@
 		           MP.email,
 		           MP.pur_quantity,
 		           MP.purchase_price,
-		           MP.pur_length,
-		           MP.pur_weight,
+		           MP.standard,
 		           MP.product,
 		           MP.purchase_date,
 		           MP.purchase_pdtnum
@@ -279,14 +271,14 @@
 		           pc.email,
 		           pt.pur_quantity,
 		           pt.purchase_price,
-		           pt.pur_length,
-		           pt.pur_weight,
+		           pt.standard,
 		           pt.product,
 		           pt.purchase_date,
 		           pt.purchase_pdtnum,
 		           ROW_NUMBER() OVER (ORDER BY pt.purchase_pdtnum DESC) AS RNUM
 		    FROM purchasecomp_table pc
 		    JOIN purchase_table pt ON pc.purchase_id = pt.purchase_id
+		    <include refid="PurchaseSearch"></include>	
 		) MP
 		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		ORDER BY MP.purchase_pdtnum DESC
@@ -310,8 +302,7 @@
          MP.ph_number,
          MP.sell_date,
          MP.sell_quantity,
-         MP.sell_length,
-         MP.sell_weight,
+         MP.standard,
          MP.sell_price,
          MP.tax,
          MP.sell_pdt,
@@ -325,8 +316,7 @@
                    sp.ph_number,
                    sp.sell_date,
                    sp.sell_quantity,
-                   sp.sell_length,
-                   sp.sell_weight,
+                   sp.standard,
                    sp.sell_price,
                    sp.tax,
                    sp.sell_pdt,
@@ -335,6 +325,7 @@
             FROM clientcomp_table cc
             JOIN machine_table mt ON cc.client_id = mt.client_id
             JOIN sell_product sp ON mt.machine_id = sp.machine_id
+            <include refid="SellSearch"></include>
        ) MP
          WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
          ORDER BY MP.resp_id DESC
@@ -355,8 +346,7 @@
     SET Product = #{Product},
         pur_quantity = #{pur_quantity},
         purchase_price = #{purchase_price},
-        pur_length = #{pur_length},
-        pur_weight = #{pur_weight}
+        standard = #{standard}
     WHERE purchase_id = #{purchase_id}
 </update>
 
@@ -368,8 +358,7 @@
 		SET 
 			responsibility = #{responsibility},
 		    sell_quantity = #{sell_quantity},
-		    sell_length = #{sell_length},
-		    sell_weight = #{sell_weight},
+		    standard = #{standard},
 		    sell_price = #{sell_price},
 		    tax = #{tax},
 		    sell_pdt = #{sell_pdt}
@@ -399,7 +388,7 @@
 
 <!-- 재고테이블 조회 -->
    <select id="StockList" resultType="com.bando.dto.StockListDTO">
-	   SELECT length, weight, purchase_price, quantity, purchase_company, product, purchase_pdtnum, stock_date, purchase_EAprice
+	   SELECT standard, purchase_price, quantity, purchase_company, product, purchase_pdtnum, stock_date, purchase_EAprice
 	   		FROM STOCK_TABLE
 	        ORDER BY PURCHASE_PDTNUM DESC  
    </select>
@@ -408,8 +397,7 @@
    
  <!-- 재고테이블 조회 -->
    <select id="StockList_P" resultType="com.bando.dto.StockListDTO">
-		   SELECT length, 
-			       weight, 
+		   SELECT standard, 
 			       purchase_price, 
 			       quantity, 
 			       purchase_company, 
@@ -418,8 +406,7 @@
 			       stock_date, 
 			       purchase_EAprice
 			FROM (
-			    SELECT length, 
-			           weight, 
+			    SELECT standard, 
 			           purchase_price, 
 			           quantity, 
 			           purchase_company, 
@@ -468,10 +455,9 @@
    
 <!-- 최근에 추가된 구매테이블의 값을 재고테이블에 추가 -->
    <insert id="AddStock">
-		INSERT INTO STOCK_TABLE (LENGTH, WEIGHT, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_EAprice, purchase_company)
+		INSERT INTO STOCK_TABLE (STANDARD, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_EAprice, purchase_company)
 			SELECT 
-			    pur_length AS LENGTH,
-			    pur_weight AS WEIGHT,
+			    standard AS STANDARD,
 			    purchase_price AS PURCHASE_PRICE,
 			    pur_quantity AS QUANTITY,
 			    product AS PRODUCT,

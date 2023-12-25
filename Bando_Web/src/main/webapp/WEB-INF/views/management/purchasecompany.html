@@ -436,9 +436,8 @@
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
                                             <th>구매일</th>
-                                            <th>품명</th>
+                                            <th>품명 | 규격</th>
                                             <th>구매처</th>
-                                            <th>규격(mm)</th>
                                             <th>수량</th>
                                             <th>개당 가격</th>
                                             <th>총 구매가격</th>
@@ -464,7 +463,6 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th></th>
                                             <th>총 지출(원)</th>
                                             <th class="money" th:text="${PurChasePdtById} + ' 원'"></th>
 											<th>
@@ -478,9 +476,8 @@
                                         		<input type="checkbox" name="RowCheck" th:value="${item.purchase_pdtnum}"/>
                                         	</th>
                                             <td th:text="${#dates.format(item.purchase_date, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${item.Product}"></td>
+                                            <td th:text="${item.Product + ' | ' + item.standard }"></td>
                                             <td th:text="${PurchaseCompany}"></td>
-                                            <td class="money" type="text"th:text="${item.pur_length + '*' + item.pur_weight + '(mm)'}"></td>
                                             <!-- <input type="text"th:text="${item.pweight}"> -->
                                             <!-- <input type="text" th:text="${item.plength}"> -->
                                             <td class="money" th:text="${item.pur_quantity + 'EA'}"></td>
@@ -493,16 +490,14 @@
                                                         style="cursor: pointer;"
                                                         th:Product="${item.Product}"
                                                         th:PurchaseCompany="${PurchaseCompany}"
-                                                        th:pweight="${item.pur_weight}"
-                                                        th:plength="${item.pur_length}"
+                                                        th:standard="${item.standard}"
                                                         th:quantity="${item.pur_quantity}"
                                                         th:pchprice="${item.purchase_price}"
                                                         th:PurchaseId="${purchase_id}"
                                                         th:onclick="initSellDetail([
                                                             this.getAttribute('Product'),
                                                             this.getAttribute('PurchaseCompany'),
-                                                            this.getAttribute('pweight'),
-                                                            this.getAttribute('plength'),
+                                                            this.getAttribute('standard'),
                                                             this.getAttribute('quantity'),
                                                             this.getAttribute('pchprice'),
                                                             this.getAttribute('PurchaseId')
@@ -634,6 +629,12 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="editId" class="col-sm-2 col-form-label">규격</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addStandard" name="standard" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">단가(EA)</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addpurchase_EAprice" name="purchase_EAprice" value="" require>
@@ -643,18 +644,6 @@
                         <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addpur_quantity" name="pur_quantity" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">길이</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addPlength" name="pur_length" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addPweight" name="pur_weight" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -711,15 +700,9 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
+                        <label for="EditProduct" class="col-sm-2 col-form-label">규격</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPweight" name="pur_weight" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">가로</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPlength" name="pur_length" value="" require>
+                            <input type="text" class="form-control" id="EditStandard" name="standard" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -999,17 +982,15 @@ function PurchAdd(duct){
 	function initSellDetail(duct){
 	    const Product = duct[0];
 	    const PurchaseCompany = duct[1];
-	    const pur_weight = duct[2];
-	    const pur_length = duct[3];
-	    const pur_quantity = duct[4];
-	    const purchase_price = duct[5];
-	    const Purchase_id = duct[6];
+	    const standard = duct[2];
+	    const pur_quantity = duct[3];
+	    const purchase_price = duct[4];
+	    const Purchase_id = duct[5];
 
 
 	    document.querySelector("#EditProduct").value = Product;
 	    document.querySelector("#Editpurchasecomp").value = PurchaseCompany;
-	    document.querySelector("#EditPweight").value = pur_weight;
-	    document.querySelector("#EditPlength").value = pur_length;
+	    document.querySelector("#EditStandard").value = standard;
 	    document.querySelector("#EditQuantity").value = pur_quantity;
 	    document.querySelector("#EditPchprice").value = purchase_price;
 	    document.querySelector("#EditpurchaseId").value = Purchase_id;

@@ -432,6 +432,7 @@
                                         <a class="btn btn-sm btn-outline-danger" type="button" 
                                         				onclick="deleteValue();" th:text="삭제"></a>
                                     </div>
+                                <form role="form" method="get">
                                 <table class="table table-hover" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -439,11 +440,10 @@
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
                                             <th>판매일</th>
-                                            <th>품명</th>
+                                            <th>품명 | 규격</th>
                                             <th>고객사</th>
                                             <th>기계명</th>
                                             <th>담당자</th>                                           
-                                            <th>규격(mm)</th>
                                             <th>수량</th>                                           
                                             <th>단가</th>
                                             <th>세액</th>
@@ -451,7 +451,6 @@
                                     </thead>
                                     <tfoot>
                                         <tr >
-											<th></th>
 											<th></th>
 											<th>총 세액(원)</th>
 											<th class="money" th:text="${PriceList[0].tax} + ' 원'"></th>
@@ -469,17 +468,33 @@
                                         		<input type="checkbox" name="RowCheck" />
                                         	</th>
                                             <td th:text="${#dates.format(item.sell_date, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${item.sell_pdt}"></td>
+                                            <td th:text="${item.sell_pdt + ' | ' + item.standard}"></td>
                                             <td th:text="${item.client_company}"></td>
                                             <td th:text="${item.machine_name}"></td>
                                             <td th:text="${item.responsibility}"></td>
-                                            <td class="money" type="text" th:text="${item.sell_length + '*' + item.sell_weight + '(mm)'}"></td>
                                             <td class="money" th:text="${item.sell_quantity + 'EA'}"></td>
                                             <td class="money" th:text="${item.sell_price + '원'}"></td>
                                             <td class="money" th:text="${item.tax + '원'}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="search">
+								    <select name="searchType">
+								        <option value="n" th:selected="${scri.searchType == null}">-----</option>
+								        <option value="t" th:selected="${scri.searchType == 't'}">담당자</option>
+								        <option value="c" th:selected="${scri.searchType == 'c'}">품명</option>
+								        <option value="w" th:selected="${scri.searchType == 'w'}">년도 검색</option>
+								        <option value="tc" th:selected="${scri.searchType == 'tc'}">담당자+품명</option>
+								    </select>
+								
+								    <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}"/>
+								
+								    <button id="searchBtn" type="button" th:attr="data-url=@{/SellList}">검색</button>
+								
+								    <!-- @@@@@@@@@@@@@@@@@@@@@ -->
+								</div>
+								
+                                </form>
                                 <div>
 									<ul>
 										<li th:if="${pageMaker.prev}"><a
@@ -864,6 +879,36 @@ Swal.fire(
 
 	
 	</script>
+	
+	
+	
+	<script th:inline="javascript">
+    $(function(){
+        $('#searchBtn').click(function() {
+            var selectedOption = $("select option:selected").val();
+            var keyword = encodeURIComponent($('#keywordInput').val());
+            var url = /*[[@{SellList}]]*/ '';
+            var query = /*[[${pageMaker.makeQuery(1)}]]*/ '';
+            
+            var queryString = "";
+
+            // Add purchase_id parameter only if purchaseId is not empty
+
+            // Remove '?' from query if it exists
+            if (query.startsWith('?')) {
+                query = query.substring(1);
+            }
+
+            queryString += query + "&searchType=" + selectedOption + "&keyword=" + keyword;
+
+            self.location = url + "?" + queryString;
+        });
+    });
+</script>
+
+
+
+
 </body>
 
 </html>

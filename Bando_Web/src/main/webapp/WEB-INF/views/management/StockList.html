@@ -440,12 +440,12 @@
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
                                         	<th>수정일</th>
-                                            <th>품명</th>
-                                            <th>구매처</th>
-                                            <th>규격(mm)</th>                                          
+                                            <th>품명 | 규격</th>
+                                            <th>구매처</th>                                     
                                             <th>수량</th>
                                             <th>개당 금액</th>
-                                            <th>재고 금액</th>                             
+                                            <th>재고 금액</th>   
+                                            <th></th>                          
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -466,12 +466,12 @@
                                         		<input type="checkbox" name="RowCheck" th:value="${item.purchase_pdtnum}"/>
                                         	</th>
                                             <td th:text="${#dates.format(item.stock_date, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${item.product}"></td>
+                                            <td th:text="${item.product + ' | ' + item.standard}"></td>
                                             <td th:text="${item.purchase_company}"></td>
-                                            <td class="money" type="text" th:text="${item.length + '*' + item.weight + '(mm)'}"></td>
                                             <td class="money" th:text="${item.quantity}"></td>
                                             <td class="money" th:text="${item.purchase_EAprice} + ' 원'"></td>
                                             <td class="money" th:text="${item.purchase_price} + ' 원'"></td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -448,11 +448,10 @@
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
                                             <th>판매일</th>
-                                            <th>품명</th>
+                                            <th>품명 | 규격</th>
                                             <th>고객사</th>
                                             <th>기계명</th>
                                             <th>담당자</th>
-                                            <th>규격(mm)</th>
                                             <th>수량</th>
                                             <th>단가</th>
                                             <th>총 판매액</th>
@@ -495,7 +494,6 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th></th>
                                             <th>총 세액(원)</th>
                                             <th class="money" th:text="${Total_tax} + ' 원'"></th>
                                             <th>총 판매(원)</th>
@@ -534,12 +532,11 @@
                                         	</th>
 											<td
 												th:text="${#dates.format(sellData.sell_date, 'yyyy-MM-dd')}"></td>
-											<td th:text="${sellData.sell_pdt}"></td>
+											<td th:text="${sellData.sell_pdt + ' | ' + sellData.standard }"></td>
 											<td th:text="${sellData.client_company}"></td>
 											<td th:text="${sellData.machine_name}"></td>
 											<!-- 필요한 속성들을 모두 출력 -->
 											<td th:text="${sellData.responsibility}"></td>
-											<td class="money" th:text="${sellData.sell_length + ' * ' + sellData.sell_weight + ' (mm)'}"></td>
 											<td class="money" th:text="${sellData.sell_quantity + 'EA'}"></td>
 											<td class="money" th:text="${sellData.sell_EAprice + '원'}"></td>
 											<td class="money" th:text="${sellData.sell_price + '원'}"></td>
@@ -554,8 +551,7 @@
 												th:machine_id="${sellData.machine_id}"
 												th:machine_name="${sellData.machine_name}"
 												th:responsibility="${sellData.responsibility}"
-												th:sell_length="${sellData.sell_length}"
-												th:sell_weight="${sellData.sell_weight}"
+												th:standard="${sellData.standard}"
 												th:sell_quantity="${sellData.sell_quantity}"
 												th:sell_price="${sellData.sell_price}"
 												th:tax="${sellData.tax}"
@@ -567,8 +563,7 @@
 											                        this.getAttribute('machine_id'),
 																	this.getAttribute('machine_name'),
 																	this.getAttribute('responsibility'),
-																	this.getAttribute('sell_length'),
-																	this.getAttribute('sell_weight'),
+																	this.getAttribute('standard'),
 																	this.getAttribute('sell_quantity'),
 																	this.getAttribute('sell_price'),
 																	this.getAttribute('tax'),
@@ -792,6 +787,12 @@
 							</div>
 							<!-- @@@@@@@@@@@@@ -->
 						</div>
+					<div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">규격</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addStandard" name="standard" value="" require>
+                        </div>
+                    </div>
                     <div class="mb-3 row">
                         <label for="editEmail" class="col-sm-2 col-form-label">수량</label>
                         <div class="col-sm-10">
@@ -802,18 +803,6 @@
                         <label for="editEmail" class="col-sm-2 col-form-label">단가</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addSell_EAprice" name="sell_EAprice" value="" oninput="calculatePercentage()" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">길이</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addSell_length" name="sell_length" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addSell_weight" name="sell_weight" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -869,6 +858,12 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">규격</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="EditStandard" name="standard" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="editName" class="col-sm-2 col-form-label">고객사</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="Editclient_company" name="client_company" value="" readonly>
@@ -887,18 +882,6 @@
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="Editresponsibility" name="responsibility" value="" require>
                             <input type="hidden" class="form-control" id="Editresp_id" name="resp_id" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">가로</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Editsell_length" name="sell_length" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Editsell_weight" name="sell_weight" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1329,20 +1312,18 @@ function initSellAdd(duct){
 	    const Product = duct[1];
 	    const purchasecomp = duct[2];
 	    const reposibility = duct[3];
-	    const pweight = duct[4];
-	    const plength = duct[5];
-	    const quantity = duct[6];
-	    const pchprice = duct[7];
-	    const price = duct[8];
-	    const tax = duct[9];
-	    const difference = duct[10];
+	    const standard = duct[4];
+	    const quantity = duct[5];
+	    const pchprice = duct[6];
+	    const price = duct[7];
+	    const tax = duct[8];
+	    const difference = duct[9];
 
 	    document.querySelector("#Editpdtnum").value = pdtnum;
 	    document.querySelector("#EditProduct").value = Product;
 	    document.querySelector("#Editpurchasecomp").value = purchasecomp;
 	    document.querySelector("#EditReposibility").value = reposibility;
-	    document.querySelector("#EditPweight").value = pweight;
-	    document.querySelector("#EditPlength").value = plength;
+	    document.querySelector("#EditStandard").value = standard;
 	    document.querySelector("#EditQuantity").value = quantity;
 	    document.querySelector("#EditPchprice").value = pchprice;
 	    document.querySelector("#EditPrice").value = price;
@@ -1360,12 +1341,11 @@ function initSellAdd(duct){
 	    const machine_id = duct[3];
 	    const machine_name = duct[4];
 	    const responsibility = duct[5];
-	    const sell_length = duct[6];
-	    const sell_weight = duct[7];
-	    const sell_quantity = duct[8];
-	    const sell_price = duct[9];
-	    const tax = duct[10];
-	    const resp_id = duct[11];
+	    const standard = duct[6];
+	    const sell_quantity = duct[7];
+	    const sell_price = duct[8];
+	    const tax = duct[9];
+	    const resp_id = duct[10];
 
 	    document.querySelector("#Editsell_pdt").value = sell_pdt;
 	    document.querySelector("#Editclient_id").value = client_id;
@@ -1373,8 +1353,7 @@ function initSellAdd(duct){
 	    document.querySelector("#Editmachine_id").value = machine_id;
 	    document.querySelector("#Editmachine_name").value = machine_name;
 	    document.querySelector("#Editresponsibility").value = responsibility;
-	    document.querySelector("#Editsell_length").value = sell_length;
-	    document.querySelector("#Editsell_weight").value = sell_weight;
+	    document.querySelector("#EditStandard").value = standard;
 	    document.querySelector("#Editsell_quantity").value = sell_quantity;
 	    document.querySelector("#Editsell_price").value = sell_price;
 	    document.querySelector("#Edittax").value = tax;
