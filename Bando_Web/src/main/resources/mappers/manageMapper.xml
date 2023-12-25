@@ -461,12 +461,13 @@
 		        p.product,
 		        p.standard,
 		        p.purchase_price,
+		        p.purchase_EAprice,
 		        SUM(p.pur_quantity) AS total_quantity
 		    FROM Purchase_table p
 		    WHERE p.purchase_date = (SELECT MAX(purchase_date) FROM Purchase_table)
-		    GROUP BY p.product, p.standard, p.purchase_price
+		    GROUP BY p.product, p.standard, purchase_price, p.purchase_EAprice
 		) p
-		ON (s.purchase_price = p.purchase_price AND s.product = p.product AND s.standard = p.standard)
+		ON (s.purchase_EAprice = p.purchase_EAprice AND s.product = p.product AND s.standard = p.standard)
 		WHEN MATCHED THEN
 		    UPDATE SET s.quantity = s.quantity + p.total_quantity
 		WHEN NOT MATCHED THEN
