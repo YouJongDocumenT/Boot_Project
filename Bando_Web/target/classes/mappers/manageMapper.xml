@@ -455,21 +455,39 @@
    
 <!-- 최근에 추가된 구매테이블의 값을 재고테이블에 추가 -->
    <insert id="AddStock">
-		INSERT INTO STOCK_TABLE (STANDARD, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_EAprice, purchase_company)
-			SELECT 
-			    standard AS STANDARD,
-			    purchase_price AS PURCHASE_PRICE,
-			    pur_quantity AS QUANTITY,
-			    product AS PRODUCT,
-			    purchase_pdtnum AS purchase_pdtnum,
-			    purchase_EAprice AS purchase_EAprice,
-			    #{PurchaseCompany} AS purchase_company
-			FROM purchase_table
-			WHERE purchase_pdtnum = (
-			    SELECT MAX(purchase_pdtnum)
-			    FROM purchase_table
-			)
+		MERGE INTO stock_table s
+		USING (
+		    SELECT 
+		        p.product,
+		        p.standard,
+		        p.purchase_price,
+		        SUM(p.pur_quantity) AS total_quantity
+		    FROM Purchase_table p
+		    WHERE p.purchase_date = (SELECT MAX(purchase_date) FROM Purchase_table)
+		    GROUP BY p.product, p.standard, p.purchase_price
+		) p
+		ON (s.purchase_price = p.purchase_price AND s.product = p.product AND s.standard = p.standard)
+		WHEN MATCHED THEN
+		    UPDATE SET s.quantity = s.quantity + p.total_quantity
+		WHEN NOT MATCHED THEN
+		    INSERT (STANDARD, PURCHASE_PRICE, QUANTITY, PRODUCT, PURCHASE_PDTNUM, purchase_EAprice, purchase_company)
+		    VALUES (
+		        p.standard,
+		        p.purchase_price,
+		        p.total_quantity,
+		        p.product,
+		        (SELECT MAX(purchase_pdtnum) FROM purchase_table),
+		        (SELECT purchase_EAprice FROM purchase_table WHERE purchase_pdtnum = (SELECT MAX(purchase_pdtnum) FROM purchase_table)),
+		        #{PurchaseCompany}
+		    )
    </insert>
+   
+   
+   
+   
+   
+   
+   
    
    
    

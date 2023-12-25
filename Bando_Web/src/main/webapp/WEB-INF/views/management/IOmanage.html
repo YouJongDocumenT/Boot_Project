@@ -442,10 +442,9 @@
                                         		<input type="checkbox" id="allCheck" name="allCheck">
                                         	</th>
                                             <th>구매일</th>
-                                            <th>품명</th>
+                                            <th>품명 | 규격</th>
                                             <th>구매처</th>
                                             <th>담당자</th>
-                                            <th>규격(mm)</th>
                                             <th>수량</th>
                                             <th>단가</th>
                                             <th>가격</th>
@@ -459,7 +458,6 @@
                                     </thead>
                                     <tfoot>
                                         <tr th:each="sales : ${saleslist}">
-											<th></th>
 											<th></th>
 											<th></th>
 											<th></th>
@@ -480,10 +478,9 @@
                                         		<input type="checkbox" name="RowCheck" th:value="${item.pdtnum}"/>
                                         	</th>
                                             <td th:text="${#dates.format(item.butdate, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${item.Product}"></td>
+                                            <td th:text="${item.Product + ' | ' + item.standard}"></td>
                                             <td th:text="${item.purchasecomp}"></td>
                                             <td th:text="${item.reposibility}"></td>
-                                            <td class="money" type="text" th:text="${item.plength + '*' + item.pweight + '(mm)'}"></td>
                                             <!-- <input type="text"th:text="${item.pweight}"> -->
                                             <!-- <input type="text" th:text="${item.plength}"> -->
                                             <td class="money" th:text="${item.quantity + 'EA'}"></td>
@@ -500,8 +497,7 @@
                                                         th:Product="${item.Product}"
                                                         th:purchasecomp="${item.purchasecomp}"
                                                         th:reposibility="${item.reposibility}"
-                                                        th:pweight="${item.pweight}"
-                                                        th:plength="${item.plength}"
+                                                        th:standard="${item.standard}"
                                                         th:quantity="${item.quantity}"
                                                         th:pchprice="${item.pchprice}"
                                                         th:price="${item.price}"
@@ -512,8 +508,7 @@
                                                             this.getAttribute('Product'),
                                                             this.getAttribute('purchasecomp'),
                                                             this.getAttribute('reposibility'),
-                                                            this.getAttribute('pweight'),
-                                                            this.getAttribute('plength'),
+                                                            this.getAttribute('standard'),
                                                             this.getAttribute('quantity'),
                                                             this.getAttribute('pchprice'),
                                                             this.getAttribute('price'),
@@ -601,6 +596,12 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="editId" class="col-sm-2 col-form-label">규격</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addStandard" name="standard" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="editName" class="col-sm-2 col-form-label">구매처</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addpurchasecomp" name="purchasecomp" value="" require>
@@ -610,18 +611,6 @@
                         <label for="editEmail" class="col-sm-2 col-form-label">담당자</label>
                         <div class="col-sm-10">
                             <input type="email" class="form-control" id="addReposibility" name="reposibility" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addPweight" name="pweight" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">가로</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="addPlength" name="plength" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -696,6 +685,12 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="editName" class="col-sm-2 col-form-label">규격</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="EditStandard" name="standard" value="" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="editName" class="col-sm-2 col-form-label">구매처</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="Editpurchasecomp" name="purchasecomp" value="" require>
@@ -705,18 +700,6 @@
                         <label for="editEmail" class="col-sm-2 col-form-label">담당자</label>
                         <div class="col-sm-10">
                             <input type="email" class="form-control" id="EditReposibility" name="reposibility" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">폭</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPweight" name="pweight" value="" require>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="editEmail" class="col-sm-2 col-form-label">가로</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="EditPlength" name="plength" value="" require>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1060,20 +1043,18 @@ Swal.fire(
 	    const Product = duct[1];
 	    const purchasecomp = duct[2];
 	    const reposibility = duct[3];
-	    const pweight = duct[4];
-	    const plength = duct[5];
-	    const quantity = duct[6];
-	    const pchprice = duct[7];
-	    const price = duct[8];
-	    const tax = duct[9];
-	    const difference = duct[10];
+	    const standard = duct[4];
+	    const quantity = duct[5];
+	    const pchprice = duct[6];
+	    const price = duct[7];
+	    const tax = duct[8];
+	    const difference = duct[9];
 
 	    document.querySelector("#Editpdtnum").value = pdtnum;
 	    document.querySelector("#EditProduct").value = Product;
 	    document.querySelector("#Editpurchasecomp").value = purchasecomp;
 	    document.querySelector("#EditReposibility").value = reposibility;
-	    document.querySelector("#EditPweight").value = pweight;
-	    document.querySelector("#EditPlength").value = plength;
+	    document.querySelector("#EditStandard").value = standard;
 	    document.querySelector("#EditQuantity").value = quantity;
 	    document.querySelector("#EditPchprice").value = pchprice;
 	    document.querySelector("#EditPrice").value = price;
