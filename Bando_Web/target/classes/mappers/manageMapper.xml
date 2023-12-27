@@ -345,6 +345,7 @@
 		ORDER BY MP.purchase_pdtnum DESC
 		
    </select>
+
 	
 	
    
@@ -509,8 +510,8 @@
 			<if test="searchType == 't'.toString()">AND PRODUCT LIKE '%' || #{keyword} || '%'</if>
 			<if test="searchType == 'c'.toString()">AND STOCK_DATE LIKE '%' || #{keyword} || '%'</if>
 			<if test="searchType == 'w'.toString()">AND purchase_company LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'y'.toString()">WHERE stock_date LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'm'.toString()">WHERE stock_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'y'.toString()">AND stock_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'm'.toString()">AND stock_date LIKE '%' || #{keyword} || '%'</if>
 			<if test="searchType == 'tc'.toString()">AND (PRODUCT LIKE '%' || #{keyword} || '%') or (STANDARD LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>	   
