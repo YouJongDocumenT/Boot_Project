@@ -44,10 +44,10 @@ public interface CompCheckDAO {
 	public List<MachineDTO> machinebyid(Long client_id) throws Exception;
 	
 	// 판매 정보 조회 dto매핑
-	public List<SellpdtDTO> sellListbyid(Long client_id) throws Exception;
+	public List<SellpdtDTO> sellListbyid(Long client_id, SearchCriteria scri) throws Exception;
 	
 	// 종합 판매 정보 조회 dto매핑
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, SearchCriteria scri) throws Exception;
+	public List<SellAllDataDTO> sellAlldata(Long client_id, SearchCriteria scri) throws Exception;
 
 	
 	
@@ -86,6 +86,8 @@ public interface CompCheckDAO {
 	// 판매처 게시물 총 갯수
 	public int SelllistCount(SearchCriteria scri) throws Exception;
 	
+	// 판매처 게시물 총 갯수
+	public int sellByIdListCount(SearchCriteria scri) throws Exception;
 	
 }
 

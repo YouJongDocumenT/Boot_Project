@@ -101,21 +101,32 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 	
 	// 판매 정보 조회 sql매핑
 	@Override
-	public List<SellpdtDTO> sellListbyid(Long client_id) throws Exception {
-		return sqlSession.selectList("manageMapper.sellListbyid", client_id);
+	public List<SellpdtDTO> sellListbyid(Long client_id, SearchCriteria scri) throws Exception {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+	    parameters.put("client_id", client_id);
+	    parameters.put("rowStart", scri.getRowStart()); // rowStart 매개변수 추가
+	    parameters.put("rowEnd", scri.getRowEnd()); // rowEnd 매개변수 추가
+	    parameters.put("keyword", scri.getKeyword()); // keyword 매개변수 추가
+	    parameters.put("searchType", scri.getSearchType()); // searchType 매개변수 추가
+	    
+	    System.out.println("검색 키워드 : " + scri.getKeyword());
+	    System.out.println("검색 타입 : " + scri.getSearchType());
+	    
+		return sqlSession.selectList("manageMapper.sellListbyid", parameters);
 
 	}
 	
 	// 총 판매 정보 조회 sql매핑
 	@Override
-	public List<SellAllDataDTO> sellAlldata(Long client_id, int machineList_id, SearchCriteria scri) throws Exception {
+	public List<SellAllDataDTO> sellAlldata(Long client_id,SearchCriteria scri) throws Exception {
 	    Map<String, Object> parameters = new HashMap<String, Object>();
 	    parameters.put("client_id", client_id);
-	    parameters.put("machine_id", machineList_id);
 	    parameters.put("rowStart", scri.getRowStart()); // rowStart 매개변수 추가
 	    parameters.put("rowEnd", scri.getRowEnd()); // rowEnd 매개변수 추가
 	    parameters.put("keyword", scri.getKeyword()); // keyword 매개변수 추가
 	    parameters.put("searchType", scri.getSearchType()); // searchType 매개변수 추가
+	    System.out.println(scri.getRowStart());
+	    System.out.println(scri.getRowEnd());
 	    
 	    System.out.println("검색 키워드 : " + scri.getKeyword());
 	    System.out.println("검색 타입 : " + scri.getSearchType());
@@ -191,6 +202,11 @@ public class CompCheckDAOImpl implements CompCheckDAO{
 		return sqlSession.selectOne("manageMapper.SelllistCount", scri);
 	}
 	
+	// 판매처 게시물 총 갯수
+	@Override
+	public int sellByIdListCount(SearchCriteria scri) throws Exception {
+		return sqlSession.selectOne("manageMapper.sellByIdListCount", scri);
+	}
 	
 	
 }

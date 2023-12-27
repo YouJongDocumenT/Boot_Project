@@ -513,9 +513,10 @@
 								    <select name="searchType">
 								        <option value="n" th:selected="${scri.searchType == null}">-----</option>
 								        <option value="t" th:selected="${scri.searchType == 't'}">품명</option>
-								        <option value="c" th:selected="${scri.searchType == 'c'}">년도 검색</option>
+								        <option value="c" th:selected="${scri.searchType == 'c'}">규격</option>
+								        <option value="y" th:selected="${scri.searchType == 'y'}">년도 검색</option>
 								        <option value="w" th:selected="${scri.searchType == 'w'}">월 검색</option>
-								        <option value="tc" th:selected="${scri.searchType == 'tc'}">규격</option>
+								        <option value="tc" th:selected="${scri.searchType == 'tc'}">품명+규격</option>
 								    </select>
 								
 								    <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}"/>
@@ -529,18 +530,18 @@
 								<div>
 									<ul>
 										<li th:if="${pageMaker.prev}"><a
-											th:href="@{purchasecompany(purchase_id=${purchase_id}, page.makeSearch=${pageMaker.startPage - 1})}">이전</a>
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${pageMaker.startPage - 1})}">이전</a>
 										</li>
 
 										<li
 											th:each="idx : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
 											<a
-											th:href="@{purchasecompany(purchase_id=${purchase_id}, page.makeSearch=${idx})}"
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${idx})}"
 											th:text="${idx}"></a>
 										</li>
 
 										<li th:if="${pageMaker.next && pageMaker.endPage > 0}"><a
-											th:href="@{purchasecompany(purchase_id=${purchase_id}, page.makeSearch=${pageMaker.endPage + 1})}">다음</a>
+											th:href="@{purchasecompany(purchase_id=${purchase_id}, page=${pageMaker.endPage + 1})}">다음</a>
 										</li>
 									</ul>
 								</div>

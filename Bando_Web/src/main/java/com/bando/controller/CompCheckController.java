@@ -191,6 +191,7 @@ public class CompCheckController {
 			throws Exception {
 
 		logger.info("purchasecompany");
+		System.out.println("받아온 client_id : "+client_id);
 
 		// 예시로 model 객체가 null이거나 manageservice가 초기화되지 않았을 경우
 		if (model != null && manageservice != null) {
@@ -221,50 +222,72 @@ public class CompCheckController {
 		// client_id에 매칭된 기계 정보 가져옴
 		model.addAttribute("machinebyid", ccs.machinebyid(client_id));
 		logger.info("고객사 정보 매칭");
-
-		// client_id에 매칭된 기계 이름과 id값만 리스트에서 빼오는 로직
-		List<MachineDTO> mcdto = ccs.machinebyid(client_id); // 가정: PurchaseCompDTO 객체 리스트 반환
-		String machine_name = mcdto.get(0).getMachine_name();
-		int machine_id = mcdto.get(0).getMachine_id();
-
-		// client_id에 매칭된 기계정보 가져옴
-		model.addAttribute("machinelist", ccs.machinebyid(client_id));
-
-		model.addAttribute("machine_name", machine_name);
-		model.addAttribute("machine_id", machine_id);
-
+		
 		// client_id에 매칭된 고객사 판매 정보 호출
-		model.addAttribute("sellListbyid", ccs.sellListbyid(client_id));
+		model.addAttribute("sellListbyid", ccs.sellListbyid(client_id, scri));
 		logger.info("구매 정보 매칭");
 
 		System.out.println("client_id" + client_id);
-		// client_id에 매칭된 모든 판매 정보 호출
-		Map<Integer, List<SellAllDataDTO>> sellAllDataMap = new HashMap<Integer, List<SellAllDataDTO>>();
+		
+		model.addAttribute("sellAllDataList", ccs.sellAlldata(client_id, scri));
+		
+		// client_id에 매칭된 기계 이름과 id값만 리스트에서 빼오는 로직
+		List<MachineDTO> mcdto = ccs.machinebyid(client_id); // 가정: PurchaseCompDTO 객체 리스트 반환
 
-		for (int i = 0; i < mcdto.size(); i++) {
-			int machineList_id = mcdto.get(i).getMachine_id();
-			List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, machineList_id, scri);
-
-			sellAllDataMap.put(machineList_id, sellAllData);
-
-			System.out.println("아이디 : " + sellAllData);
-			logger.info("구매 정보 매칭 : " + i);
+		// mcdto가 값이 있을떄만 조회
+		if (mcdto.size() != 0) {
+			String machine_name = mcdto.get(0).getMachine_name();
+			int machine_id = mcdto.get(0).getMachine_id();
+			// client_id에 매칭된 기계정보 가져옴
+			model.addAttribute("machinelist", ccs.machinebyid(client_id));
+			model.addAttribute("machine_name", machine_name);
+			model.addAttribute("machine_id", machine_id);
 		}
-
-		// SellAllDataDTO 형식의 리스트를 생성합니다.
-		List<SellAllDataDTO> sellAllDataList = new ArrayList<SellAllDataDTO>();
-
-		// sellAllDataMap에서 값들을 가져와서 리스트에 추가합니다.
-		for (Map.Entry<Integer, List<SellAllDataDTO>> entry : sellAllDataMap.entrySet()) {
-			List<SellAllDataDTO> sellAllData = entry.getValue();
-
-			// sellAllData가 null이 아니고 비어 있지 않은 경우에만 리스트에 추가합니다.
-			if (sellAllData != null && !sellAllData.isEmpty()) {
-				sellAllDataList.addAll(sellAllData);
+		
+		/*
+		// client_id에 매칭된 기계 이름과 id값만 리스트에서 빼오는 로직
+		List<MachineDTO> mcdto = ccs.machinebyid(client_id); // 가정: PurchaseCompDTO 객체 리스트 반환
+		
+		// mcdto가 값이 있을떄만 조회
+		if(mcdto.size()!=0) {
+			String machine_name = mcdto.get(0).getMachine_name();
+			int machine_id = mcdto.get(0).getMachine_id();
+			// client_id에 매칭된 기계정보 가져옴
+			model.addAttribute("machinelist", ccs.machinebyid(client_id));
+	
+			model.addAttribute("machine_name", machine_name);
+			model.addAttribute("machine_id", machine_id);
+			
+			// client_id에 매칭된 모든 판매 정보 호출
+			Map<Integer, List<SellAllDataDTO>> sellAllDataMap = new HashMap<Integer, List<SellAllDataDTO>>();
+	
+			for (int i = 0; i < mcdto.size(); i++) {
+				int machineList_id = mcdto.get(i).getMachine_id();
+				List<SellAllDataDTO> sellAllData = ccs.sellAlldata(client_id, scri);
+	
+				sellAllDataMap.put(machineList_id, sellAllData);
+	
+				System.out.println("아이디 : " + sellAllData);
+				logger.info("구매 정보 매칭 : " + i);
 			}
+	
+			// SellAllDataDTO 형식의 리스트를 생성합니다.
+			List<SellAllDataDTO> sellAllDataList = new ArrayList<SellAllDataDTO>();
+	
+			// sellAllDataMap에서 값들을 가져와서 리스트에 추가합니다.
+			for (Map.Entry<Integer, List<SellAllDataDTO>> entry : sellAllDataMap.entrySet()) {
+				List<SellAllDataDTO> sellAllData = entry.getValue();
+	
+				// sellAllData가 null이 아니고 비어 있지 않은 경우에만 리스트에 추가합니다.
+				if (sellAllData != null && !sellAllData.isEmpty()) {
+					sellAllDataList.addAll(sellAllData);
+				}
+			}
+			model.addAttribute("sellAllDataList", sellAllDataList);
 		}
-		model.addAttribute("sellAllDataList", sellAllDataList);
-
+		*/
+		
+		
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);

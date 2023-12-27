@@ -481,10 +481,12 @@
                                 <div class="search">
 								    <select name="searchType">
 								        <option value="n" th:selected="${scri.searchType == null}">-----</option>
-								        <option value="t" th:selected="${scri.searchType == 't'}">담당자</option>
-								        <option value="c" th:selected="${scri.searchType == 'c'}">품명</option>
-								        <option value="w" th:selected="${scri.searchType == 'w'}">년도 검색</option>
-								        <option value="tc" th:selected="${scri.searchType == 'tc'}">담당자+품명</option>
+								        <option value="t" th:selected="${scri.searchType == 't'}">품명</option>
+								        <option value="c" th:selected="${scri.searchType == 'c'}">규격</option>
+								        <option value="w" th:selected="${scri.searchType == 'w'}">담당자</option>
+								        <option value="y" th:selected="${scri.searchType == 'y'}">년도 검색</option>
+								        <option value="m" th:selected="${scri.searchType == 'm'}">월 검색</option>
+								        <option value="tc" th:selected="${scri.searchType == 'tc'}">담당자+규격</option>
 								    </select>
 								
 								    <input type="text" name="keyword" id="keywordInput" th:value="${scri.keyword}"/>

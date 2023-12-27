@@ -2,7 +2,7 @@ package com.bando.dto;
 
 import java.util.Date;
 
-public class SellAllDataDTO {
+public class SellAllDataDTO{
 	
 	private String client_id;
 	private String client_company;

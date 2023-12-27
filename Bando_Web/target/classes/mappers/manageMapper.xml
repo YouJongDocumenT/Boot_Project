@@ -117,9 +117,10 @@
 <sql id="PurchaseSearch">
 		<if test="searchType != null">
 			<if test="searchType == 't'.toString()">AND PRODUCT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">AND PURCHASE_DATE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">AND PURCHASE_ID LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">AND (PRODUCT LIKE '%' || #{keyword} || '%') or (PURCHASE_ID LIKE '%' || #{keyword} || '%')</if>
+			<if test="searchType == 'c'.toString()">AND STANDARD LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'y'.toString()">AND PURCHASE_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND PURCHASE_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (PRODUCT LIKE '%' || #{keyword} || '%') or (STANDARD LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>	
    
@@ -168,15 +169,70 @@
         
         
 <!-- 매칭된 machine_id값의 판매 정보 조회 -->
-   <select id="sellListbyid" resultType="com.bando.dto.SellpdtDTO">
-	   SELECT responsibility, ph_number, sell_date, sell_quantity, standard, sell_price, tax, sell_pdt, sell_EAprice
-	   		FROM sell_product
-	   		WHERE client_id = #{client_id}
+   <select id="sellListbyid" resultType="com.bando.dto.SellpdtDTO"  parameterType="java.util.Map">
+	    SELECT responsibility, 
+			   ph_number, 
+			   sell_date, 
+			   sell_quantity, 
+			   standard, 
+			   sell_price, 
+			   tax, 
+			   sell_pdt, 
+			   sell_EAprice,
+			   purchase_pdtnum
+		FROM (
+			    SELECT responsibility, 
+					   ph_number, 
+					   sell_date, 
+					   sell_quantity, 
+					   standard, 
+					   sell_price, 
+					   tax, 
+					   sell_pdt, 
+					   sell_EAprice,
+					   purchase_pdtnum,
+					   ROW_NUMBER() OVER(ORDER BY purchase_pdtnum DESC) AS RNUM
+		   		FROM sell_product
+		   		WHERE client_id = #{client_id}
+	   			<include refid="SellPdtSearch"></include>
+	   		) MP
+			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+			ORDER BY purchase_pdtnum DESC
    </select> 
  
  
+ <!-- 게시물 총 갯수 -->
+<select id="sellByIdListCount" resultType="int">
+<!-- <![CDATA[ ]]> -->
+		SELECT COUNT(purchase_pdtnum)
+		  FROM sell_product
+		 WHERE purchase_pdtnum > 0
+		 <include refid="SellPdtSearch"></include>	
+	</select>
+	
+<sql id="SellPdtSearch">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND SELL_PDT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND STANDARD LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND RESPONSIBILITY LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'y'.toString()">AND sell_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'm'.toString()">AND sell_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (SELL_PDT LIKE '%' || #{keyword} || '%') or (STANDARD LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 <!-- 매칭된 값의 판매 정보 조회 -->  
-<select id="sellAlldata" parameterType="map" resultType="com.bando.dto.SellAllDataDTO">
+<select id="sellAlldata" parameterType="java.util.Map" resultType="com.bando.dto.SellAllDataDTO">
     <!-- SELECT cc.client_company, cc.address, cc.comp_number, cc.email, mt.machine_id, mt.machine_name, mt.machine_memo, sp.sell_date, sp.responsibility, sp.ph_number, sp.sell_quantity, sp.sell_length, sp.sell_weight, sp.sell_price, sp.tax, sp.sell_pdt, sp.resp_id
 	    FROM clientcomp_table cc
 	    JOIN machine_table mt ON cc.client_id = mt.client_id
@@ -184,65 +240,70 @@
 	    WHERE cc.client_id = #{client_id} AND mt.machine_id = #{machine_id} -->
     
     
-			    SELECT MP.client_company, 
-			       MP.address, 
-			       MP.comp_number, 
-			       MP.email, 
-			       MP.machine_id, 
-			       MP.machine_name, 
-			       MP.machine_memo, 
-			       MP.sell_date, 
-			       MP.responsibility, 
-			       MP.ph_number, 
-			       MP.sell_quantity, 
-			       MP.standard, 
-			       MP.sell_price, 
-			       MP.tax, 
-			       MP.sell_pdt, 
-			       MP.resp_id,
-			       MP.sell_EAprice
-			FROM (
-			    SELECT cc.client_company, 
-			           cc.address, 
-			           cc.comp_number, 
-			           cc.email, 
-			           mt.machine_id, 
-			           mt.machine_name, 
-			           mt.machine_memo, 
-			           sp.sell_date, 
-			           sp.responsibility, 
-			           sp.ph_number, 
-			           sp.sell_quantity, 
-			           sp.standard, 
-			           sp.sell_price, 
-			           sp.tax, 
-			           sp.sell_pdt, 
-			           sp.resp_id,
-			           sp.sell_EAprice,
-			           ROW_NUMBER() OVER(ORDER BY sp.resp_id DESC) AS RNUM
-			    FROM clientcomp_table cc
-			    JOIN machine_table mt ON cc.client_id = mt.client_id
-			    JOIN sell_product sp ON mt.machine_id = sp.machine_id
-			    WHERE cc.client_id = #{client_id} AND mt.machine_id = #{machine_id}
-			    <include refid="SellSearch"></include>
-			) MP
-			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-			ORDER BY MP.resp_id DESC
+			     SELECT MP.client_company, 
+				        MP.address, 
+				        MP.comp_number, 
+				        MP.email, 
+				        MP.machine_id, 
+				        MP.machine_name, 
+				        MP.machine_memo, 
+				        MP.sell_date, 
+				        MP.responsibility, 
+				        MP.ph_number, 
+				        MP.sell_quantity, 
+				        MP.standard, 
+				        MP.sell_price, 
+				        MP.tax, 
+				        MP.sell_pdt, 
+				        MP.resp_id,
+				        MP.sell_EAprice,
+				        MP.purchase_pdtnum
+				FROM (
+				       SELECT cc.client_company, 
+				              cc.address, 
+				              cc.comp_number, 
+				              cc.email, 
+				              mt.machine_id, 
+				              mt.machine_name, 
+				              mt.machine_memo, 
+				              sp.sell_date, 
+				              sp.responsibility, 
+				              sp.ph_number, 
+				              sp.sell_quantity, 
+				              sp.standard, 
+				              sp.sell_price, 
+				              sp.tax, 
+				              sp.sell_pdt, 
+				              sp.resp_id,
+				              sp.sell_EAprice,
+				              sp.purchase_pdtnum,
+				              ROW_NUMBER() OVER(ORDER BY sp.purchase_pdtnum DESC) AS RNUM
+				              FROM clientcomp_table cc
+				              JOIN machine_table mt ON cc.client_id = mt.client_id
+				              JOIN sell_product sp ON mt.machine_id = sp.machine_id
+				              WHERE cc.client_id = #{client_id}
+				              <include refid="SellSearch"></include>
+				          ) MP
+				          WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+				          ORDER BY MP.purchase_pdtnum DESC
 </select> 
 <select id="SelllistCount" resultType="int">
-		SELECT COUNT(resp_id)
+		SELECT COUNT(purchase_pdtnum)
 		  FROM sell_product
-		 WHERE resp_id > 0
+		 WHERE purchase_pdtnum > 0
 		 <include refid="SellSearch"></include>
 	</select>
 	
 	
 <sql id="SellSearch">
 		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">AND RESPONSIBILITY LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">AND SELL_PDT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">AND SELL_DATE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">AND (RESPONSIBILITY LIKE '%' || #{keyword} || '%') or (SELL_PDT LIKE '%' || #{keyword} || '%')</if>
+			<if test="searchType == 't'.toString()">AND SELL_PDT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND STANDARD LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND RESPONSIBILITY LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'n'.toString()">AND MACHINE_NAME LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'y'.toString()">AND SELL_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'm'.toString()">AND SELL_DATE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (SELL_PDT LIKE '%' || #{keyword} || '%') or (STANDARD LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>
 
@@ -436,17 +497,21 @@
 <sql id="StockSearch_P">
 		<if test="searchType != null">
 			<if test="searchType == 't'.toString()">WHERE PRODUCT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">WHERE STOCK_DATE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">WHERE PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">WHERE (PRODUCT LIKE '%' || #{keyword} || '%') or (PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%')</if>
+			<if test="searchType == 'c'.toString()">WHERE STANDARD LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">WHERE purchase_company LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'y'.toString()">WHERE stock_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'm'.toString()">WHERE stock_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">WHERE (PRODUCT LIKE '%' || #{keyword} || '%') or (STANDARD LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>	  
 <sql id="StockSearch">
 		<if test="searchType != null">
 			<if test="searchType == 't'.toString()">AND PRODUCT LIKE '%' || #{keyword} || '%'</if>
 			<if test="searchType == 'c'.toString()">AND STOCK_DATE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">AND PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">AND (PRODUCT LIKE '%' || #{keyword} || '%') or (PURCHASE_COPMPANY LIKE '%' || #{keyword} || '%')</if>
+			<if test="searchType == 'w'.toString()">AND purchase_company LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'y'.toString()">WHERE stock_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'm'.toString()">WHERE stock_date LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (PRODUCT LIKE '%' || #{keyword} || '%') or (STANDARD LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>	   
    
