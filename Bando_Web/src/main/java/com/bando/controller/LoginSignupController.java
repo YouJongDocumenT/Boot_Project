@@ -2,15 +2,20 @@ package com.bando.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bando.service.SignUpService;
+
 @Controller
 public class LoginSignupController {
 	
+	@Autowired
+	SignUpService signUpService;
 	
 	@RequestMapping("/vip")
 	public String vip(HttpServletRequest request, Model model, Authentication authentication) {
@@ -44,4 +49,24 @@ public class LoginSignupController {
 	public String loginLinkPage(Model model) {
 		return "member/loginLinkPage";
 	}
+	
+	
+	
+	
+	
+	@RequestMapping("/signUpView")
+	public String signUpView(Model model) {
+		return "member/signUpView";
+	}
+		
+	@RequestMapping("/signUp")
+	public String signUp(HttpServletRequest request, Model model) {
+		//사용자가 입력한 정보를 파라미터로 넘김
+		boolean isInserted = signUpService.insertUserInfo(request.getParameter("id"), request.getParameter("password"));
+		if(isInserted) return "member/loginForm";
+		else return "member/signUpView";
+	}
+	
+	
+	
 }

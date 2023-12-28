@@ -82,7 +82,7 @@
 		denyAll : 모두 접근 미허용 -->
 		
 	<s:authentication-manager>
-		<s:authentication-provider user-service-ref="loginService"/>
+		<s:authentication-provider ref="loginAuthenticationProvider"/>
 	</s:authentication-manager>
 	
 	

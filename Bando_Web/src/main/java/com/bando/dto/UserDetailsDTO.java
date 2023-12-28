@@ -34,6 +34,10 @@ public class UserDetailsDTO implements UserDetails{
 		// TODO Auto-generated method stub
 		return PASSWORD;
 	}
+	
+	public void setPassword(String password) {
+		PASSWORD = password;
+	}
 
 	@Override
 	public String getUsername() {

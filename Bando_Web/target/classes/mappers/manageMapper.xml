@@ -765,11 +765,16 @@
 		FROM USERAUTH 
 		WHERE ID=#{username}
 	</select>
-     
-     
-     
-     
-     
+       
+
+	
+	<insert id="userSignUp" parameterType="java.util.Map">
+		INSERT INTO USERACC VALUES(#{username},#{password},#{enable})
+	</insert>
+	
+	<insert id="giveAuth" parameterType="java.util.Map">
+		INSERT INTO USERAUTH VALUES(#{username},#{authority})
+	</insert> 
      
      
      

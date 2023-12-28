@@ -44,6 +44,8 @@
 			ref="templateEngine" />
 		<beans:property name="characterEncoding" value="UTF-8" />
 	</beans:bean>
+	
+	<beans:bean id="bPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 	
 	<!-- thymeleaf 설정 부분  -->
