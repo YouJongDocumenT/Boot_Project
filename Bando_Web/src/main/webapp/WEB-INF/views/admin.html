@@ -8,6 +8,7 @@
     <h1> FOR ADMIN! </h1>
     <div th:if="${#httpServletRequest.userPrincipal != null}">
         <p> Session On </p>
+        <p th:text="'IP : ' + ${ipAddress}"></p>
     </div>
     <div th:if="${#httpServletRequest.userPrincipal == null}">
         <p> Session Out </p>

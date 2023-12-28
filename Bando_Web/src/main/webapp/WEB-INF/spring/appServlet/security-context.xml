@@ -45,8 +45,9 @@
 			login-processing-url="/login_check" 
 			login-page="/login" 
 			authentication-failure-url="/login?ng"
-			authentication-success-handler-ref="myAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="loginFailHandler"
+    		authentication-success-handler-ref="loginSuccessHandler"
+
 		/>
 		<s:logout 
 			logout-url="/security_logout"
@@ -63,11 +64,9 @@
 		<s:access-denied-handler ref="accessFailHandler"/>
 	</s:http>
 	
-	<bean id="myAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-    	<property name="defaultTargetUrl" value="/" /> <!-- 기본적으로 "/"로 리다이렉트, 필요에 따라 원하는 URL로 변경 -->
-	</bean>
 	<bean id="accessFailHandler" class="com.bando.config.AccessFailHandler"/>
 	<bean id="loginFailHandler" class="com.bando.config.LoginFailHandler"/>
+	<bean id="loginSuccessHandler" class="com.bando.config.LoginSuccessHandler"/>
 	
 	<!-- ※ access 설명
 

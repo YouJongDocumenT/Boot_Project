@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>Login Link Page!</h1>
+	<div th:if="${#httpServletRequest.userPrincipal == null}">
+        <button type="button" onclick="location.href='/login'">LOGIN</button>
+    </div>
+
+</body>
+</html>
