@@ -44,7 +44,6 @@
 			password-parameter="user_pw"
 			login-processing-url="/login_check" 
 			login-page="/login" 
-			authentication-failure-url="/login?ng"
 			authentication-failure-handler-ref="loginFailHandler"
     		authentication-success-handler-ref="loginSuccessHandler"
 
@@ -53,11 +52,15 @@
 			logout-url="/security_logout"
 			logout-success-url="/main"
 			invalidate-session="true"
-			delete-cookies="true"
+			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"
 		/>
+		
+		<s:remember-me key="kimcoder" token-validity-seconds="604800"
+			authentication-success-handler-ref="loginSuccessHandler"/>
+			
+			
 		<!-- 사용자가 특정 url 패턴으로 요청을 하면, 여기서 먼저 인증 절차를 거친다. -->
 		<!-- s:intercept-url의 pattern이 방금 언급한 특정 url 패턴이고, access에서는 권한을 체크한다. -->
-		<s:intercept-url pattern="/login*" access="isAnonymous()"/>
 		<s:intercept-url pattern="/vip*" access="hasRole('ROLE_USER')"/>
 		<s:intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')"/>
 		<!-- 마지막으로, s:access-denied-handler는 접근 오류(403) 페이지를 대체할 페이지를 설정할 수 있다. error-page를 "/"로 설정하여 403 page를 home page로 redirect시킨다. -->
