@@ -54,17 +54,13 @@ public class LoginSignupController {
 	
 	
 	
-	@RequestMapping("/signUpView")
-	public String signUpView(Model model) {
-		return "member/signUpView";
-	}
 		
 	@RequestMapping("/signUp")
 	public String signUp(HttpServletRequest request, Model model) {
 		//사용자가 입력한 정보를 파라미터로 넘김
 		boolean isInserted = signUpService.insertUserInfo(request.getParameter("id"), request.getParameter("password"));
-		if(isInserted) return "member/loginForm";
-		else return "member/signUpView";
+		if(isInserted) return "member/LoginForm";
+		else return "member/LoginForm";
 	}
 	
 	

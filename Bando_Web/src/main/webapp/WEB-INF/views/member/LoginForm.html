@@ -3,18 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" href="/resources/member/loginForm.css">
+    <link rel="stylesheet" href="/resources/member/css/loginForm.css">
 </head>
 <body>
-    <h1>LOGIN</h1>
+<!-- <h1>LOGIN</h1>
     <form th:action="@{/login_check}" method="post">
         <div th:if="${LoginFailMessage != null}">
     		<p> Error : <span th:text="${LoginFailMessage}"></span> </p>
 		</div>
         USER : <input type="text" name="user_id"><br>
         PASSWORD : <input type="password" name="user_pw"><br>
-        <input type="checkbox" name="_spring_security_remember_me">로그인 유지<br>
         <input type="submit" value="Login">
-    </form>
+    </form> -->
+    
+    
+    
+    <div id="container" class="container">
+    <!-- FORM SECTION -->
+    <div class="row">
+    
+    <form class="col align-items-center flex-col sign-up" th:action="@{/signUp}" method="post">
+      <!-- SIGN UP -->
+        <div class="form-wrapper align-items-center">
+          <div class="form sign-up">
+            <div class="input-group">
+              <i class='bx bxs-user'></i>
+              <input type="text" id="id" name="id" placeholder="Username">
+            </div>
+            <div class="input-group">
+              <i class='bx bx-mail-send'></i>
+              <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" placeholder="Password(준비중)">
+            </div>
+            <div class="input-group">
+              <i class='bx bxs-lock-alt'></i>
+              <input type="password" placeholder="Confirm password(준비중)">
+            </div>
+            <button type="submit">회원가입</button>
+            
+            <p>
+              <span>이미 계정이 있으신가요?</span>
+              <b onclick="toggle()" class="pointer">
+                Sign in here
+              </b>
+            </p>
+          </div>
+        </div>
+      
+      <!-- END SIGN UP -->
+      </form>
+      
+      <form class="col align-items-center flex-col sign-in" th:action="@{/login_check}" method="post">
+	      <!-- SIGN IN -->
+	        <div class="form-wrapper align-items-center">
+	          <div class="form sign-in">
+	            <div class="input-group">
+	              <i class='bx bxs-user'></i>
+	              <input type="text" name="user_id" placeholder="Username">
+	            </div>
+	            <div class="input-group">
+	              <i class='bx bxs-lock-alt'></i>
+	              <input type="password" name="user_pw" placeholder="Password">
+	            </div>
+	            <div th:if="${LoginFailMessage != null}">
+		    		<p> Error : <span th:text="${LoginFailMessage}"></span> </p>
+				</div>
+				<input type="checkbox" name="_spring_security_remember_me">로그인 유지<br>
+	            <button type="submit">로그인</button>
+	            <p>
+	              <b>비밀번호를 잊으셨나요?</b>
+	            </p>
+	            <p>
+	              <span>아직 계정이 없으신가요?</span>
+	              <b onclick="toggle()" class="pointer">Sign up here</b>
+	            </p>
+	          </div>
+	        </div>
+	        <div class="form-wrapper">
+	    
+	        </div>
+	      <!-- END SIGN IN -->
+      </form>
+      
+      
+    </div>
+    <!-- END FORM SECTION -->
+    <!-- CONTENT SECTION -->
+    <div class="row content-row">
+      <!-- SIGN IN CONTENT -->
+      <div class="col align-items-center flex-col">
+        <div class="text sign-in">
+          <h2>환영합니다<br>반도테크입니다.</h2>
+  
+        </div>
+        <div class="img sign-in">
+    
+        </div>
+      </div>
+      <!-- END SIGN IN CONTENT -->
+      <!-- SIGN UP CONTENT -->
+      <div class="col align-items-center flex-col">
+        <div class="img sign-up">
+        
+        </div>
+        <div class="text sign-up">
+          <h2> 회원가입 </h2>
+  
+        </div>
+      </div>
+      <!-- END SIGN UP CONTENT -->
+    </div>
+    <!-- END CONTENT SECTION -->
+  </div>
+  
+  <script src="/resources/member/js/loginForm.js"></script>
+
 </body>
 </html>

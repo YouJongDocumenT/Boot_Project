@@ -63,6 +63,13 @@
 		<!-- s:intercept-url의 pattern이 방금 언급한 특정 url 패턴이고, access에서는 권한을 체크한다. -->
 		<s:intercept-url pattern="/vip*" access="hasRole('ROLE_USER')"/>
 		<s:intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')"/>
+		<s:intercept-url pattern="/clientcompany*" access="hasRole('ROLE_ADMIN')"/>
+		<s:intercept-url pattern="/IOmanage*" access="hasRole('ROLE_ADMIN')"/>
+		<s:intercept-url pattern="/purchasecompany*" access="hasRole('ROLE_ADMIN')"/>
+		<s:intercept-url pattern="/PurChaseList*" access="hasRole('ROLE_ADMIN')"/>
+		<s:intercept-url pattern="/SellList*" access="hasRole('ROLE_ADMIN')"/>
+		<s:intercept-url pattern="/StockList*" access="hasRole('ROLE_ADMIN')"/>
+		<s:intercept-url pattern="/stockManagement*" access="hasRole('ROLE_ADMIN')"/>
 		<!-- 마지막으로, s:access-denied-handler는 접근 오류(403) 페이지를 대체할 페이지를 설정할 수 있다. error-page를 "/"로 설정하여 403 page를 home page로 redirect시킨다. -->
 		<s:access-denied-handler ref="accessFailHandler"/>
 	</s:http>

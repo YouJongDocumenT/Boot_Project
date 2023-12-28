@@ -67,7 +67,13 @@
                 </div>
                 <a href="contact" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+            <div th:if="${#httpServletRequest.userPrincipal == null}">
+        		<a href="http://localhost:8090/login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">로그인<i class="fa fa-arrow-right ms-3"></i></a>
+    		</div>
+    		<div th:if="${#httpServletRequest.userPrincipal != null}">
+        		<a th:href="@{'/security_logout'}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">로그아웃<i class="fa fa-arrow-right ms-3"></i></a>
+    		</div>
+
         </div>
     </nav>
     <!-- Navbar End -->
