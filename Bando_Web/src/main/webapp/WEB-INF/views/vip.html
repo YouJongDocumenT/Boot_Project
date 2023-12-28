@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
 </head>
 <body>
-
-	<h1>FOR VIP MEMBERS!</h1>
-
+    <h1> FOR VIP MEMBERS! </h1>
+    <div th:if="${#httpServletRequest.userPrincipal != null}">
+        <p> Session On </p>
+    </div>
+    <div th:if="${#httpServletRequest.userPrincipal == null}">
+        <p> Session Out </p>
+    </div>
+    <p th:if="${#httpServletRequest.userPrincipal != null}" th:text="${#httpServletRequest.userPrincipal.name}">HELLO</p>
+    <a th:href="@{'/security_logout'}">Log Out</a>
 </body>
 </html>

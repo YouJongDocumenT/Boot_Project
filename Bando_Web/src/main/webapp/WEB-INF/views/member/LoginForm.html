@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="/resources/member/loginForm.css">
+</head>
+<body>
+    <h1>LOGIN</h1>
+    <form th:action="@{/login_check}" method="post">
+        <div th:if="${param.ng != null}">
+            <p>error : <span th:if="${#request.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}" th:text="${#request.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}" /></p>
+        </div>
+        USER : <input type="text" name="user_id"><br>
+        PASSWORD : <input type="password" name="user_pw"><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>

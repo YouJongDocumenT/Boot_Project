@@ -17,4 +17,9 @@ public class LoginSignupController {
 	public String admin(Model model) {
 		return "admin";
 	}
+	
+	@RequestMapping("/login")
+	public String login(Model model) {
+		return "member/LoginForm";
+	}
 }
