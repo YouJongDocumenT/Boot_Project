@@ -45,6 +45,7 @@
 			login-processing-url="/login_check" 
 			login-page="/login" 
 			authentication-failure-url="/login?ng"
+			authentication-success-handler-ref="myAuthenticationSuccessHandler"
 		/>
 		<s:logout 
 			logout-url="/security_logout"
@@ -61,6 +62,10 @@
 		<s:access-denied-handler error-page="/main"/>
 	</s:http>
 	
+	<bean id="myAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+    	<property name="defaultTargetUrl" value="/" /> <!-- 기본적으로 "/"로 리다이렉트, 필요에 따라 원하는 URL로 변경 -->
+	</bean>
+	
 	<!-- ※ access 설명
 
 		s:http의 use-expressions를 true로 설정해야 다음과 같이 메소드 형태로 권한을 체크할 수 있다.
@@ -75,12 +80,8 @@
 		denyAll : 모두 접근 미허용 -->
 		
 	<s:authentication-manager>
-		<s:authentication-provider>
-			<s:user-service>
-				<s:user name="member" password="1234" authorities="ROLE_USER"/>
-				<s:user name="admin" password="1234" authorities="ROLE_USER, ROLE_ADMIN"/>
-			</s:user-service>
-		</s:authentication-provider>
+		<s:authentication-provider user-service-ref="loginService"/>
 	</s:authentication-manager>
+	
 	
 </beans>

@@ -726,7 +726,64 @@
 		    purchase_id
    </select>
      
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     <select id="selectUser" resultType="com.bando.dto.UserDetailsDTO">
+		SELECT * FROM USERACC 
+		WHERE ID=#{username}
+	</select>
+	
+	<select id="getAuthList" resultType="String">
+		SELECT AUTHORITY 
+		FROM USERAUTH 
+		WHERE ID=#{username}
+	</select>
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
 </mapper>
+
+
+
 
 
 
