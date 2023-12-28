@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:s="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<s:http auto-config="true" use-expressions="true">
+		<!-- 사용자가 특정 url 패턴으로 요청을 하면, 여기서 먼저 인증 절차를 거친다. -->
+		<!-- s:intercept-url의 pattern이 방금 언급한 특정 url 패턴이고, access에서는 권한을 체크한다. -->
+		<s:intercept-url pattern="/login*" access="isAnonymous()"/>
+		<s:intercept-url pattern="/vip*" access="hasRole('ROLE_USER')"/>
+		<s:intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')"/>
+		<!-- 마지막으로, s:access-denied-handler는 접근 오류(403) 페이지를 대체할 페이지를 설정할 수 있다. error-page를 "/"로 설정하여 403 page를 home page로 redirect시킨다. -->
+		<s:access-denied-handler error-page="/main"/>
+	</s:http>
+	
+	<!-- ※ access 설명
+
+		s:http의 use-expressions를 true로 설정해야 다음과 같이 메소드 형태로 권한을 체크할 수 있다.
+		
+		isAnonymous() : 익명일 때만 접근 허용(로그인 상태에서는 접근을 허용하지 않음)
+		hasRole('role') : 해당 권한이 있다면 접근 허용
+		hasAnyRole('role1', 'role2') : 하나의 권한이라도 가진다면 접근 허용
+		isAuthenticated() : 이미 로그인 인증을 받은 User일 경우 접근 허용, 익명 사용자는 로그인 페이지로 이동
+		isRememberMe() : 자동 로그인 대상 User일 경우 접근 허용
+		isFullyAuthenticated() : 자동 로그인 없이 로그인 인증을 받은 User일 경우 접근 허용
+		permitAll : 모두 접근 허용
+		denyAll : 모두 접근 미허용 -->
+		
+	<s:authentication-manager>
+		<s:authentication-provider>
+			<s:user-service>
+				<s:user name="member" password="1234" authorities="ROLE_USER"/>
+				<s:user name="admin" password="1234" authorities="ROLE_USER, ROLE_ADMIN"/>
+			</s:user-service>
+		</s:authentication-provider>
+	</s:authentication-manager>
+	
+</beans>
