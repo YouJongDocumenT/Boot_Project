@@ -433,10 +433,49 @@
 
 <!-- 구매정보 삭제 -->
    <delete id="PurchaseDataDelete" parameterType="int">
-	   DELETE 
-			FROM purchase_table
-		WHERE purchase_pdtnum = #{purchase_pdtnum}  
-	                 
+   <![CDATA[
+	   DECLARE
+		  v_quantity_stock_table stock_table.QUANTITY%TYPE;
+		  v_quantity_purchase_table purchase_table.PUR_QUANTITY%TYPE;
+		  v_purchase_price purchase_table.PURCHASE_EAPRICE%TYPE;
+		BEGIN
+		  SELECT QUANTITY
+		  INTO v_quantity_stock_table
+		  FROM stock_table
+		  WHERE PRODUCT = (SELECT PRODUCT FROM purchase_table WHERE PURCHASE_PDTNUM = #{purchase_pdtnum})
+		    AND STANDARD = (SELECT STANDARD FROM purchase_table WHERE PURCHASE_PDTNUM = #{purchase_pdtnum});
+		
+		  SELECT PUR_QUANTITY, PURCHASE_EAPRICE
+		  INTO v_quantity_purchase_table, v_purchase_price
+		  FROM purchase_table
+		  WHERE PURCHASE_PDTNUM = #{purchase_pdtnum};
+		
+		  IF v_quantity_purchase_table > v_quantity_stock_table THEN
+		    DELETE FROM purchase_table WHERE PURCHASE_PDTNUM = #{purchase_pdtnum};
+		    DELETE FROM stock_table WHERE PURCHASE_PDTNUM = #{purchase_pdtnum};
+		    UPDATE price_table
+		    SET STOCK_PRICE = STOCK_PRICE - (v_purchase_price * v_quantity_stock_table),
+		        ALLPURCHCNT = ALLPURCHCNT - (v_purchase_price * v_quantity_stock_table);
+		  ELSIF v_quantity_purchase_table = v_quantity_stock_table THEN
+		    DELETE FROM purchase_table WHERE PURCHASE_PDTNUM = #{purchase_pdtnum};
+		    DELETE FROM stock_table WHERE PURCHASE_PDTNUM = #{purchase_pdtnum};
+		    UPDATE price_table
+		    SET STOCK_PRICE = STOCK_PRICE - (v_purchase_price * v_quantity_purchase_table),
+		        ALLPURCHCNT = ALLPURCHCNT - (v_purchase_price * v_quantity_purchase_table);
+		  ELSE
+		    DELETE FROM purchase_table WHERE PURCHASE_PDTNUM = #{purchase_pdtnum};
+		    UPDATE stock_table
+		    SET QUANTITY = QUANTITY - v_quantity_purchase_table;
+		    UPDATE price_table
+		    SET STOCK_PRICE = STOCK_PRICE - (v_purchase_price * v_quantity_purchase_table),
+		        ALLPURCHCNT = ALLPURCHCNT - (v_purchase_price * v_quantity_purchase_table);
+		  END IF;
+		END;
+  
+		
+
+	    ]]>
+	          
    </delete>
  
  
@@ -727,11 +766,7 @@
    </select>
      
      
-     
-     
-     
-     
-     
+   
      
      
      
