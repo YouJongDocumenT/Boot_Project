@@ -341,11 +341,11 @@ public class CompCheckController {
 		sts.St_Quantity_Cnt();
 		logger.info("재고수량 카운트 감소");
 		
-		sts.DeleteStock();
-		logger.info("재고수량이 0일시 재고 열 삭제");
-		
 		sts.ChangeStockValue();
 		logger.info("재고금액 변경");
+		
+		sts.DeleteStock();
+		logger.info("재고수량이 0일시 재고 열 삭제");
 		
 		sts.tax();
 		logger.info("세금 총액테이블에 추가");

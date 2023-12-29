@@ -671,8 +671,16 @@
 	<!-- 재고수량이 0일시 재고 열 삭제 -->
    <delete id="DeleteStock" parameterType="int">
    <![CDATA[
-	   DELETE FROM stock_table
-		WHERE QUANTITY <= 0       
+		BEGIN
+		  INSERT INTO stock_table_backup (PURCHASE_PRICE, QUANTITY, PURCHASE_COMPANY, PRODUCT, PURCHASE_PDTNUM, STOCK_DATE, PURCHASE_EAPRICE, STANDARD)
+		  SELECT PURCHASE_PRICE, QUANTITY, PURCHASE_COMPANY, PRODUCT, PURCHASE_PDTNUM, STOCK_DATE, PURCHASE_EAPRICE, STANDARD
+		  FROM stock_table
+		  WHERE QUANTITY <= 0;
+		
+		  DELETE FROM stock_table
+		  WHERE QUANTITY <= 0;
+		  
+		END;
 	]]>  
    </delete>
    
