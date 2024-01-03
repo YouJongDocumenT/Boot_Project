@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Sidenav Light - SB Admin</title>
+        <link href="/resources/DarkTemplates/css/styles.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        
+        
+        <style>
+        
+        	#purchase {
+        background-color: #F5F5F5;
+        line-height: 100px;
+    }
+    #purchase_2 {
+        background-color: #F8F9FA;
+    }
+.cli_div {
+    display: flex; /* Flex Container로 설정 */
+    width: 100%; /* 원하는 너비로 지정 */
+    /* 또는 필요에 따라 justify-content 속성을 수정하여 정렬 방식을 조절할 수 있습니다. */
+  }
+
+  /* 각 요소에 추가적인 스타일을 적용할 수 있습니다. */
+  .cli_div_1 {
+  	margin-top: 0px; /* 원하는 값으로 조절 (예: 10px) */
+  	flex-basis: 95%; /* 첫 번째 자식 요소는 80%의 너비를 가지도록 설정 */
+    padding: 15px;
+    display: flex;
+    flex-direction: column; /* 세로로 요소 배치 */
+  }
+    .cli_div_2 {
+    flex-basis: 5%; /* 첫 번째 자식 요소는 80%의 너비를 가지도록 설정 */
+    padding: 0px;
+  }    
+  .cli_div_3 {
+  	
+    height: 20px; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top: 1px; 
+    padding-right: 2px;
+  }
+  .line_1 {
+  	
+  	 height: 40px; /* 원하는 높이 값으로 설정 */
+  }
+  .line_2 {
+  	 height: 40px; /* 원하는 높이 값으로 설정 */
+  }
+  
+  #line_1,
+#line_2 {
+    height: 40px; /* 두 요소의 높이를 동일하게 설정 */
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+
+
+
+
+
+.table_1{
+	height: 250px; /* 원하는 높이 값으로 설정 */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+    text-align: center;
+    border-top: 2px solid black;
+}
+/* 테이블의 셀(cell) 내부 요소의 높이를 조정하는 클래스 */
+  .table_1 tbody td {
+   padding: 2px; /* 셀 내부 여백 설정 */
+    font-size: 12px; /* 원하는 폰트 크기로 설정 */
+  }
+  .table_1 thead th {
+    padding: 2px; /* 셀 내부 여백 설정 */
+    font-size: 12px; /* 원하는 폰트 크기로 설정 */
+    position: sticky;
+    top: 0px;
+    background-color: #F8F9FA;
+  }
+  
+  
+.table_2{
+	height: 20px; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top: 12px; 
+    padding-right: 2px;
+    text-align: center;
+}
+.table_2 thead th {
+    padding: 2px; /* 셀 내부 여백 설정 */
+    font-size: 12px; /* 원하는 폰트 크기로 설정 */
+    background-color: #F8F9FA;
+  }
+
+
+
+  
+.table_3{
+	height: 250px; /* 원하는 높이 값으로 설정 */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+    text-align: center;
+    border-top: 2px solid black;
+}
+.table_3 tbody td {
+    padding: 2px; /* 셀 내부 여백 설정 */
+    font-size: 12px; /* 원하는 폰트 크기로 설정 */
+  }
+  .table_3 thead th {
+    padding: 2px; /* 셀 내부 여백 설정 */
+    font-size: 12px; /* 원하는 폰트 크기로 설정 */
+    position: sticky;
+    top: 0px;
+    background-color: #F8F9FA;
+  }
+  
+  
+.table_4{
+	height: 20px; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top: 12px; 
+    padding-right: 2px;
+    text-align: center;
+}
+.table_4 thead th {
+    padding: 2px; /* 셀 내부 여백 설정 */
+    font-size: 12px; /* 원하는 폰트 크기로 설정 */
+    background-color: #F8F9FA;
+  }
+  
+  
+.label_1{
+	height: 30px; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top: 15px; 
+    padding-right: 2px;
+}
+.label_2{
+	height: 30px; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top: 15px; 
+    padding-right: 2px;
+}
+
+        </style>
+        
+        
+        
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <button class="btn btn-outline-secondary-costom"> 기초정보관리 </button>
+            <a type="button" class="btn btn-outline-secondary-costom" href="http://localhost:8090/purchase"> 매입관리 </a>
+            <a type="button" class="btn btn-outline-secondary-costom" href="http://localhost:8090/sell"> 매출관리 </a>
+            <a type="button" class="btn btn-outline-secondary-costom" href="http://localhost:8090/stock"> 재고관리 </a>
+            <button class="btn btn-outline-secondary-costom"> 손익현황 </button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <button class="btn btn-outline-secondary-costom"> 영업시작하기 </button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+        
+        	<!-- 사이드바 -->
+
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"></div>매출관리
+                                
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="layout-static.html">- 총 매출 현황</a>
+                                </nav>
+                            </div>
+                            
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts_2" aria-expanded="false" aria-controls="collapseLayouts_2">
+                                <div class="sb-nav-link-icon"></div>판매등록
+                                
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts_2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="layout-static.html">- 판매등록</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts_3" aria-expanded="false" aria-controls="collapseLayouts_3">
+                                <div class="sb-nav-link-icon"></div>명세서
+                                
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts_3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="layout-static.html">- 명세서 현황</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">- 매출일보현황</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">- 거래처별매출현황</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">- 거래처월매출현황</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- 사이드바 -->
+            
+            <!-- 내부 디자인 시작 -->
+			<body>
+				<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> <!-- 날짜 입력 스크립트 -->
+				
+				<!-- 날짜 입력 필드에 대한 flatpickr 초기화 -->
+				<script>
+					// DOM이 준비되면 실행
+					document.addEventListener('DOMContentLoaded', function () {
+						// 구매 날짜 입력 필드에 대한 flatpickr 초기화
+						flatpickr("#purchase-date-start", {
+							dateFormat: "Y/m/d",
+						});
+						flatpickr("#purchase-date-end", {
+							dateFormat: "Y/m/d",
+						});
+					});
+
+					
+
+
+				</script>
+
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h3 class="mt-4"style="margin-bottom: 5px;">총 매출 현황</h3>
+                        <hr/>
+                        <div>
+                        	<div class="cli_div">
+								<div id="purchase" class="cli_div_1">
+									<div class="line_1" id="line_1">
+										<label class="jol_1" style="margin-right: 10px; margin-left: 35px;">● 매입처</label>
+										<span class="search-icon"></span>
+										<select id="searchdatalist" class="jol_2" style="margin-right: 35px; width: 130px;">
+				                        		<option>미래EnG</option>
+						                        <option>미래EnG</option>
+						                        <option>넥센타이어</option>
+						                        <option>미래EnG</option>
+										</select>
+
+										<label class="jol_3" style="margin-right: 10px;">타입</label>
+										<span class="search-icon"></span>
+										<select id="searchdatalist1" class="jol_4" style="margin-right: 30px;">
+				                        		<option>Belt</option>
+						                        <option>미래EnG</option>
+						                        <option>넥센타이어</option>
+						                        <option>미래EnG</option>
+				                        	</select>
+
+										<label class="jol_5" style="margin-right: 10px;">규격</label>
+										<span class="search-icon"></span>
+										<select id="searchdatalist2" class="jol_6" style="margin-right: 30px;">
+				                        		<option>W800</option>
+						                        <option>미래EnG</option>
+						                        <option>넥센타이어</option>
+						                        <option>미래EnG</option>
+				                        	</select>
+			                        </div>
+			                        <div class="line_2" id="line_2" style="margin-right: 10px; margin-left: 15px;">
+										<label style="margin-right: 10px;">● 매입 날짜</label>
+										<input id="purchase-date-start" type="text" class="flatpickr-input" >
+										<span class="date-emoticon" style="margin-right: 20px;">📅</span>
+										<label style="margin-right: 20px;">~</label>
+										<input id="purchase-date-end" type="text" class="flatpickr-input">
+										<span class="date-emoticon">📅</span>
+									</div>
+								</div>
+			                        
+		                        <div id="purchase" class="cli_div_2">
+		                        	<button class="btn btn-secondary">검색</button>
+		                        </div>
+	                        </div>
+	                        <div id="purchase_2" class="cli_div_3">
+		                        	<span style="font-size: 12px; margin-left: 20px;">[영업기준정보설정]의 설정에따라 공급단가, 공급가액, 부가세액, 수량의 소수점 단위가 결정됩니다.</span>
+		                        </div>
+                     	</div>
+					</body>
+
+
+                        <div class="label_1">
+                       		<span style="font-size: 15px; font-weight: bold;"> ● 매입 검색 0</span>
+                       	</div>
+                        
+                        <div class="table_1">
+                        	<table class="table table-bordered">
+                        		<tr>
+	                        		<thead>
+	                        			<th>
+                                        	<input type="checkbox" id="allCheck" name="allCheck">
+                                        </th>
+	                        			<th>구매일</th>
+	                                    <th>품명 | 규격</th>
+	                                    <th>구매처</th>
+	                                    <th>수량</th>
+	                                    <th>개당 가격</th>
+	                                    <th>총 구매가격</th>
+	                        		</thead>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	
+	                        	
+                        	</table>
+                        </div>
+                       
+                        <div class="table_2">
+                        	<table class="table table-bordered">
+                        		<tr>
+	                        		<thead>
+	                                    <th  style="min-width: 600px">합계</th>
+	                                    <th>총 지출(원)</th>
+	                                    <th>10,000,000</th>
+	                        		</thead>
+	                        	</tr>
+	                        </table>
+                        </div>
+                        
+                        <div class="label_2">
+                       		<span style="font-size: 15px; font-weight: bold;"> ● 매입 현황 0</span>
+                       	</div>
+                       	
+                        
+                         
+                        
+                        
+                        <div class="table_3">
+                        	<table class="table table-bordered">
+                        		<tr>
+	                        		<thead>
+	                        			<th>
+                                        	<input type="checkbox" id="allCheck" name="allCheck">
+                                        </th>
+	                        			<th>구매일</th>
+	                                    <th>품명 | 규격</th>
+	                                    <th>구매처</th>
+	                                    <th>수량</th>
+	                                    <th>개당 가격</th>
+	                                    <th>총 구매가격</th>
+	                        		</thead>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+                                       <input type="checkbox" id="allCheck" name="allCheck">
+                                    </td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        		<td>더미 데이터</td>
+	                        	</tr>
+	                        	
+                        	</table>
+                        </div>
+                        <div class="table_4">
+                        	<table class="table table-bordered">
+                        		<tr>
+	                        		<thead>
+	                                    <th style="min-width: 600px">합계</th>
+	                                    <th>총 지출(원)</th>
+	                                    <th>10,000,000</th>
+	                        		</thead>
+	                        	</tr>
+	                        </table>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="/resources/DarkTemplates/js/scripts.js"></script>
+    </body>
+</html>

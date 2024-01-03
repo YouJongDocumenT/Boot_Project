@@ -528,7 +528,7 @@
 																		this.getAttribute('ph_number')
 											                    ])">
 											<th style="min-width: 50px">
-                                        		<input type="checkbox" name="RowCheck" th:value="${sellData.resp_id}"/>
+                                        		<input type="checkbox" name="RowCheck" th:value="${sellData.purchase_pdtnum}"/>
                                         	</th>
 											<td
 												th:text="${#dates.format(sellData.sell_date, 'yyyy-MM-dd')}"></td>

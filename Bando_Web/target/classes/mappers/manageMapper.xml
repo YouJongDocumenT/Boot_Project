@@ -481,9 +481,8 @@
  
 <!-- 판매정보 삭제 -->
    <delete id="ClientDataDelete" parameterType="int">
-	   DELETE 
-			FROM sell_product
-		WHERE resp_id = #{resp_id}  
+	   DELETE FROM sell_product
+		WHERE purchase_pdtnum = #{purchase_pdtnum}  
 	                 
    </delete>
 
