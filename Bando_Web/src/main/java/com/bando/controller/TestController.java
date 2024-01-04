@@ -20,6 +20,12 @@ public class TestController {
 	public String sell_view() {
 		return"StockView/SellManage";
 	}
+	@GetMapping("/registersell")
+	public String registersell_view() {
+		return"StockView/registerSell";
+	}
+	
+	
 	@GetMapping("/stock")
 	public String stock_view() {
 		return"StockView/StockManage";
