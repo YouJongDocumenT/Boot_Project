@@ -217,37 +217,37 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"></div>매입관리
+                                <div class="sb-nav-link-icon"></div>매출관리
                                 
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="http://localhost:8090/purchase">- 총 매입 현황</a>
+                                    <a class="nav-link" href="http://localhost:8090/purchase">- 총 매출 현황</a>
                                 </nav>
                             </div>
                             
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts_2" aria-expanded="false" aria-controls="collapseLayouts_2">
-                                <div class="sb-nav-link-icon"></div>구매등록
+                                <div class="sb-nav-link-icon"></div>매출등록
                                 
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts_2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="layout-static.html">- 구매 등록</a>
+                                	<a class="nav-link" href="layout-static.html">- 판매 등록</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts_3" aria-expanded="false" aria-controls="collapseLayouts_3">
-                                <div class="sb-nav-link-icon"></div>구매현황
+                                <div class="sb-nav-link-icon"></div>매출현황
                                 
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts_3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="layout-static.html">- 명세서 현황</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">- 매입일보현황</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">- 거래처별매입현황</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">- 거래처월매입현황</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">- 매출일보현황</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">- 거래처별매출현황</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">- 거래처월매출현황</a>
                                 </nav>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4"style="margin-bottom: 5px;">총 매입 현황</h3>
+                        <h3 class="mt-4"style="margin-bottom: 5px;">총 매출 현황</h3>
                         <hr/>
                         <div>
                         	<div class="cli_div">
@@ -336,7 +336,7 @@
 
 
                         <div class="label_1">
-                       		<span style="font-size: 15px; font-weight: bold;"> ● 매입 검색 0</span>
+                       		<span style="font-size: 15px; font-weight: bold;"> ● 매출 검색 0</span>
                        	</div>
                         
                         <div class="table_1">
@@ -493,7 +493,7 @@
                         </div>
                         
                         <div class="label_2">
-                       		<span style="font-size: 15px; font-weight: bold;"> ● 매입 현황 0</span>
+                       		<span style="font-size: 15px; font-weight: bold;"> ● 매출 등록</span>
                        	</div>
                        	
                         
@@ -505,7 +505,7 @@
 	                        	<table class="table table-bordered">
 	                        		<tr>
 		                        		<thead>
-		                                    <th>매입처 등록</th>
+		                                    <th>고객사 등록</th>
 		                        		</thead>
 		                        	</tr>
 		                        	<tr>
@@ -538,7 +538,7 @@
 	                        	<table class="table table-bordered">
 	                        		<tr>
 		                        		<thead>
-		                        			<th>매입추가</th>
+		                        			<th>기계추가</th>
 		                        		</thead>
 		                        	</tr>
 		                        	<tr>
@@ -570,6 +570,57 @@
 		                        	</tr>
 		                        	<tr>
 		                        		<td>총 구매가</td>
+		                        		<td>
+											<input></input>
+										</td>
+
+		                        	</tr>
+	                        	</table>
+                        	</div>
+                        	<div class="line_table_3">
+	                        	<table class="table table-bordered">
+	                        		<tr>
+		                        		<thead>
+		                        			<th>판매추가</th>
+		                        		</thead>
+		                        	</tr>
+		                        	<tr>
+		                        		<td>담당자</td>
+		                        		<td>
+											<input></input>
+										</td>
+		                        		<td>번호</td>
+		                        		<td>
+											<input></input>
+										</td>
+		                        	</tr>
+		                        	<tr>
+		                        		<td>품명</td>
+		                        		<td>
+											<input></input>
+										</td>
+		                        		<td>규격</td>
+		                        		<td>
+											<input></input>
+										</td>
+		                        	</tr>
+		                        	<tr>
+		                        		<td>수량</td>
+		                        		<td>
+											<input></input>
+										</td>
+										<td>단가</td>
+		                        		<td>
+											<input></input>
+										</td>
+
+		                        	</tr>
+		                        	<tr>
+		                        		<td>총 판매액</td>
+		                        		<td>
+											<input></input>
+										</td>
+										<td>세액(10%)</td>
 		                        		<td>
 											<input></input>
 										</td>
